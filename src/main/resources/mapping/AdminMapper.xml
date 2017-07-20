@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jd.shop.dao.AdminMapper" >
+  <resultMap id="BaseResultMap" type="com.jd.shop.model.Admin" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="admin" property="admin" jdbcType="VARCHAR" />
+    <result column="apass" property="apass" jdbcType="VARCHAR" />
+    <result column="alogin" property="alogin" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, admin, apass, alogin
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_admin
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!-- new -->
+  <select id="selectByAdmin" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM t_admin
+    WHERE admin = #{admin,jdbcType=VARCHAR} AND apass = #{apass,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_admin
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jd.shop.model.Admin" >
+    insert into t_admin (id, admin, apass, 
+      alogin)
+    values (#{id,jdbcType=INTEGER}, #{admin,jdbcType=VARCHAR}, #{apass,jdbcType=VARCHAR}, 
+      #{alogin,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jd.shop.model.Admin" >
+    insert into t_admin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="admin != null" >
+        admin,
+      </if>
+      <if test="apass != null" >
+        apass,
+      </if>
+      <if test="alogin != null" >
+        alogin,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="admin != null" >
+        #{admin,jdbcType=VARCHAR},
+      </if>
+      <if test="apass != null" >
+        #{apass,jdbcType=VARCHAR},
+      </if>
+      <if test="alogin != null" >
+        #{alogin,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jd.shop.model.Admin" >
+    update t_admin
+    <set >
+      <if test="admin != null" >
+        admin = #{admin,jdbcType=VARCHAR},
+      </if>
+      <if test="apass != null" >
+        apass = #{apass,jdbcType=VARCHAR},
+      </if>
+      <if test="alogin != null" >
+        alogin = #{alogin,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jd.shop.model.Admin" >
+    update t_admin
+    set admin = #{admin,jdbcType=VARCHAR},
+      apass = #{apass,jdbcType=VARCHAR},
+      alogin = #{alogin,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jd.shop.dao.PartMapper" >
+  <resultMap id="BaseResultMap" type="com.jd.shop.model.Part" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pname" property="pname" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="priority" property="priority" jdbcType="INTEGER" />
+    <result column="describe" property="describe" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, pname, `type`, `priority`, `describe`
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_part
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!-- new -->
+  <select id="getAll" resultType="com.jd.shop.model.Part">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM t_part
+  </select>
+
+  <select id="shophome" resultType="map">
+    SELECT t_part.id as pid, t_part.pname , g.id as gid, g.`name` as gname,  i.title
+    FROM (SELECT * from t_goods ) as g
+    Right JOIN t_part on g.part_goods=t_part.id
+    Left JOIN
+    (SELECT * FROM t_image ) as i
+    ON i.image_list=g.piclist_goods
+    GROUP BY t_part.id
+    ORDER BY t_part.priority DESC
+  </select>
+
+  <select id="getPartGoods" resultType="com.jd.shop.model.Goods" parameterType="java.lang.Integer">
+    SELECT
+    t_goods.`name`,
+    t_goods.id,
+    t_goods.price,
+    t_goods.gclass,
+    t_goods.parameter1,
+    t_goods.parameter2,
+    t_goods.parameter3,
+    t_goods.freight,
+    t_goods.detail,
+    t_goods.sales,
+    t_goods.stock,
+    t_goods.shelf,
+    t_goods.part_goods,
+    t_goods.piclist_goods
+    FROM t_goods , t_part
+    WHERE t_goods.part_goods=t_part.id and t_part.id= #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_part
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jd.shop.model.Part" >
+    insert into t_part (id, pname, `type`,
+      priority, `describe`)
+    values (#{id,jdbcType=INTEGER}, #{pname,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{priority,jdbcType=INTEGER}, #{describe,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jd.shop.model.Part" >
+    insert into t_part
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pname != null" >
+        pname,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="priority != null" >
+        priority,
+      </if>
+      <if test="describe != null" >
+        describe,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pname != null" >
+        #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null" >
+        #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="describe != null" >
+        #{describe,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- new -->
+  <insert id="addpart" parameterType="com.jd.shop.model.Part" >
+    INSERT INTO t_part ( `pname` , `type` , `priority` , `describe` )
+    VALUE ( #{pname,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR},#{priority,jdbcType=INTEGER},#{describe,jdbcType=VARCHAR} )
+  </insert>
+
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.jd.shop.model.Part" >
+    update t_part
+    <set >
+      <if test="pname != null" >
+        `pname` = #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null" >
+        `priority` = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="describe != null" >
+        `describe` = #{describe,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jd.shop.model.Part" >
+    update t_part
+    set pname = #{pname,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      priority = #{priority,jdbcType=INTEGER},
+      describe = #{describe,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

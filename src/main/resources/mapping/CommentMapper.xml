@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jd.shop.dao.CommentMapper" >
+  <resultMap id="BaseResultMap" type="com.jd.shop.model.Comment" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="grade" property="grade" jdbcType="INTEGER" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="comment_user" property="commentUser" jdbcType="INTEGER" />
+    <result column="comment_goods" property="commentGoods" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, grade, time, comment, comment_user, comment_goods
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_comment
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_comment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jd.shop.model.Comment" >
+    insert into t_comment (id, grade, time, 
+      comment, comment_user, comment_goods
+      )
+    values (#{id,jdbcType=INTEGER}, #{grade,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, 
+      #{comment,jdbcType=VARCHAR}, #{commentUser,jdbcType=INTEGER}, #{commentGoods,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jd.shop.model.Comment" >
+    insert into t_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+      <if test="commentUser != null" >
+        comment_user,
+      </if>
+      <if test="commentGoods != null" >
+        comment_goods,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="commentUser != null" >
+        #{commentUser,jdbcType=INTEGER},
+      </if>
+      <if test="commentGoods != null" >
+        #{commentGoods,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jd.shop.model.Comment" >
+    update t_comment
+    <set >
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="commentUser != null" >
+        comment_user = #{commentUser,jdbcType=INTEGER},
+      </if>
+      <if test="commentGoods != null" >
+        comment_goods = #{commentGoods,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jd.shop.model.Comment" >
+    update t_comment
+    set grade = #{grade,jdbcType=INTEGER},
+      time = #{time,jdbcType=TIMESTAMP},
+      comment = #{comment,jdbcType=VARCHAR},
+      comment_user = #{commentUser,jdbcType=INTEGER},
+      comment_goods = #{commentGoods,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
