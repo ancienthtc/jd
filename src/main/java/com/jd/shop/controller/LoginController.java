@@ -1,0 +1,96 @@
+package com.jd.shop.controller;
+
+import com.jd.shop.model.Admin;
+import com.jd.shop.model.User;
+import com.jd.shop.service.PartService;
+import com.jd.shop.service.loginService;
+import org.springframework.http.HttpRequest;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by ThinkPad on 2017/7/6.
+ */
+@Controller
+@RequestMapping("/login")
+public class LoginController extends BaseController{
+
+    @Resource
+    private loginService loginService;
+
+    @Resource
+    private PartService partService;
+
+    @RequestMapping("/login")
+    public String login()
+    {
+        return "login";
+    }
+
+    @RequestMapping("/reg")
+    public String reg()
+    {
+        return "register";
+    }
+
+    @RequestMapping("/admin")
+    public String admin()
+    {
+        return "admin/alogin";
+    }
+
+    @RequestMapping(value = "/ton" /*, method = RequestMethod.POST*/)//tel or name
+    public String login(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password , Model model)
+    {
+        User user=new User();
+        user=loginService.login(username,password);
+        if(user!=null)
+        {
+            model.addAttribute("User",user);
+
+            //取消主页异步请求，改为跳转前获取数据。
+            //获取板块-代表
+            List<Map<String, String>> allinfo=partService.getAllInfo();
+            model.addAttribute("parts",allinfo);
+
+            return "shophome";//改跳转到Controller 获取商品，用户信息
+        }
+        model.addAttribute("message","登录失败!");
+        return "login";
+    }
+
+    //对于游客
+    @RequestMapping("/view")
+    public String view(Model model)
+    {
+        List<Map<String, String>> allinfo=partService.getAllInfo();
+        model.addAttribute("parts",allinfo);
+        return "shophome";
+    }
+
+    @RequestMapping(value = "/alogin" , method = RequestMethod.POST)
+    public String adminlogin(@RequestParam(value = "admin") String admin, @RequestParam(value = "pass") String pass , HttpServletRequest request,Model model)
+    {
+
+        Admin a=new Admin();
+        a=loginService.alogin(admin,pass);
+        if(a!=null)
+        {
+            //
+            HttpSession session=request.getSession();
+            session.setAttribute("admin",a);
+            return "redirect:/admin/tohome";
+        }
+        model.addAttribute("message","登录失败");
+        return "admin/alogin";
+    }
+}
