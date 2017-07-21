@@ -6,9 +6,10 @@
     <result column="admin" property="admin" jdbcType="VARCHAR" />
     <result column="apass" property="apass" jdbcType="VARCHAR" />
     <result column="alogin" property="alogin" jdbcType="TIMESTAMP" />
+    <result column="alevel" property="alevel" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, admin, apass, alogin
+    id, admin, apass, alogin ,alevel
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -31,9 +32,9 @@
   </delete>
   <insert id="insert" parameterType="com.jd.shop.model.Admin" >
     insert into t_admin (id, admin, apass, 
-      alogin)
+      alogin,alevel)
     values (#{id,jdbcType=INTEGER}, #{admin,jdbcType=VARCHAR}, #{apass,jdbcType=VARCHAR}, 
-      #{alogin,jdbcType=TIMESTAMP})
+      #{alogin,jdbcType=TIMESTAMP}#{alevel,jdbcType=INTEGER} )
   </insert>
   <insert id="insertSelective" parameterType="com.jd.shop.model.Admin" >
     insert into t_admin
@@ -50,6 +51,9 @@
       <if test="alogin != null" >
         alogin,
       </if>
+      <if test="alevel != null" >
+        alevel,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -63,6 +67,9 @@
       </if>
       <if test="alogin != null" >
         #{alogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="alevel != null" >
+        #{alevel,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -78,6 +85,9 @@
       <if test="alogin != null" >
         alogin = #{alogin,jdbcType=TIMESTAMP},
       </if>
+      <if test="alevel != null" >
+        alevel = #{alevel,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -85,7 +95,8 @@
     update t_admin
     set admin = #{admin,jdbcType=VARCHAR},
       apass = #{apass,jdbcType=VARCHAR},
-      alogin = #{alogin,jdbcType=TIMESTAMP}
+      alogin = #{alogin,jdbcType=TIMESTAMP},
+      alevel = #{alevel,jdbcType=TIMESTAMP},
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
