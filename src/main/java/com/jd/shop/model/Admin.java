@@ -11,6 +11,8 @@ public class Admin {
 
     private Date alogin;
 
+    private Integer alevel;//管理员权限 新增
+
     public Integer getId() {
         return id;
     }
@@ -41,5 +43,13 @@ public class Admin {
 
     public void setAlogin(Date alogin) {
         this.alogin = alogin;
+    }
+
+    public Integer getAlevel() {
+        return alevel;
+    }
+
+    public void setAlevel(Integer alevel) {
+        this.alevel = alevel;
     }
 }
