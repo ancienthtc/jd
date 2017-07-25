@@ -1,5 +1,6 @@
 package com.jd.shop.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jd.shop.model.Goods;
 import com.jd.shop.model.Image;
@@ -98,22 +99,24 @@ public class GoodsController extends BaseController{
     }
 
     //获取所有商品列表
-//    @RequestMapping("/goodslist")
-//    public String getgoddslist(Model model)
-//    {
-//        List<Goods> goodslist=goodsService.getAll();
-//        model.addAttribute("goodslist",goodslist);
-//
-//        return "admin/goodslist";
-//    }
+    @RequestMapping("/listpage")
+    public String getgoddslist(Model model)
+    {
+       /*List<Goods> goodslist=goodsService.getAll();
+        model.addAttribute("goodslist",goodslist);*/
+
+        return "admin/goodslist";
+    }
 
     //获取所有商品列表，分页
     @RequestMapping("/goodslist")
+    @ResponseBody
     public String getListPage(Integer pageNumber,Integer pageSize ,Model model)
     {
         PagedResult<Goods> goodslist=goodsService.queryByPage(pageNumber,pageSize);
         model.addAttribute("goodslist",goodslist);
-        return "admin/goodslist";
+        String json = JSON.toJSONString(goodslist);
+        return json;
     }
 
     //获取板块商品

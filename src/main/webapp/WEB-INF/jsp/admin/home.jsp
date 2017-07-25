@@ -45,7 +45,7 @@
         <li>
           <h4 class="M2"><span></span>商品管理</h4>
           <div class="list-item none">
-            <a href='<%=basePath%>goods/list'>商品列表</a>
+            <a href='<%=basePath%>goods/listpage'>商品列表</a>
             <a href=''>商品添加</a>         
            </div>
         </li>
