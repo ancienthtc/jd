@@ -83,4 +83,9 @@ public class PictureServiceImpl implements PictureService {
         }
         return false;
     }
+
+    public boolean partAndpicture(String pid, Image image) {
+
+        return false;
+    }
 }

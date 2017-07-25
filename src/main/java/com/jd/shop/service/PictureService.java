@@ -1,5 +1,7 @@
 package com.jd.shop.service;
 
+import com.jd.shop.model.Image;
+
 /**
  * Created by ThinkPad on 2017/7/7.
  */
@@ -23,4 +25,7 @@ public interface PictureService {
     boolean goodsAndpicture(String goodsid,String title,String filename,String server);
 
     boolean deleteGoodsPic(String imageid);
+
+    boolean partAndpicture(String pid, Image image);
+
 }

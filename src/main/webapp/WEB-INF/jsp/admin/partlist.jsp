@@ -82,8 +82,8 @@
                 <th>价格</th>
                 <th>量词</th>
                 <th>优先级</th>
-                <th>--</th>
-                <th>--</th>
+                <th>修改</th>
+                <th>删除</th>
             </tr>
             </thead>
             <tbody>
