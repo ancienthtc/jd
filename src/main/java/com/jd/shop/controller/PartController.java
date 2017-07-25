@@ -27,49 +27,47 @@ public class PartController {
     private PartService partService;
 
     //查询所有板块后跳转
-//    @RequestMapping("/list")
-//    public String getPartlist(Model model) {
+    @RequestMapping("/list")
+    public String getPartlist(Model model) {
 //        List<Part> parts = partService.getAll();
 //        model.addAttribute("parts", parts);
-//        return "admin/partlist";
-//    }
+        return "admin/partlist";
+    }
 
     //分页查询所有板块 分页
-    @RequestMapping("/list")        //应该前端解决分页
-    public String selectPartList(Integer pageNumber,Integer pageSize ,Model model,String t,Integer p)
+    @RequestMapping("/list_get")
+    @ResponseBody
+    public String selectPartList(Integer pageNo, Integer pageSize , Model model)
     {
-        if(t != null)   //分页验证--前端解决
-        {
-            if(t.equals("a"))
-            {
-                if(pageNumber<=1)
-                {
-                    pageNumber=1;
-                }
-                else
-                {
-                    pageNumber = pageNumber - 1;
-                }
-            }
-            else if(t.equals("b"))
-            {
-                if(pageNumber>=p)
-                {
-                    pageNumber=p;
-                }
-                else
-                {
-                    pageNumber = pageNumber + 1;
-                }
-            }
-        }
-
-        PagedResult<Part> parts=partService.queryByPage(pageNumber,pageSize);
+        PagedResult<Part> parts=partService.queryByPage(pageNo,pageSize);
 
         model.addAttribute("pageParts",parts);
         //System.out.print(parts);
-        return "admin/partlist";
+        //return "admin/partlist2";
+        String json= JSON.toJSONString(parts);
+        return json;
     }
+
+//    @RequestMapping("/list2")
+//    public String tolist2()
+//    {
+//        return "admin/partlist2";
+//    }
+//
+//    //
+//    @RequestMapping("/list2_json")        //测试新分页
+//    @ResponseBody
+//    public String selectPartList(Integer pageNo, Integer pageSize , Model model)
+//    {
+//
+//        PagedResult<Part> parts=partService.queryByPage(pageNo,pageSize);
+//
+//        model.addAttribute("pageParts",parts);
+//        //System.out.print(parts);
+//        //return "admin/partlist2";
+//        String json= JSON.toJSONString(parts);
+//        return json;
+//    }
 
     //板块添加
     @RequestMapping(value = "/add" , method = RequestMethod.POST)
