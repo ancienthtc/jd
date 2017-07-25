@@ -11,6 +11,8 @@ public class Part {
 
     private String describe;
 
+    private Integer piclistPart;//新增  板块图片
+
     public Integer getId() {
         return id;
     }
@@ -49,5 +51,13 @@ public class Part {
 
     public void setDescribe(String describe) {
         this.describe = describe == null ? null : describe.trim();
+    }
+
+    public Integer getPiclistPart() {
+        return piclistPart;
+    }
+
+    public void setPiclistPart(Integer piclistPart) {
+        this.piclistPart = piclistPart;
     }
 }

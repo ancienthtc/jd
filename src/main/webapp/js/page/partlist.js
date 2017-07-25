@@ -41,8 +41,8 @@ $(function(){
 	    			$(tr).append('<td>'+row.type+'</td>');
 	    			$(tr).append('<td>'+row.describe+'</td>');
 	    			$(tr).append('<td>'+row.priority+'</td>');
-	    			$(tr).append("<td><a href='/JDWebShop/part/alter?pic="+row.id+"'>修改</a></td>");
-	    			//$(tr).append('<td>'+row.email+'</td>');
+	    			$(tr).append("<td><a href='/JDWebShop/part/alter?pid="+row.id+"'>修改</a></td>");
+	    			$(tr).append("<td><a href='/JDWebShop/part/####?###="+row.id+"'>删除</a></td>");
 	    			//$(tr).append('<td>'+row.statusName+'</td>');
 	    			//$(tr).append('<td>'+row.update_time+'</td>');
 	    			$(tb).append(tr);
