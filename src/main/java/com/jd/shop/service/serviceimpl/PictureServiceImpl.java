@@ -82,11 +82,12 @@ public class PictureServiceImpl implements PictureService {
 
     //删除该商品的一张图片,并删除项目路径下的图片
     public boolean deleteGoodsPic(String imageid,String absolutePath) {
+        Image image=imageMapper.selectByPrimaryKey( Integer.valueOf(imageid) );
+        absolutePath=absolutePath+image.getTitle();
+        fileDel(absolutePath);
+
         if(imageMapper.deleteByPrimaryKey( Integer.parseInt(imageid) ) > 0)
         {
-            Image image=imageMapper.selectByPrimaryKey( Integer.valueOf(imageid) );
-            absolutePath=absolutePath+image.getTitle();
-            fileDel(absolutePath);
             return true;
         }
         return false;

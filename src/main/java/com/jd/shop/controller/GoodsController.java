@@ -258,7 +258,7 @@ public class GoodsController extends BaseController{
 
 
     //商品图片删除   (ajax)//刷新问题
-    @RequestMapping("/deletepic")   //goodsid?
+    @RequestMapping("/deletepic_json")   //goodsid?
     //@ResponseBody
     public String deletePic(@RequestBody String json,Model model)
     {
@@ -279,6 +279,22 @@ public class GoodsController extends BaseController{
         }
     }
 
+    @RequestMapping("/deletepic")   //goodsid?
+    //@ResponseBody
+    public String deletePic(String goodsid,String imageid,Model model)
+    {
 
+        String absolutePath=request.getSession().getServletContext().getRealPath("/")+ "upload/";
+
+        if(pictureService.deleteGoodsPic(imageid,absolutePath))
+        {
+
+            return "goods/getGoodsPic/"+goodsid;
+        }
+        else
+        {
+            return "admin/goodsupload";
+        }
+    }
 
 }

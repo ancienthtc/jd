@@ -30,7 +30,7 @@ public class GoodsServiceImpl implements GoodsService {
 
     //全部商品 分页
 
-
+    //分页
     public PagedResult<Goods> queryByPage(Integer pageNo, Integer pageSize) {
         pageNo = pageNo == null?1:pageNo;
         pageSize = pageSize == null?10:pageSize;
@@ -38,18 +38,19 @@ public class GoodsServiceImpl implements GoodsService {
         return BeanUtil.toPagedResult(goodsMapper.getAll());
     }
 
-    //获取商品图片
+    //获取某个商品的所有图片
     public List<Image> getGoodsPic(int goodsid) {
         return goodsMapper.getgoodspic(goodsid);
     }
 
-    //添加图片
+
+    //添加商品(未上架，把销量设为0)
     public int addGoods(Goods goods) {
         goods.setSales(0.0);
         return goodsMapper.insertSelective(goods);
     }
 
-    //获得商品信息
+    //获得某商品所有信息
     public Goods getGoods(int goodsid) {
         return goodsMapper.selectByPrimaryKey(goodsid);
     }

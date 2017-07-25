@@ -26,7 +26,7 @@
                 jQuery.ajax( {
                     type : 'POST',
                     contentType : 'application/json',
-                    url : '<%=basePath%>/goods/deletepic',
+                    url : '<%=basePath%>/goods/deletepic_json',
                     data : date,
                     dataType : 'json',
                     success : function(data) {
