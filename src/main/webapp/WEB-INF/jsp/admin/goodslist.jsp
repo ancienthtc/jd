@@ -11,8 +11,52 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
+    <title>商品列表</title>
+    <meta charset="UTF-8">
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="https://terryz.github.io/lib/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
+    <link rel="stylesheet" href="<%=basePath%>css/page/b.page.bootstrap3.css" type="text/css">
+
+    <script type="text/javascript">
+
+    </script>
+</head>
+<body>
+<div class="row-fluid">
+    <div id="pageJsonContent">
+        <table id="dataGridTableJson" class="table table-striped table-bordered table-hover table-condensed">
+            <thead>
+            <tr>
+                <th class="selectColumn">商品名称</th>
+                <th>单价</th>
+                <td>量</td>
+                <th>参数1</th>
+                <th>参数2</th>
+                <th>参数3</th>
+                <th>运费</th>
+                <th>详情</th>
+                <th>销量</th>
+                <th>库存</th>
+                <th>上架日期</th>
+                <th>修改</th>
+                <th>删除</th>
+               <%-- <th class="selectColumn" >选择</th>
+                <th>板块名称</th>
+                <th>价格</th>
+                <th>量词</th>
+                <th>优先级</th>
+                <th>--</th>
+                <th>--</th>--%>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <div id="page3"></div>
+
+<%--<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <title>分页</title>
 
@@ -99,7 +143,7 @@ a, a:visited{text-decoration:none;}
     <td>修改</td>
 	<td>删除</td>
   </tr>
-    <c:forEach var="item" items="${goodslist.dataList}">
+   &lt;%&ndash; <c:forEach var="item" items="${goodslist.dataList}">
         <tr class="hang2">
             <td>${item.name}</td>
 			<td>${item.price}</td>
@@ -115,12 +159,12 @@ a, a:visited{text-decoration:none;}
             <td><a href="<%=basePath%>goods/goodsalter/${item.id}">修改</a></td>
 			<td>----</td>
         </tr>
-    </c:forEach>
+    </c:forEach>&ndash;%&gt;
 
 </table>
-
+<div id="page3"></div>--%>
 <!--下一页--->
-<div class="wrap" style="margin-top:150px;">
+<%--<div class="wrap" style="margin-top:150px;">
 
     <div class="fenye">
     	<ul>
@@ -150,7 +194,7 @@ a, a:visited{text-decoration:none;}
 
     </div>
 
-</div>
+</div>--%>
 
 <div>${message}</div>
 
@@ -158,8 +202,11 @@ a, a:visited{text-decoration:none;}
 
 <script src="<%=basePath%>js/public.js" type="text/javascript"></script>
 
-<div align="center" style="clear:both;font-size:12px;color:#666;"><br><br><br><br>
-</div>
+<%--分页插件--%>
+<script type="text/javascript" src="<%=basePath%>js/page/b.page.js" ></script>
+<script type="text/javascript" src="<%=basePath%>js/page/goodslist.js" ></script>
+
+
 
 </body>
 
