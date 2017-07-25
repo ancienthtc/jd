@@ -30,4 +30,5 @@ public interface PartMapper {
     List<Map<String,String>> shophome();
 
     List<Goods> getPartGoods(Integer id);
+
 }

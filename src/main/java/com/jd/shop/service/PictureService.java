@@ -24,8 +24,23 @@ public interface PictureService {
      */
     boolean goodsAndpicture(String goodsid,String title,String filename,String server);
 
-    boolean deleteGoodsPic(String imageid);
+    boolean deleteGoodsPic(String imageid,String absolutePath);
 
-    boolean partAndpicture(String pid, Image image);
 
+    //板块图片关联步骤
+    /*
+     *  1.检查图片集 "part"+id
+     *  2.若不存在就创建,并更新part的 piclist_part
+     *  3.若存在，直接添加图片数据，更新image_list
+     */
+
+    /**
+     * @param pid
+     * @param image
+     * @return
+     */
+    boolean partAndpicture(Integer pid, Image image);
+
+    //删除项目下路径
+    void fileDel(String absolutePath);
 }

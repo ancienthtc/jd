@@ -263,7 +263,9 @@ public class GoodsController extends BaseController{
         String imageid=date.getString("id");
         String goodsid=date.getString("goodsid");
 
-        if(pictureService.deleteGoodsPic(imageid))
+        String absolutePath=request.getSession().getServletContext().getRealPath("/")+ "upload/";
+
+        if(pictureService.deleteGoodsPic(imageid,absolutePath))
         {
 
             return "goods/getGoodsPic/"+goodsid;
