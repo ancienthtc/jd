@@ -1,0 +1,252 @@
+@charset "utf-8";
+@import "public/colorset";
+.mainBox {
+  overflow: hidden;
+}
+
+
+/*左边侧边栏部分*/
+
+.leftBox {
+  float: left;
+  width: 180px;
+  background-color: @blue1;
+  color: @white;
+  padding-bottom: 5000px;
+  margin-bottom: -5000px;
+  .logo {
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    background-color: #32374d;
+  }
+}
+
+
+/*左边导航栏列表开始*/
+
+.slideBarBox {
+  .default {
+    font-size: 12px;
+    color: #ccc;
+    p {
+      margin: 0;
+      padding: 20px 25px;
+      cursor: pointer;
+      font-size: 14px;
+      &.on,
+      &:hover {
+        color: @white;
+        .arrow {
+          -webkit-transition: all ease-in .3s;
+          -moz-transition: all ease-in .3s;
+          -ms-transition: all ease-in .3s;
+          -o-transition: all ease-in .3s;
+          transition: all ease-in .3s;
+          transform: rotate(90deg);
+          -ms-transform: rotate(90deg);
+          -moz-transform: rotate(90deg);
+          -webkit-transform: rotate(90deg);
+          -o-transform: rotate(90deg);
+        }
+      }
+    }
+    span.iconfont {
+      padding-right: 10px;
+    }
+    .arrow {
+      float: right;
+      line-height: 29px;
+    }
+    .secondNav {
+      display: none;
+      background-color: @blue2;
+      li {
+        padding-left: 50px;
+        color: #ccc;
+        a {
+          color: #ccc;
+          display: block;
+          padding: 11px 0;
+          color: #999aa2;
+        }
+        &.on {
+          background-color: darken(@blue2, 4%);
+          border-right: 3px solid @green;
+          a {
+            color: @green;
+          }
+        }
+        &:hover {
+          background-color: darken(@blue2, 4%);
+          a {
+            color: @green;
+          }
+        }
+      }
+    }
+  }
+}
+
+.ripple {
+  display: block;
+  position: absolute;
+  background: rgba(33, 213, 142, .3);
+  border-radius: 100%;
+  -webkit-transform: scale(0);
+  transform: scale(0);
+  &.animate {
+    -webkit-animation: ripple 1s ease-out;
+    animation: ripple 1s ease-out;
+  }
+}
+
+@-webkit-keyframes ripple {
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(3);
+  }
+}
+
+@keyframes ripple {
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(3);
+    transform: scale(3);
+  }
+}
+
+
+/*右边主体部分*/
+
+.rightBox {
+  overflow: hidden;
+  background-color: #f5f5f5;
+}
+
+.topNav {
+  overflow: hidden;
+  padding-right: 16px;
+  padding-left: 16px;
+  height: 60px;
+  line-height: 60px;
+  background-color: #32374d;
+  #topMsg,
+  .logout {
+    float: right;
+    color: @white;
+  }
+  #topMsg {
+    position: relative;
+    display: block;
+    width: 34px;
+    margin-right: 20px;
+    &:hover {
+      color: @green;
+    }
+    .icon-msg {
+      font-size: 26px;
+    }
+  }
+  .msgNum {
+    position: absolute;
+    top: 5px;
+    right: 4px;
+    background: #21d58e;
+    color: #fff;
+    border-radius: 10px;
+    min-width: 20px;
+    min-height: 20px;
+    display: block;
+    text-align: center;
+    padding: 3px;
+    font-size: 12px;
+    line-height: normal;
+  }
+  .logout {
+    min-width: 100px;
+    overflow-x: hidden;
+		.icon-down {
+			padding-left: 3px;
+			font-size: 12px;
+		}
+  }
+  .userName {
+    padding-left: 5px;
+  }
+  .userImg {
+    float: left;
+    img {
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+    }
+  }
+  .logoutBox {
+    z-index: 9;
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 60px;
+    width: 123px;
+    background: #32374d;
+    text-align: center;
+    span {
+      display: block;
+      line-height: 36px;
+      &:hover {
+        color: @green;
+				background-color: #23253a;
+      }
+    }
+  }
+}
+
+.contentBox {
+  margin: 16px;
+  padding: 16px;
+  background-color: @white;
+  /* min-height: 545px; */
+}
+
+
+/* 404 500 */
+
+.gray-bg {
+  background-color: #f5f5f5;
+  overflow: hidden;
+}
+
+.middle-box {
+  text-align: center;
+  h1 {
+    font-size: 170px;
+  }
+  .font-bold {
+    font-weight: 600;
+  }
+	img {
+		width: 100%;
+	}
+}
+
+//公共错误信息提示页面
+.publicInfoBox {
+	position: relative;
+	.publicInfoText {
+		position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 15%;
+    max-width: 56%;
+		h2 {
+			margin-bottom: 20px;
+		}
+		p {
+			color: #999;
+			text-align: left;
+			text-indent: 2em;
+		}
+	}
+}
