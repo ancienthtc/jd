@@ -77,11 +77,13 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     //商品下架
-
     public int goodsunder(int goodsid) {
         return goodsMapper.goodsunder(goodsid);
     }
 
     //商品删除(listname:"goods"+id)
+    public int goodsDel(Integer goodsid) {
+        return goodsMapper.deleteGoodsAll(goodsid);
+    }
 
 }

@@ -182,8 +182,16 @@ public class GoodsController extends BaseController{
 
 
     //商品删除
-
-
+    @RequestMapping("goodsdel")
+    @ResponseBody
+    public String goodsdel(Integer id)
+    {
+        if(goodsService.goodsDel(id) > 0) {
+            return "Success";
+        }
+        else
+            return "Fail";
+    }
 
     //获取图片地址
     @RequestMapping("getGoodsPic/{goodsid}")

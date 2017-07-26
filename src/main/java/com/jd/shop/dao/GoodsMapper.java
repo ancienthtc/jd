@@ -29,4 +29,7 @@ public interface GoodsMapper {
     int goodsunder(@Param("goodsid")Integer goodsid);
 
     List<Goods> getOther();
+
+    //删除该商品全部信息(多表关联删除)
+    int deleteGoodsAll(@Param("id")Integer id);
 }

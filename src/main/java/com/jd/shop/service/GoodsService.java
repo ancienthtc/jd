@@ -26,4 +26,6 @@ public interface GoodsService {
     int goodsunder(int goodsid);
 
     PagedResult<Goods> queryByPage(Integer pageNo, Integer pageSize);
+
+    int goodsDel(Integer goodsid);
 }

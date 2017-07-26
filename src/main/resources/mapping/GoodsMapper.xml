@@ -61,6 +61,17 @@
     delete from t_goods
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+  <!-- new -->
+  <delete id="deleteGoodsAll" parameterType="java.lang.Integer">
+    DELETE t_goods
+    FROM
+    t_goods
+     JOIN t_piclist ON t_goods.piclist_goods = t_piclist.id
+     JOIN t_image ON t_piclist.id = t_image.image_list
+    WHERE t_goods.id = #{id,jdbcType=INTEGER}
+  </delete>
+
   <insert id="insert" parameterType="com.jd.shop.model.Goods" >
     insert into t_goods (id, name, price, 
       gclass, parameter1, parameter2, 
