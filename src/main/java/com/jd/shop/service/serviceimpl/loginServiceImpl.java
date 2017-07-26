@@ -58,10 +58,13 @@ public class loginServiceImpl implements loginService {
     }
 
     public Admin alogin(String admin, String pass) {
+        //密码转MD5
         pass=Md5Utils.string2MD5(pass);
 
+        //
         Admin a=new Admin();
         a=adminMapper.selectByAdmin(admin,pass);
+
 
         if(a != null)
         {

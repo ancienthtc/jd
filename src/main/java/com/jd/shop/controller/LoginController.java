@@ -77,6 +77,14 @@ public class LoginController extends BaseController{
         return "shophome";
     }
 
+    /**
+     * 管理员登录
+     * @param admin
+     * @param pass
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/alogin" , method = RequestMethod.POST)
     public String adminlogin(@RequestParam(value = "admin") String admin, @RequestParam(value = "pass") String pass , HttpServletRequest request,Model model)
     {

@@ -2,10 +2,11 @@ package com.jd.shop.controller;
 
 import com.jd.shop.model.Admin;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 
 /**
  * Created by ThinkPad on 2017/7/7.
@@ -17,10 +18,27 @@ public class AdminController {
 
     //admin dispather
     //管理员主页
+
+    /**
+     * 管理员跳转主页
+     * @param req
+     * @return
+     */
     @RequestMapping("/tohome")
-    public String home()
-    {
-        return "admin/home";
+    public String home(HttpServletRequest req){
+        //判断session是否存在
+        HttpSession session = req.getSession();
+        if(session == null){
+            return "admin/login";
+        }
+        //判断是否为登录状态
+        Admin admin = (Admin) session.getAttribute("admin");
+        if(admin==null){
+            return "admin/login";
+        }
+        //将权限标识存入request
+        req.setAttribute("alevel",admin.getAlevel());
+        return "admin/aindex";
     }
 
     //导航栏frame

@@ -65,7 +65,7 @@
                 <tr>
                     <th class="pd15"></th>
                     <td class="pd15">
-                        <button class="submit_btn" type="button" name="submit" >登录</button>
+                        <input class="submit_btn" type="submit" value="登录" />
                         <p class="line"><input type="checkbox" id="remember" value=""> <label for="remember">记住我</label></p>
                     </td>
                 </tr>

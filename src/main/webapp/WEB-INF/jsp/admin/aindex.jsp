@@ -1,7 +1,16 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<%--<html lang="en" xmlns:th="http://www.thymeleaf.org">--%>
 
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="UTF-8" />
     <title>飞食科技后台-首页</title>
     <!-- bootstrap样式 -->
@@ -35,7 +44,7 @@
         <!--左边侧边栏部分-->
         <div class="leftBox">
             <!--logo-->
-            <div class="logo"><img src="" alt="" /></div>
+            <div class="logo"><p>后台模板管理系统</p></div>
             <!--左边导航栏列表开始-->
             <div class="slideBarBox">
                 <ul>

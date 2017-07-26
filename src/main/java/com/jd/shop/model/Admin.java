@@ -13,6 +13,10 @@ public class Admin {
 
     private Integer alevel;//管理员权限 新增
 
+    private static final Integer SUPER_ADMIN = 1;//超级管理员
+
+    private static final Integer ADMIN = 0;//管理员
+
     public Integer getId() {
         return id;
     }
