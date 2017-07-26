@@ -42,5 +42,8 @@ public interface PictureService {
     boolean partAndpicture(Integer pid, Image image);
 
     //删除项目下路径
-    void fileDel(String absolutePath);
+    boolean fileDel(String absolutePath);
+
+    //板块图片删除
+    boolean partPicdel(Integer pid,String ServerPath);
 }

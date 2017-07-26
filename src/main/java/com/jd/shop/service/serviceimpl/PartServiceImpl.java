@@ -2,9 +2,12 @@ package com.jd.shop.service.serviceimpl;
 
 import com.github.pagehelper.PageHelper;
 import com.jd.shop.dao.PartMapper;
+import com.jd.shop.dao.PicListMapper;
 import com.jd.shop.model.Goods;
+import com.jd.shop.model.Image;
 import com.jd.shop.model.Part;
 import com.jd.shop.service.PartService;
+import com.jd.shop.service.PictureService;
 import com.jd.shop.util.BeanUtil;
 import com.jd.shop.util.PagedResult;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,12 @@ public class PartServiceImpl implements PartService{
 
     @Resource
     private PartMapper partMapper;
+
+    @Resource
+    private PictureService pictureService;
+
+    @Resource
+    private PicListMapper picListMapper;
 
     //所有板块
     public List<Part> getAll() {
@@ -64,4 +73,22 @@ public class PartServiceImpl implements PartService{
     public Part selectByPrimaryKey(Integer id) {
         return partMapper.selectByPrimaryKey(id);
     }
+
+
+    //删除板块(并删除图片)
+    public boolean partDel(Integer id,String ServerPath)
+    {
+        pictureService.partPicdel(id,ServerPath);//删图片
+        //删图片集
+        picListMapper.deleteByPrimaryKey( partMapper.selectByPrimaryKey(id).getPiclistPart() );
+        if(partMapper.deleteByPrimaryKey(id) >0)//删板块
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 }

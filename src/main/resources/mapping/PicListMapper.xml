@@ -8,6 +8,10 @@
   <sql id="Base_Column_List" >
     id, listname
   </sql>
+  <sql id="Image_Column_List" >
+    id, title, filename, server, image_list
+  </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -26,6 +30,15 @@
     select id
     from t_piclist
     where listname = #{listname , jdbcType=VARCHAR}
+  </select>
+
+  <select id="getImagesList" resultType="com.jd.shop.model.Image">
+    SELECT
+    <include refid="Image_Column_List" />
+    FROM
+    t_image
+    WHERE
+    image_list = #{listid , jdbcType=INTEGER}
   </select>
 
 

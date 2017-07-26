@@ -2,18 +2,21 @@ package com.jd.shop.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.jd.shop.model.Goods;
+import com.jd.shop.model.Image;
 import com.jd.shop.model.Part;
 import com.jd.shop.service.PartService;
+import com.jd.shop.service.PictureService;
 import com.jd.shop.util.PagedResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.util.*;
 
 /**
  * Created by ThinkPad on 2017/7/12.
@@ -25,6 +28,12 @@ public class PartController {
 
     @Autowired
     private PartService partService;
+
+    @Autowired
+    private PictureService pictureService;
+
+    @Autowired
+    private HttpServletRequest request;
 
     //查询所有板块后跳转
     @RequestMapping("/list")
@@ -141,5 +150,60 @@ public class PartController {
         return "shoppart";
     }
 
+    //板块图片删除
+    @RequestMapping("/picdel")
+    @ResponseBody
+    public boolean partPicDel(Integer pid)
+    {
+        String ServerPath=request.getSession().getServletContext().getRealPath("/")+ "upload/";
+        if(pictureService.partPicdel(pid,ServerPath))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    //板块删除(异步)
+    @RequestMapping("/partdel")
+    @ResponseBody
+    public boolean deletePart(Integer pid)
+    {
+        String absolutePath=request.getSession().getServletContext().getRealPath("/")+ "upload/";
+        //先删图片再删图片集最后删图片
+        return partService.partDel(pid,absolutePath);
+    }
+
+
+
+    //板块添加图片(添加1张)
+    @RequestMapping("/picupload/{partid}")
+    @ResponseBody
+    public boolean partUploadPic(@PathVariable Integer partid , @RequestParam("file") MultipartFile file)
+    {
+        String filePath=null;
+        Calendar now = Calendar.getInstance();//日期
+        String uuid = UUID.randomUUID().toString();//UUID
+        String title=uuid +"."+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
+
+        if (!file.isEmpty()) {
+            try {
+                // 文件保存路径
+                filePath = request.getSession().getServletContext().getRealPath("/") + "upload/" + //file.getOriginalFilename();
+                /*now.getTimeInMillis()*/ title;
+                // 转存文件
+                file.transferTo(new File(filePath));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        String serverPath=request.getSession().getServletContext().getRealPath("/") + "upload";
+        Image image=new Image();
+        image.setFilename(filePath);
+        image.setServer(serverPath);
+        image.setTitle(title);
+
+        //调用图片添加方法
+        return pictureService.partPicdel(partid,serverPath);
+    }
 
 }

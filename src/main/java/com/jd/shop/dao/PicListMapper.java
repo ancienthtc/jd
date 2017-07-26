@@ -1,8 +1,11 @@
 package com.jd.shop.dao;
 
+import com.jd.shop.model.Image;
 import com.jd.shop.model.PicList;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface PicListMapper {
@@ -23,4 +26,6 @@ public interface PicListMapper {
 
     int getid(@Param("listname")String listname);//返回id
 
+    //返回一个图片集下所有图片
+    List<Image> getImagesList(@Param("listid") Integer id);
 }

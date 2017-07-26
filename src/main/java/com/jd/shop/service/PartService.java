@@ -1,6 +1,7 @@
 package com.jd.shop.service;
 
 import com.jd.shop.model.Goods;
+import com.jd.shop.model.Image;
 import com.jd.shop.model.Part;
 import com.jd.shop.util.PagedResult;
 
@@ -25,4 +26,7 @@ public interface PartService {
     int partAlter(Part part);
 
     Part selectByPrimaryKey(Integer id);
+
+    boolean partDel(Integer id,String ServerPath);
+
 }

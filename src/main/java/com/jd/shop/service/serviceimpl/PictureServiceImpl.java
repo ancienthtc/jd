@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.File;
+import java.util.List;
 
 /**
  * Created by ThinkPad on 2017/7/7.
@@ -32,6 +33,7 @@ public class PictureServiceImpl implements PictureService {
 
     @Resource
     private PartMapper partMapper;
+
 
     //给商品添加图片
     public boolean goodsAndpicture(String goodsid, String title, String filename, String server) {
@@ -93,6 +95,7 @@ public class PictureServiceImpl implements PictureService {
         return false;
     }
 
+    //板块添加图片
     public boolean partAndpicture(Integer pid, Image image) {
         boolean x=true;
         //检查图片参数
@@ -108,7 +111,7 @@ public class PictureServiceImpl implements PictureService {
         if(picListMapper.iscreate(picList.getListname())==null)
         {
             int i=picListMapper.insertSelective(picList);
-            if (i<=0)
+            if (i<=0)//验证
                 x=false;
         }
 
@@ -120,9 +123,12 @@ public class PictureServiceImpl implements PictureService {
         {
             part.setPiclistPart(listid);
             int i=partMapper.updateByPrimaryKeySelective(part);
-            if(i<=0)
+            if(i<=0)//验证
                 x=false;
         }
+
+        //查看该板块是否已存在图片,已存在就删除
+        partPicdel(pid,image.getServer());
 
         //添加图片数据，(image_list)
         image.setImageList(listid);
@@ -134,11 +140,38 @@ public class PictureServiceImpl implements PictureService {
         return x;
     }
 
-    public void fileDel(String absolutePath) {
+    //板块图片删除
+    public boolean partPicdel(Integer pid,String ServerPath)
+    {
+        //1查找
+        Part part=partMapper.selectByPrimaryKey(pid);
+        Integer listid=part.getPiclistPart();
+        //2所有图片,删除
+        List<Image> images=picListMapper.getImagesList(listid);
+        if(images.isEmpty())//没有图片删除
+        {
+            return false;
+        }
+        for(Image i:images)
+        {
+            if(  fileDel(ServerPath+i.getTitle())   )//先删文件
+            {
+                imageMapper.deleteByPrimaryKey(i.getId());//再删数据库
+            }
+        }
+        return true;
+    }
+
+    //项目图片删除
+    public boolean fileDel(String absolutePath) {
         //imagePath = request.getSession().getServletContext().getRealPath("/")+ "upload/" + pic;
         File file = new File(absolutePath);
-        if (file.exists()) {
+        if (file.exists())
+        {
             file.delete();
+            return true;
         }
+        return false;
     }
+
 }
