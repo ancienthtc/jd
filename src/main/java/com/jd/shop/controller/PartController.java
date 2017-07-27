@@ -192,7 +192,7 @@ public class PartController {
      * @return
      */
     @RequestMapping("/toPartList")
-    public String toPartList2(HttpServletRequest req,HttpSession session){
+    public String toPartList(HttpServletRequest req,HttpSession session){
 
         return "admin/partlist";
     }

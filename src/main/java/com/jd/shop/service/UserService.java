@@ -1,6 +1,7 @@
 package com.jd.shop.service;
 
 import com.jd.shop.model.User;
+import com.jd.shop.util.PagedResult;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,5 +13,7 @@ public interface UserService {
     //注册
     int insertSelective(User user);
 
+    //获取用户列表(分页)
+    PagedResult<User> queryByPage(Integer pageNo, Integer pageSize);
 
 }

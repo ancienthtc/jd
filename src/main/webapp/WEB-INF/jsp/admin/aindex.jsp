@@ -58,18 +58,12 @@
                         </ul>-->
                     </li>
                     <!-- 商品管理 -->
-                    <a <%--href="<%=basePath%>/goods/toGoodsList"--%>>
-                        <li class="default" id = "good">
-                            <p><span class="iconfont icon-products"></span>商品管理<i class="iconfont icon-right arrow"></i></p>
-                           <!-- <ul class="secondNav">
-                                <li id="good"><a href="javascript:void(0);">商品列表</a></li>
-                                <li ><a href="javascript:void(0);">xxx</a></li>
+                    <li class="default" id = "good">
+                       <p><span class="iconfont icon-products"></span>商品管理<i class="iconfont icon-right arrow"></i></p>
 
-                            </ul>-->
-                        </li>
-                    </a>
+                    </li>
                     <!-- 用户管理 -->
-                    <li class="default" >
+                    <li class="default" id="user">
                         <p><span class="iconfont icon-manage"></span>用户管理<i class="iconfont icon-right arrow"></i></p>
                        <!-- <ul class="secondNav">
                             <li id="admin"><a href="javascript:void(0);">用户列表</a></li>
@@ -154,6 +148,7 @@
     <!-- 引用ajax(js文件下的) -->
     <script src="../js/goodslist.js"></script>
     <script src="../js/partlist.js"></script>
+    <script src="../js/userlist.js"></script>
     
 </body>
 <!--<script th:inline="javascript">
