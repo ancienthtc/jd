@@ -1,6 +1,7 @@
 var goodslist = new Object();
 
 goodslist.init = function(){
+    /*商品页面部分刷新*/
     $("#good").click(
 
         function(){
@@ -19,6 +20,10 @@ goodslist.init = function(){
         }
 
     );
+
+  $(this).click(function(){
+
+  });
 }
 
 $(function(){

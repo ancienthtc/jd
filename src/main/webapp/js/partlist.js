@@ -16,14 +16,14 @@ partlist.init = function(){
                     alert("页面出错");
                 }
 
-            });
+        });
         }
 
     );
 
-    $(this).click(function(){
+  $(this).click(function(){
 
-    });
+  });
 }
 
 $(function(){
