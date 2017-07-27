@@ -6,7 +6,7 @@ partlist.init = function(){
 
         function(){
             $.ajax({
-                url:"../part/toPartList2",
+                url:"../part/toPartList",
                 type:"get",
                 dataType:"html",
                 success:function(data){
