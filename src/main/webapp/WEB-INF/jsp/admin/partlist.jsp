@@ -107,6 +107,8 @@
     <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
     <script type="text/javascript" src="<%=basePath%>js/page/b.page.js" ></script>
     <script type="text/javascript" src="<%=basePath%>js/page/partlist.js" ></script>
+
+
     <script type="text/javascript">
         $(function(){
             SyntaxHighlighter.all();

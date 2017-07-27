@@ -49,8 +49,8 @@
             <div class="slideBarBox">
                 <ul>
                     <!-- 板块管理 -->
-                    <li class="default">
-                        <p id="part"><span class="iconfont icon-comm"></span>板块管理<i class="iconfont icon-right arrow"></i></p>
+                    <li class="default" id="part">
+                        <p ><span class="iconfont icon-comm"></span>板块管理<i class="iconfont icon-right arrow"></i></p>
                       <!--  <ul class="secondNav">
                             <li id="part"><a href="javascript:void(0);">板块管理</a></li>
                             <li ><a href="javascript:void(0);">xxx</a></li>
@@ -58,7 +58,7 @@
                         </ul>-->
                     </li>
                     <!-- 商品管理 -->
-                    <a href="<%=basePath%>/goods/toGoodsList">
+                    <a <%--href="<%=basePath%>/goods/toGoodsList"--%>>
                         <li class="default" id = "good">
                             <p><span class="iconfont icon-products"></span>商品管理<i class="iconfont icon-right arrow"></i></p>
                            <!-- <ul class="secondNav">
@@ -148,11 +148,12 @@
 
     <script src="../static/js/merchant/public/index.js"></script>
 
-    <%--分页插件--%>
-    <script type="text/javascript" src="<%=basePath%>js/page/b.page.js" ></script>
-    <script type="text/javascript" src="<%=basePath%>js/page/goodslist.js" ></script>
 
-    <%--<script src="../js/goodslist.js"></script>--%>
+
+
+
+    <script src="../js/goodslist.js"></script>
+    <script src="../js/partlist.js"></script>
     
 </body>
 <!--<script th:inline="javascript">

@@ -195,6 +195,28 @@ a, a:visited{text-decoration:none;}
     </div>
 
 </div>--%>
+    <div class="modal fade messageModal">
+        <input type="hidden" id="messageId" />
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>通知详情</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="messageForm">
+                        <p class="title" name="title">提醒发货</p>
+                        <p class="time" name="createTimeStr">2017-10-09</p>
+                        <div class="desGroup">
+                            <p name="content" class="content"></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <div>${message}</div>
 
@@ -203,8 +225,8 @@ a, a:visited{text-decoration:none;}
 <script src="<%=basePath%>js/public.js" type="text/javascript"></script>
 
 <%--分页插件--%>
-<%--<script type="text/javascript" src="<%=basePath%>js/page/b.page.js" ></script>
-<script type="text/javascript" src="<%=basePath%>js/page/goodslist.js" ></script>--%>
+<script type="text/javascript" src="<%=basePath%>js/page/b.page.js" ></script>
+<script type="text/javascript" src="<%=basePath%>js/page/goodslist.js" ></script>
 
 
 

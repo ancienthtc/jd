@@ -36,7 +36,6 @@ $(function(){
 	    	if(data && data.dataList && data.dataList.length > 0){
 	    		$.each(data.dataList,function(i,row){
 	    			var tr = $('<tr>');
-	    			$(tr).append('<td></td>');
 	    			$(tr).append('<td>'+row.name+'</td>');
 	    			$(tr).append('<td>'+row.price+'</td>');
 	    			$(tr).append('<td>'+row.gclass+'</td>');
@@ -48,6 +47,9 @@ $(function(){
                     $(tr).append('<td>'+row.sales+'</td>');
                     $(tr).append('<td>'+row.stock+'</td>');
                     $(tr).append('<td>'+row.shelf+'</td>');
+                    $(tr).append('<td>'+'<span class="iconfont icon-view"></span>'+'</td>');
+                    $(tr).append('<td>'+'<span class="iconfont icon-del"></span>'+'</td>');
+                    $(tr).append('<span style="display:none">'+row.id+'</span>');
 	    			$(tb).append(tr);
 	    		});
 	    	}
