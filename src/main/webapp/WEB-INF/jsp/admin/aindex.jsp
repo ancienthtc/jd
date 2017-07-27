@@ -12,7 +12,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="UTF-8" />
-    <title>飞食科技后台-首页</title>
+    <title>管理员后台-首页</title>
     <!-- bootstrap样式 -->
     <link rel="stylesheet" href="../static/libs/bootstrap/bootstrap.min.css" />
     <!-- 头像上传样式 -->
@@ -58,14 +58,16 @@
                         </ul>-->
                     </li>
                     <!-- 商品管理 -->
-                    <li class="default" >
-                        <p><span class="iconfont icon-products"></span>商品管理<i class="iconfont icon-right arrow"></i></p>
-                       <!-- <ul class="secondNav">
-                            <li id="good"><a href="javascript:void(0);">商品列表</a></li>
-                            <li ><a href="javascript:void(0);">xxx</a></li>
+                    <a href="<%=basePath%>/goods/toGoodsList">
+                        <li class="default" id = "good">
+                            <p><span class="iconfont icon-products"></span>商品管理<i class="iconfont icon-right arrow"></i></p>
+                           <!-- <ul class="secondNav">
+                                <li id="good"><a href="javascript:void(0);">商品列表</a></li>
+                                <li ><a href="javascript:void(0);">xxx</a></li>
 
-                        </ul>-->
-                    </li>
+                            </ul>-->
+                        </li>
+                    </a>
                     <!-- 用户管理 -->
                     <li class="default" >
                         <p><span class="iconfont icon-manage"></span>用户管理<i class="iconfont icon-right arrow"></i></p>
@@ -117,7 +119,12 @@
         </a>
         <a href="javascript:void(0);" id="topMsg" class="msgBox"><i class="iconfont icon-msg"></i> <span class="msgNum">3</span></a> -->
             </div>
-            <div class="contentBox" id="contentBoxId"></div>
+
+            <div class="contentBox" id="contentBoxId">
+                <c:if test="${requestScope.goods==1}"><jsp:include page="/admin/goodslist"></jsp:include></c:if>
+                <c:if test="${requestScope.goods==2}"><jsp:include page="/admin/partlist"></jsp:include></c:if>
+               <%-- <c:import url="${jsp}" />--%>
+            </div>
         </div>
     </div>
    <!--<input type="hidden" th:value="${session.indexPoin}" id="indexPoin" />-->
@@ -140,11 +147,17 @@
     <script src="../static/util/icheck.js"></script>
 
     <script src="../static/js/merchant/public/index.js"></script>
+
+    <%--分页插件--%>
+    <script type="text/javascript" src="<%=basePath%>js/page/b.page.js" ></script>
+    <script type="text/javascript" src="<%=basePath%>js/page/goodslist.js" ></script>
+
+    <%--<script src="../js/goodslist.js"></script>--%>
     
 </body>
 <!--<script th:inline="javascript">
     /*<![CDATA[*/
-    ctx = [[${application.get('ctx')}]];
+   <%-- ctx = [[${application.get('ctx')}]];--%>
     /*]]>*/
   </script>-->
 

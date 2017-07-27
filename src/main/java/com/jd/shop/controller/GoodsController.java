@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.*;
 
@@ -303,6 +304,32 @@ public class GoodsController extends BaseController{
         {
             return "admin/goodsupload";
         }
+    }
+
+    /**
+     * 页面部分刷新,使用<a></a>标签
+     * @param req
+     * @param session
+     * @return
+     */
+    @RequestMapping("/toGoodsList")
+    public ModelAndView toGoodsList(HttpServletRequest req,HttpSession session){
+        Map<String,Integer> data = new HashMap<String, Integer>();
+        data.put("goods",1);
+        ModelAndView mav = new ModelAndView("admin/aindex",data);
+        return mav;
+    }
+
+    /**
+     * 页面部分刷新,使用ajax
+     * @param req
+     * @param session
+     * @return
+     */
+    @RequestMapping("/toGoodsList2")
+    public String toGoodsList2(HttpServletRequest req,HttpSession session){
+
+        return "admin/goodslist";
     }
 
 }

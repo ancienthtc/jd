@@ -38,6 +38,8 @@ public class AdminController {
         }
         //将权限标识存入request
         req.setAttribute("alevel",admin.getAlevel());
+
+
         return "admin/aindex";
     }
 

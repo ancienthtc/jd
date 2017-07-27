@@ -203,8 +203,8 @@ a, a:visited{text-decoration:none;}
 <script src="<%=basePath%>js/public.js" type="text/javascript"></script>
 
 <%--分页插件--%>
-<script type="text/javascript" src="<%=basePath%>js/page/b.page.js" ></script>
-<script type="text/javascript" src="<%=basePath%>js/page/goodslist.js" ></script>
+<%--<script type="text/javascript" src="<%=basePath%>js/page/b.page.js" ></script>
+<script type="text/javascript" src="<%=basePath%>js/page/goodslist.js" ></script>--%>
 
 
 

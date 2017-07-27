@@ -92,11 +92,11 @@ indexObj.business = function(){
 
 
 $(function() {
-	indexObj.business();
+	/*indexObj.business();*/
   //左侧二级导航下拉效果
   indexObj.leftNav();
   indexObj.secondNav();
-  agricultural.checkLogin();
+ /* agricultural.checkLogin();*/
 
   //左侧导航栏高度
   indexObj.changeHeight();
@@ -105,7 +105,7 @@ $(function() {
   indexObj.sliderEffect();
 
   //注销登录
-  indexObj.logOut();
+  /*indexObj.logOut();*/
   
   /**
    *  指向
