@@ -1,4 +1,26 @@
+var good =  new Object();
+good.event = function(){
+	/*编辑产品页面*/
+    $("#dataGridTableJson").on("click",".icon-view",function(){
+		$.ajax({
+			url:"../goods/toGoodDetail",
+			type:"get",
+			dataType:"html",
+			success:function(data){
+                $("#contentBoxId").html(data);
+			},
+			error:function(){
+				alert("请求失败");
+			}
+		})
+    });
+
+
+
+}
+
 $(function(){
+
 	//$('#page1').bPage({
 	//    url : '/JDWebShop/part/list2',
 	//    totalPage : "<%=totalpages%>",
@@ -61,4 +83,5 @@ $(function(){
 	        };
 	    }
 	});
+    good.event();
 });

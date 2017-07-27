@@ -21,9 +21,7 @@ goodslist.init = function(){
 
     );
 
-  $(this).click(function(){
 
-  });
 }
 
 $(function(){

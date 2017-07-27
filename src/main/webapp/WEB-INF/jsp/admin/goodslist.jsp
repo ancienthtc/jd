@@ -15,8 +15,28 @@
     <meta charset="UTF-8">
 
     <link rel="stylesheet" href="https://terryz.github.io/lib/bootstrap/3.3.7/css/bootstrap.min.css" />
+
     <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
     <link rel="stylesheet" href="<%=basePath%>css/page/b.page.bootstrap3.css" type="text/css">
+
+    <!-- bootstrap样式 -->
+    <link rel="stylesheet" href="../static/libs/bootstrap/bootstrap.min.css" />
+    <!-- 头像上传样式 -->
+    <link rel="stylesheet" href="../static/libs/h5-imgUpload/css/cropper.min.css" />
+    <link rel="stylesheet" href="../static/libs/h5-imgUpload/css/sitelogo.css" />
+
+
+    <!-- 时间选择器样式 -->
+    <link rel="stylesheet" href="../static/libs/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" />
+    <!-- jquery-UI -->
+    <link rel="stylesheet" href="../static/libs/jquery-ui/themes/smoothness/jquery-ui.css" />
+    <!-- 确认框的样式引入 -->
+    <link rel="stylesheet" href="../static/libs/jquery-confirm/jquery-confirm.css" />
+    <!-- 提示框的样式引入 -->
+    <link rel="stylesheet" href="../static/libs/messenger/css/messenger.css" />
+    <link rel="stylesheet" href="../static/libs/messenger/css/messenger-theme-future.css" />
+
+
 
     <script type="text/javascript">
 
@@ -195,33 +215,92 @@ a, a:visited{text-decoration:none;}
     </div>
 
 </div>--%>
-    <div class="modal fade messageModal">
-        <input type="hidden" id="messageId" />
+
+    <%--备用编辑模态框--%>
+   <%-- <div class="modal fade goodsRange">
+        <input type="hidden" id="goodsRangeId">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5>通知详情</h5>
+                    <h5>商品管理</h5>
                     <button type="button" class="close" data-dismiss="modal">
                         <span>&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="" id="messageForm">
-                        <p class="title" name="title">提醒发货</p>
-                        <p class="time" name="createTimeStr">2017-10-09</p>
+                    <form action="" id="goodsRangeForm">
+                       &lt;%&ndash; <input style="display:none;" name="id"/>
+                        <input style="display:none;" name="sort"/>&ndash;%&gt;
+                        <div class="btGroup">
+                            <label for="">商品名称:</label>
+                            <input type="text" class="form-control" name="startWeight"  />
+                            <span class="tips"></span>
+                        </div>
+                        <div class="btGroup">
+                            <label for="">单价:</label>
+                            <input type="text" class="form-control" name="endWeight"  />
+                            <span class="tips"></span>
+                        </div>
+                       <div class="btGroup">
+                           <label for="">量:</label>
+                           <input type="text" class="form-control" name="endWeight"  />
+                           <span class="tips"></span>
+                       </div>
+                       <div class="btGroup">
+                           <label for="">参数1:</label>
+                           <input type="text" class="form-control" name="endWeight"  />
+                           <span class="tips"></span>
+                       </div>
+                       <div class="btGroup">
+                           <label for="">参数2:</label>
+                           <input type="text" class="form-control" name="endWeight"  />
+                           <span class="tips"></span>
+                       </div>
+                           <div class="btGroup">
+                               <label for="">参数3:</label>
+                               <input type="text" class="form-control" name="endWeight"  />
+                               <span class="tips"></span>
+                           </div>
+                           <div class="btGroup">
+                               <label for="">运费:</label>
+                               <input type="text" class="form-control" name="endWeight"  />
+                               <span class="tips"></span>
+                           </div>
+                           <div class="btGroup">
+                               <label for="">销量:</label>
+                               <input type="text" class="form-control" name="endWeight"  />
+                               <span class="tips"></span>
+                           </div>
+                           <div class="btGroup">
+                               <label for="">库存:</label>
+                               <input type="text" class="form-control" name="endWeight"  />
+                               <span class="tips"></span>
+                           </div>
+                           <div class="btGroup">
+                               <label for="">上架日期:</label>
+                               <input type="text" class="form-control" name="endWeight"  />
+                               <span class="tips"></span>
+                           </div>
+
+
                         <div class="desGroup">
-                            <p name="content" class="content"></p>
+                            <label for="">详情:</label>
+                            <textarea name="description" class="" ></textarea>
+                            <span class="tips"></span>
                         </div>
                     </form>
                 </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" data-btn="goodsRange">保存</button>
+                </div>
             </div>
         </div>
-    </div>
+    </div>--%>
 
 <div>${message}</div>
 
 <script src="<%=basePath%>js/jquery-3.1.1.js" type="text/javascript"></script>
-
+<script src="../static/libs/bootstrap/bootstrap.min.js"></script>
 <script src="<%=basePath%>js/public.js" type="text/javascript"></script>
 
 <%--分页插件--%>
