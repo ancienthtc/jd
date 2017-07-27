@@ -332,4 +332,10 @@ public class GoodsController extends BaseController{
         return "admin/goodslist";
     }
 
+    @RequestMapping("/toGoodDetail")
+    public String toGoodsDetail(HttpServletRequest req,HttpSession session){
+
+        return "admin/goodDetail";
+    }
+
 }
