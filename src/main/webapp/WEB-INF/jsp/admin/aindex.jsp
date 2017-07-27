@@ -151,7 +151,7 @@
 
 
 
-
+    <!-- 引用ajax(js文件下的) -->
     <script src="../js/goodslist.js"></script>
     <script src="../js/partlist.js"></script>
     
