@@ -4,6 +4,8 @@ import com.jd.shop.model.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
@@ -20,4 +22,6 @@ public interface UserMapper {
 
     //User login(String name,String pass);
     User login(@Param("name")String name , @Param("pass")String pass);
+
+    List<User> getAll();
 }

@@ -1,12 +1,15 @@
-var partlist = new Object();
+/**
+ * Created by ThinkPad on 2017/7/27.
+ */
+var userlist = new Object();
 
-partlist.init = function(){
+userlist.init = function(){
     /*商品页面部分刷新*/
-    $("#part").click(
+    $("#user").click(
 
         function(){
             $.ajax({
-                url:"../part/toPartList",
+                url:"../user/tolist",
                 type:"get",
                 dataType:"html",
                 success:function(data){
@@ -16,16 +19,16 @@ partlist.init = function(){
                     alert("页面出错");
                 }
 
-        });
+            });
         }
 
     );
 
-  $(this).click(function(){
+    $(this).click(function(){
 
-  });
+    });
 }
 
 $(function(){
-    partlist.init();
+    userlist.init();
 })

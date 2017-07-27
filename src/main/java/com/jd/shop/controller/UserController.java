@@ -1,13 +1,16 @@
 package com.jd.shop.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.jd.shop.model.User;
 import com.jd.shop.service.UserService;
 import com.jd.shop.util.Md5Utils;
+import com.jd.shop.util.PagedResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
@@ -49,6 +52,24 @@ public class UserController extends BaseController{
             model.addAttribute("message","注册失败");
         }
         return "login";
+    }
+
+    //进入用户列表
+    @RequestMapping("tolist")
+    public String toUserlist()
+    {
+        return "admin/userlist";
+    }
+
+    //分页 获取用户列表(json)
+    @RequestMapping("/list_get")
+    @ResponseBody
+    public String selectUserList(Integer pageNo, Integer pageSize )
+    {
+        PagedResult<User> parts=userService.queryByPage(pageNo,pageSize);
+
+        String json= JSON.toJSONString(parts);
+        return json;
     }
 
 }

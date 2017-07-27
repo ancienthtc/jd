@@ -58,27 +58,6 @@ public class PartController {
         return json;
     }
 
-//    @RequestMapping("/list2")
-//    public String tolist2()
-//    {
-//        return "admin/partlist2";
-//    }
-//
-//    //
-//    @RequestMapping("/list2_json")        //测试新分页
-//    @ResponseBody
-//    public String selectPartList(Integer pageNo, Integer pageSize , Model model)
-//    {
-//
-//        PagedResult<Part> parts=partService.queryByPage(pageNo,pageSize);
-//
-//        model.addAttribute("pageParts",parts);
-//        //System.out.print(parts);
-//        //return "admin/partlist2";
-//        String json= JSON.toJSONString(parts);
-//        return json;
-//    }
-
     //板块添加
     @RequestMapping(value = "/add" , method = RequestMethod.POST)
     @ResponseBody
@@ -212,8 +191,8 @@ public class PartController {
      * @param session
      * @return
      */
-    @RequestMapping("/toPartList2")
-    public String toPartList2(HttpServletRequest req,HttpSession session){
+    @RequestMapping("/toPartList")
+    public String toPartList(HttpServletRequest req,HttpSession session){
 
         return "admin/partlist";
     }
