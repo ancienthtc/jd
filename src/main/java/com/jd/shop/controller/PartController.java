@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.*;
 
@@ -204,6 +205,17 @@ public class PartController {
 
         //调用图片添加方法
         return pictureService.partPicdel(partid,serverPath);
+    }
+    /**
+     * 页面部分刷新,使用ajax
+     * @param req
+     * @param session
+     * @return
+     */
+    @RequestMapping("/toPartList2")
+    public String toPartList2(HttpServletRequest req,HttpSession session){
+
+        return "admin/partlist";
     }
 
 }

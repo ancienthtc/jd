@@ -27,7 +27,6 @@
     <link rel="stylesheet" href="<%=basePath%>css/page/b.page.bootstrap3.css" type="text/css">
 
     <script type="text/javascript">
-
     </script>
 </head>
 <body>
@@ -107,6 +106,8 @@
     <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
     <script type="text/javascript" src="<%=basePath%>js/page/b.page.js" ></script>
     <script type="text/javascript" src="<%=basePath%>js/page/partlist.js" ></script>
+
+
     <script type="text/javascript">
         $(function(){
             SyntaxHighlighter.all();

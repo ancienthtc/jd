@@ -1,11 +1,12 @@
-var goodslist = new Object();
+var partlist = new Object();
 
-goodslist.init = function(){
-    $("#good").click(
+partlist.init = function(){
+    /*商品页面部分刷新*/
+    $("#part").click(
 
         function(){
             $.ajax({
-                url:"../goods/toGoodsList2",
+                url:"../part/toPartList2",
                 type:"get",
                 dataType:"html",
                 success:function(data){
@@ -15,12 +16,16 @@ goodslist.init = function(){
                     alert("页面出错");
                 }
 
-        });
+            });
         }
 
     );
+
+    $(this).click(function(){
+
+    });
 }
 
 $(function(){
-    goodslist.init();
+    partlist.init();
 })
