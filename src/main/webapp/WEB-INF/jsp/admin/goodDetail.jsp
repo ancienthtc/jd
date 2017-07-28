@@ -19,7 +19,7 @@
     <input type="hidden" class="form-control" name="id" />
     <div class="btGroup">
       <label>产品名称：</label>
-      <input type="text" class="form-control" name="name" />
+      <input type="text" class="form-control" name="name" value="${requestScope.goods.name}"/>
       <span class="tips"></span>
     </div>
   <div class="btGroup">
@@ -32,7 +32,7 @@
   </div>
     <div class="btGroup">
       <label>单价：</label>
-        <input type="text" class="form-control" name="price" />
+        <input type="text" class="form-control" name="price" value="${requestScope.goods.price}"/>
         <span class="tips"></span>
           <%--<select class="form-control" id="parentType">
               <option  selected="selected">请选择分类</option>
@@ -46,43 +46,43 @@
     </div>
     <div class="btGroup">
       <label>计量单位：</label>
-        <input type="text" class="form-control" name="gclass" />
+        <input type="text" class="form-control" name="gclass" value="${requestScope.goods.gclass}"/>
         <span class="tips"></span>
     </div>
     <div class="btGroup">
       <label>参数1：</label>
-        <input type="text" class="form-control" name="parameter1" />
+        <input type="text" class="form-control" name="parameter1" value="${requestScope.goods.parameter1}"/>
         <span class="tips"></span>
     </div>
     <div class="btGroup">
       <label>参数2：</label>
-        <input type="text" class="form-control" name="parameter2" />
+        <input type="text" class="form-control" name="parameter2" value="${requestScope.goods.parameter2}"/>
         <span class="tips"></span>
     </div>
     <div class="btGroup">
       <label>参数3：</label>
-      <input type="text" class="form-control" name="parameter3" />
+      <input type="text" class="form-control" name="parameter3" value="${requestScope.goods.parameter3}"/>
       <span class="tips"></span>
     </div>
     <div class="btGroup">
       <label>运费：</label>
-      <input type="text" class="form-control" name="freight" />
+      <input type="text" class="form-control" name="freight" value="${requestScope.goods.freight}"/>
       <span class="tips"></span>
     </div>
     <div class="btGroup">
       <label for="">销量:</label>
-        <input type="text" class="form-control" name="sales" readonly="readonly"/>
+        <input type="text" class="form-control" name="sales" value="${requestScope.goods.sales}" readonly="readonly"/>
         <span class="tips"></span>
     </div>
     <div class="btGroup">
       <label for="">库存:</label>
-        <input type="text" class="form-control" name="stock" />
+        <input type="text" class="form-control" value="${requestScope.goods.stock}" name="stock" />
         <span class="tips"></span>
 
     </div>
     <div id="cover" class="btGroup">
       <label for="">上架日期:</label>
-        <input type="text" class="form-control"   id="datetimepicker"/>
+        <input type="text" class="form-control" name="shelf"  id="datetimepicker" value="${requestScope.goods.shelf}"/>
    <%--   <div class="photos">
         <div class="img" ></div>
         <i class="iconfont icon-add" style="line-height: 150px;"></i>
@@ -93,7 +93,7 @@
     </div>
     <div id="bigCover" class="desGroup">
       <label for="">详情</label>
-        <textarea type="text" class="form-control" name="detail"  style="width: 72.4%"></textarea>
+        <textarea type="text" class="form-control" name="detail"  style="width: 72.4%">${requestScope.goods.detail}</textarea>
         <span class="tips"></span>
       <%--<div class="photos">
         <div class="img" ></div>
@@ -124,21 +124,25 @@
       <div id="imgBox" class="photoGroup" >
           <label for="">轮播图集合</label>
           <!-- 上限6张 -->
-          <div class="photos" >
-              <div class="img" ></div>
-              <div class="mask"></div>
-              <i class="iconfont icon-add"></i>
-              <input type="file" name="listImg1" />
-              <div class="btnBox" style="display: block">
-                  <i class="iconfont icon-del"></i>
-                  <i class="iconfont icon-sort"></i>
+          <c:forEach items="${requestScope.imgs}"  var="item">
+             <%-- <p>${item.filename}</p>--%>
+              <div class="photos"  >
+                  <div class="img" style="background-image: url('<%=basePath%>picture/show?pic=${item.title}')"></div>
+                  <div class="mask"></div>
+                  <i class="iconfont icon-add"></i>
+                  <input type="file" name="file" id="listImg1"/>
+                  <div class="btnBox" style="display: block">
+                      <i class="iconfont icon-del"></i>
+                      <i class="iconfont icon-sort"></i>
+                  </div>
               </div>
-          </div>
-          <input  type="hidden" class="listImg2" />
+              <input  type="hidden" class="listImg2" />
+          </c:forEach>
+
           <div class="photos" >
               <div class="img" style="background-image: none"></div>
               <i class="iconfont icon-add"></i>
-              <input type="file" name="listImg1" />
+              <input type="file" name="file" id="listImg2"/>
               <div class="btnBox">
                   <i class="iconfont icon-del"></i>
                   <i class="iconfont icon-sort"></i>
@@ -211,6 +215,8 @@
 <!-- 时间选择器 -->
 <script src="../static/libs/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
 <script src="../static/libs/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="../static/libs/file/ajaxfileupload.js"></script>
+<script src="../static/util/imessenger.js"></script>
 
 <script type="text/javascript" src="<%=basePath%>js/goodDetail.js" ></script>
 

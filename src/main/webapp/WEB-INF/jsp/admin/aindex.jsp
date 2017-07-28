@@ -140,6 +140,8 @@
     <script src="../static/util/iverify.js"></script>
     <script src="../static/util/icheck.js"></script>
 
+
+
     <script src="../static/js/merchant/public/index.js"></script>
 
 

@@ -2,8 +2,10 @@ var good =  new Object();
 good.event = function(){
 	/*编辑产品页面*/
     $("#dataGridTableJson").on("click",".icon-view",function(){
+    	var id = $(this).parent().nextAll("span").text();
 		$.ajax({
 			url:"../goods/toGoodDetail",
+			data:{"id":id},
 			type:"get",
 			dataType:"html",
 			success:function(data){
@@ -71,7 +73,7 @@ $(function(){
                     $(tr).append('<td>'+row.shelf+'</td>');
                     $(tr).append('<td>'+'<span class="iconfont icon-view"></span>'+'</td>');
                     $(tr).append('<td>'+'<span class="iconfont icon-del"></span>'+'</td>');
-                    $(tr).append('<span style="display:none">'+row.id+'</span>');
+                    $(tr).append('<span  style="display:none">'+row.id+'</span>');
 	    			$(tb).append(tr);
 	    		});
 	    	}
