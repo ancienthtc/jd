@@ -1,5 +1,4 @@
 var ctx = 'http://localhost:8888';
-console.log = function() {}
 
 
 /*模态框关闭时候清空*/

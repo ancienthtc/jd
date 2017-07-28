@@ -19,7 +19,7 @@ public class BaseController {
 
         // 根据不同错误转向不同页面
         // 根据不同的异常类型进行不同处理
-        if(ex instanceof Exception)
+        if(ex instanceof RuntimeException)
         {
             System.out.println(ex.getMessage());
             ex.printStackTrace();

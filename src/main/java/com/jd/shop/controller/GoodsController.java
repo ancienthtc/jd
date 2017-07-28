@@ -214,7 +214,7 @@ public class GoodsController extends BaseController{
     }
 
     //商品图片上传
-    @RequestMapping("/goodsUpload/{goodsid}")
+    @RequestMapping(value="/goodsUpload/{goodsid}",method = RequestMethod.POST)
     public String goodsUpload(@PathVariable String goodsid , @RequestParam("file") MultipartFile file) {
         // 判断文件是否为空
         String filePath=null;
@@ -333,8 +333,19 @@ public class GoodsController extends BaseController{
     }
 
     @RequestMapping("/toGoodDetail")
-    public String toGoodsDetail(HttpServletRequest req,HttpSession session){
-
+    public String toGoodsDetail(HttpServletRequest req,HttpSession session,Integer id){
+        //判断参数合法性
+        if(id==null){
+            throw new RuntimeException("参数不合法");
+        }
+        Goods goods = goodsService.getGoods(id);
+        req.setAttribute("goods",goods);
+        Integer piclist_goods = goods.getPiclistGoods();
+        List<Image> imgs = null;
+        if(piclist_goods!=null){
+           imgs = goodsService.getGoodsPic(id);
+        }
+        req.setAttribute("imgs",imgs);
         return "admin/goodDetail";
     }
 
