@@ -1,7 +1,10 @@
+document.write("<script language=javascript src='/JDWebShop/js/layer.js'></script>");
+document.write("<script language=javascript src='/JDWebShop/js/jquery-3.1.1.js'></script>");
+
 var partlist = new Object();
 
 partlist.init = function(){
-    /*商品页面部分刷新*/
+    /*板块页面部分刷新*/
     $("#part").click(
 
         function(){
