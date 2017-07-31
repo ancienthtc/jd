@@ -91,4 +91,10 @@ public class PartServiceImpl implements PartService{
         }
     }
 
+    //获取板块所有图片
+    public List<Image> getAllPic(Integer pid) {
+        List<Image> image=partMapper.getPartPic(pid);
+        return image;
+    }
+
 }

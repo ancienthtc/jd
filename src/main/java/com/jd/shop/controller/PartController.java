@@ -25,7 +25,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/part")
-public class PartController {
+public class PartController extends BaseController{
 
     @Autowired
     private PartService partService;
@@ -78,6 +78,7 @@ public class PartController {
 
     //进入板块修改
     @RequestMapping(value = "/alter" )
+    @Deprecated
     public String toalter(Integer pid,Model model)
     {
         Part part=partService.selectByPrimaryKey(pid);
@@ -185,16 +186,30 @@ public class PartController {
         //调用图片添加方法
         return pictureService.partPicdel(partid,serverPath);
     }
-    /**
-     * 页面部分刷新,使用ajax
-     * @param req
-     * @param session
-     * @return
-     */
+
+    //进入板块列表
     @RequestMapping("/toPartList")
     public String toPartList(HttpServletRequest req,HttpSession session){
 
         return "admin/partlist";
+    }
+
+    //进入板块细节(板块修改)
+    @RequestMapping("/partDetail")
+    public String getPartDetail(HttpServletRequest req,Integer id)
+    {
+        if(id==null){
+            throw new RuntimeException("参数不合法");
+        }
+        //获取板块
+        Part part=partService.selectByPrimaryKey(id);
+        //获取板块所有图片(1)
+        List<Image> images=partService.getAllPic(id);
+        //放入参数
+        req.setAttribute("part",part);
+        req.setAttribute("images",images);
+
+        return "admin/partDetail";
     }
 
 }

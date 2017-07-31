@@ -2,26 +2,29 @@ var part =  new Object();
 part.event = function(){
 	/*编辑产品页面*/
     $("#dataGridTableJson").on("click",".icon-view",function(){
-        // $.ajax({
-        //     url:"../goods/toGoodDetail",
-        //     type:"get",
-        //     dataType:"html",
-        //     success:function(data){
-        //         $("#contentBoxId").html(data);
-        //     },
-        //     error:function(){
-        //         alert("请求失败");
-        //     }
-        // });
-        var url = "../part/alter";
-        $.post(url, {}, function(str){
-            layer.open({
-                type: 1,
-                skin : "layui-layer-molv",
-                area : ['50%','90%'],
-                content: str //注意，如果str是object，那么需要字符拼接。
-            });
+        var id = $(this).parent().nextAll("span").text();
+        $.ajax({
+            url:"../part/partDetail",
+            data:{"id":id},
+            type:"get",
+            dataType:"html",
+            success:function(data){
+                $("#contentBoxId").html(data);
+            },
+            error:function(){
+                alert("请求失败");
+            }
         });
+
+        // var url = "../part/partDetail";
+        // $.post(url, {"pid":id}, function(str){
+        //     layer.open({
+        //         type: 1,
+        //         skin : "layui-layer-molv",
+        //         area : ['50%','90%'],
+        //         content: str //注意，如果str是object，那么需要字符拼接。
+        //     });
+        // });
 
     });
 }

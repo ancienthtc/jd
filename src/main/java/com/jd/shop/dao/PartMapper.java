@@ -1,6 +1,7 @@
 package com.jd.shop.dao;
 
 import com.jd.shop.model.Goods;
+import com.jd.shop.model.Image;
 import com.jd.shop.model.Part;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -31,4 +32,5 @@ public interface PartMapper {
 
     List<Goods> getPartGoods(Integer id);
 
+    List<Image> getPartPic(@Param("id")Integer pid);
 }

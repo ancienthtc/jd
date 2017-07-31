@@ -29,4 +29,5 @@ public interface PartService {
 
     boolean partDel(Integer id,String ServerPath);
 
+    List<Image> getAllPic(Integer pid);
 }

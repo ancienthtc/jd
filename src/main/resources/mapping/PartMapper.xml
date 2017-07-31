@@ -12,6 +12,11 @@
   <sql id="Base_Column_List" >
     id, pname, `type`, `priority`, `describe`,piclist_part
   </sql>
+
+  <sql id="Image_Column_List" >
+    id, title, filename, server, image_list
+  </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -56,6 +61,17 @@
     FROM t_goods , t_part
     WHERE t_goods.part_goods=t_part.id and t_part.id= #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="getPartPic" resultType="com.jd.shop.model.Image" parameterType="java.lang.Integer">
+    SELECT
+      t_image.id, title, filename, server, image_list
+    FROM
+      t_part
+    JOIN t_piclist ON t_part.piclist_part = t_piclist.id
+    JOIN t_image ON t_image.image_list = t_piclist.id
+    WHERE t_part.id=#{id,jdbcType=INTEGER}
+  </select>
+
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_part
