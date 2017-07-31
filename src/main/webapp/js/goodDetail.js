@@ -1,5 +1,6 @@
 var goodDetail = new Object();
-
+goodDetail.id="";
+goodDetail.count = $('#imgBox').children('.photos').length;
 goodDetail.event = function(){
     /*返回按钮*/
     $('[data-btn="backProduct"]').on('click', function(){
@@ -19,6 +20,7 @@ goodDetail.event = function(){
 
     //轮播图的添加
     $('#imgBox').on('change','input[type="file"]',function(e) {
+        var id = $(this).parents("form").children("span").eq(0).text();
         //判断图片的类型是否正确
         var img = $(this).val();
         goodDetail.id=$(this).attr('id');
@@ -35,7 +37,7 @@ goodDetail.event = function(){
             reader.onload = function(e){
                 $this.prevAll('.img').css('backgroundImage',"url("+e.target.result+")");
                 $.ajaxFileUpload({
-                    url : '../goods/goodsUpload/1', // 用于文件上传的服务器端请求地址
+                    url : '../goods/goodsUpload/'+id, // 用于文件上传的服务器端请求地址
                     secureuri : false, // 一般设置为false(是否锁定这个接口)
                     async : true,//是否是异步
                     fileElementId : goodDetail.id, // 文件上传控件的id属性 <input
@@ -45,13 +47,11 @@ goodDetail.event = function(){
                     complete : function() {// 只要完成即执行，最后执行
                     },
                     success : function(data, status) {// 服务器成功响应处理函数
-                        alert(1);
                         var key=data.data.key;
                         var id="#"+goodDetail.id+"2";
                         $(id).val(key);
                     },
                     error : function(data, status, e) {// 服务器响应失败处理函数
-                        alert(2);
                         console.log("error");
                     }
                 })
@@ -72,6 +72,53 @@ goodDetail.event = function(){
                 goodDetail.count=goodDetail.count+1;
             }
         }
+    })
+
+
+    //轮播图的删除
+    $('#imgBox').on('click','.icon-del',function() {
+        var $this = $(this);
+        var imgid = $(this).parent().prevAll("span").text();
+
+        $.confirm({
+            title: '提示',
+            content: '确定要删除该图吗？',
+            confirm: function() {
+
+                $.ajax({
+                    url:"../goods/deletepic",
+                    data:{"imageid":imgid},
+                    type:"get",
+                    dataType:"json",
+                    success:function(data){
+                        if(data==true){
+                            imessenger.success("图片删除成功");
+                        }else{
+                            imessenger.error("图片删除失败");
+                        }
+                    },
+                    error:function(){
+                        imessenger.error("请求失败");
+                    }
+                })
+                if( ($('#imgBox').children('.canSort').length == 6 )){
+                    var id=$this.parents('.photos').find("input").attr('id');
+                    var id="#"+id+"2";
+                    $(id).remove();
+                    $this.parents('.photos').remove();
+                    productDetail.count=productDetail.count-1;
+                    $('#imgBox').append('<div class="photos"><div class="img" style="background-image: none"></div><div class="mask"></div><i class="iconfont icon-add"></i><input type="file" /><div class="btnBox"><i class="iconfont icon-del"></i><i class="iconfont icon-sort"></i></div></div><input type="hidden" class="listImg2" id="listImg62">');
+                } else {
+                    var id=$this.parents('.photos').find("input").attr('id');
+                    var id="#"+id+"2";
+                    $(id).remove();
+                    $this.parents('.photos').remove();
+                    productDetail.count=productDetail.count-1;
+                }
+
+
+            },
+        });
     })
 
 }

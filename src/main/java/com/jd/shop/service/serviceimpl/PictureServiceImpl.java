@@ -36,11 +36,11 @@ public class PictureServiceImpl implements PictureService {
 
 
     //给商品添加图片
-    public boolean goodsAndpicture(String goodsid, String title, String filename, String server) {
+    public Image goodsAndpicture(String goodsid, String title, String filename, String server) {
 
         if(filename.equals("")||filename==null || goodsid==null || goodsid.equals(""))
         {
-            return false;
+            return null;
         }
 
         PicList picList = new PicList();
@@ -74,11 +74,11 @@ public class PictureServiceImpl implements PictureService {
         }
         if( j!=0 )
         {
-            return true;
+            return image;
         }
         else
         {
-            return false;
+            return null;
         }
     }
 

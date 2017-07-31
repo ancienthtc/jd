@@ -215,7 +215,7 @@ public class GoodsController extends BaseController{
 
     //商品图片上传
     @RequestMapping(value="/goodsUpload/{goodsid}",method = RequestMethod.POST)
-    public String goodsUpload(@PathVariable String goodsid , @RequestParam("file") MultipartFile file) {
+    public void goodsUpload(@PathVariable String goodsid , @RequestParam("file") MultipartFile file) {
         // 判断文件是否为空
         String filePath=null;
         //System.out.println(goodsid);
@@ -240,11 +240,11 @@ public class GoodsController extends BaseController{
         //创建图片集 名称 goodsid
         // pictureservice --> insert 图集  insert 图片
         String serverPath=request.getSession().getServletContext().getRealPath("/") + "upload";
-        boolean isSuccess=pictureService.goodsAndpicture(goodsid,title,filePath,serverPath);
-        request.setAttribute("upmessage",isSuccess);
+        Image image=pictureService.goodsAndpicture(goodsid,title,filePath,serverPath);
+        request.setAttribute("image",image);
 
         // 重定向
-        return "redirect:/goods/list";
+       /* return "redirect:/goods/list";*/
     }
 
     /***
@@ -269,7 +269,7 @@ public class GoodsController extends BaseController{
     //商品图片删除   (ajax)//刷新问题
     @RequestMapping("/deletepic_json")   //goodsid?
     //@ResponseBody
-    public String deletePic(@RequestBody String json,Model model)
+    public String deletePicForJson(@RequestBody String json,Model model)
     {
         JSONObject date=new JSONObject( JSONObject.parseObject(json)  );
         String imageid=date.getString("id");
@@ -289,21 +289,16 @@ public class GoodsController extends BaseController{
     }
 
     @RequestMapping("/deletepic")   //goodsid?
-    //@ResponseBody
-    public String deletePic(String goodsid,String imageid,Model model)
+    @ResponseBody
+    public boolean deletePic(String imageid,Model model)
     {
 
         String absolutePath=request.getSession().getServletContext().getRealPath("/")+ "upload/";
 
-        if(pictureService.deleteGoodsPic(imageid,absolutePath))
-        {
+        boolean flag =  pictureService.deleteGoodsPic(imageid,absolutePath);
 
-            return "goods/getGoodsPic/"+goodsid;
-        }
-        else
-        {
-            return "admin/goodsupload";
-        }
+        return flag;
+
     }
 
     /**

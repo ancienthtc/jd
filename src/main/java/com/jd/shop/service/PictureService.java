@@ -22,7 +22,7 @@ public interface PictureService {
      * @param server:图片所在服务器
      * @return
      */
-    boolean goodsAndpicture(String goodsid,String title,String filename,String server);
+    Image goodsAndpicture(String goodsid,String title,String filename,String server);
 
     boolean deleteGoodsPic(String imageid,String absolutePath);
 

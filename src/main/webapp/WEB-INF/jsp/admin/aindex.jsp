@@ -129,11 +129,8 @@
     <script src="../static/libs/jquery-ui/jquery-ui.min.js"></script>
     <script src="../static/libs/bootstrap/tether.min.js"></script>
     <script src="../static/libs/bootstrap/bootstrap.min.js"></script>
-    <!-- 确认框的js -->
-    <script src="../static/libs/jquery-confirm/jquery-confirm.js"></script>
-    <!-- 提示框的js -->
-    <script src="../static/libs/messenger/js/messenger.min.js"></script>
-    <script src="../static/util/imessenger.js"></script>
+
+
     <!-- 公共js -->
     <script src="../static/js/merchant/public/public.js"></script>
     <script src="../static/util/iform.js"></script>
