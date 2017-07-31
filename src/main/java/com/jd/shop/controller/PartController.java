@@ -158,8 +158,8 @@ public class PartController extends BaseController{
 
     //板块添加图片(添加1张)
     @RequestMapping("/picupload/{partid}")
-    @ResponseBody
-    public boolean partUploadPic(@PathVariable Integer partid , @RequestParam("file") MultipartFile file)
+    //@ResponseBody
+    public void partUploadPic(@PathVariable Integer partid , @RequestParam("file") MultipartFile file)
     {
         String filePath=null;
         Calendar now = Calendar.getInstance();//日期
@@ -184,8 +184,24 @@ public class PartController extends BaseController{
         image.setTitle(title);
 
         //调用图片添加方法
-        return pictureService.partPicdel(partid,serverPath);
+        pictureService.partAndpicture(partid,image);
+        //return pictureService.partPicdel(partid,serverPath);
     }
+
+    @RequestMapping("/deletepic")   //goodsid?
+    @ResponseBody
+    public boolean deletePic(Integer pid,Model model)
+    {
+
+        String absolutePath=request.getSession().getServletContext().getRealPath("/")+ "upload/";
+
+        boolean flag =  pictureService.partPicdel(pid,absolutePath);
+
+        return flag;
+
+    }
+
+
 
     //进入板块列表
     @RequestMapping("/toPartList")

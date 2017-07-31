@@ -25,7 +25,7 @@
 </div>
 <div id="productDetail">
     <form id="partDetailForm">
-        <input type="hidden" class="form-control" name="id" />
+        <span style="display: none" class="form-control" name="id" >${requestScope.part.id}</span>
         <div class="btGroup">
             <label>板块名称：</label>
             <input type="text" class="form-control" name="name" value="${requestScope.part.pname}"/>
@@ -79,30 +79,34 @@
             <!-- 上限6张 -->
             <c:forEach items="${requestScope.images}"  var="item">
                 <%-- <p>${item.filename}</p>--%>
-                <div class="photos"  >
+                <div class="photos canSort"  >
                     <div class="img" style="background-image: url('<%=basePath%>picture/show?pic=${item.title}')"></div>
+
+                    <span  style="display: none">${requestScope.part.id}</span>
+
                     <div class="mask"></div>
                     <i class="iconfont icon-add"></i>
                     <input type="file" name="file" id="listImg1"/>
                     <div class="btnBox" style="display: block">
                         <i class="iconfont icon-del"></i>
-                        <i class="iconfont icon-sort"></i>
+                            <%--  <i class="iconfont icon-sort"></i>--%>
                     </div>
                 </div>
                 <input  type="hidden" class="listImg2" />
             </c:forEach>
+            <c:if test="${requestScope.imgs.size()!=6}">
+                <div class="photos" >
+                    <div class="img" style="background-image: none"></div>
+                    <i class="iconfont icon-add"></i>
+                    <input type="file" name="file" id="listImg2"/>
+                    <div class="btnBox">
 
-            <div class="photos" >
-                <div class="img" style="background-image: none"></div>
-                <i class="iconfont icon-add"></i>
-                <input type="file" name="file" id="listImg2"/>
-                <div class="btnBox">
-                    <i class="iconfont icon-del"></i>
-                    <i class="iconfont icon-sort"></i>
+                        <i class="iconfont icon-del"></i>
+                            <%--<i class="iconfont icon-sort"></i>--%>
+                    </div>
                 </div>
-            </div>
-            <input  type="hidden" class="listImg2" />
-
+                <input  type="hidden" class="listImg2" />
+            </c:if>
             <span class="tips"></span>
         </div>
         <%--<div class="btGroup" id="productDetailTime">
@@ -169,9 +173,13 @@
 <script src="../static/libs/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
 <script src="../static/libs/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="../static/libs/file/ajaxfileupload.js"></script>
+<!-- 提示框的js -->
+<script src="../static/libs/messenger/js/messenger.min.js"></script>
 <script src="../static/util/imessenger.js"></script>
+<!-- 确认框的js -->
+<script src="../static/libs/jquery-confirm/jquery-confirm.js"></script>
 
-<script type="text/javascript" src="<%=basePath%>js/goodDetail.js" ></script>
+<script type="text/javascript" src="<%=basePath%>js/partDetail.js" ></script>
 
 <script>
     $('#datetimepicker').datetimepicker({

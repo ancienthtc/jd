@@ -61,6 +61,8 @@ public class PictureServiceImpl implements PictureService {
         image.setImageList(piclist_id);
 
         j=imageMapper.insertSelective(image);//添加到图片表
+        //获取id
+        image.getId();
 
         //3.更新图片集-商品
         //判断商品是否有图片集 有--结束  ， 无--更新
@@ -108,7 +110,7 @@ public class PictureServiceImpl implements PictureService {
         picList.setListname("part"+pid);
 
         //1.检查图片集 "part"+id,若不存在就创建
-        if(picListMapper.iscreate(picList.getListname())==null)
+        if( picListMapper.iscreate( picList.getListname() )==null )
         {
             int i=picListMapper.insertSelective(picList);
             if (i<=0)//验证
