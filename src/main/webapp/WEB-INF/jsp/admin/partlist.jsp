@@ -39,8 +39,8 @@
             <tr>
                 <%--<th class="selectColumn" >选择</th>--%>
                 <th>板块名称</th>
-                <th>价格</th>
-                <th>量词</th>
+                <th>类型</th>
+                <th>描述</th>
                 <th>优先级</th>
                 <th>修改</th>
                 <th>删除</th>

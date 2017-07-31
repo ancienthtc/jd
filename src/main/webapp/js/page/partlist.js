@@ -57,13 +57,14 @@ $(function(){
 	    			$(tb).append(tr);
 	    		});
 	    	}
-	    },
-	    params : function(){
-	        return {
-	            userName : 'zhangsan',
-	            age : 42
-	        };
 	    }
+	    // ,
+	    // params : function(){
+	    //     return {
+	    //         userName : 'zhangsan',
+	    //         age : 42
+	    //     };
+	    // }
 	});
     part.event();
 });
