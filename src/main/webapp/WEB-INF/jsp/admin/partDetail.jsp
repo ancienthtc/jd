@@ -26,9 +26,10 @@
 <div id="productDetail">
     <form id="partDetailForm">
         <span style="display: none" class="form-control" name="id" >${requestScope.part.id}</span>
+        <input type="hidden" class="form-control" name="id" value="${requestScope.part.id}"/>
         <div class="btGroup">
             <label>板块名称：</label>
-            <input type="text" class="form-control" name="name" value="${requestScope.part.pname}"/>
+            <input type="text" class="form-control" name="pname" value="${requestScope.part.pname}"/>
             <span class="tips"></span>
         </div>
         <div class="btGroup">
@@ -44,12 +45,30 @@
                 <option >请选择分类</option>
             </select>
             <span class="tips"></span>--%>
-        </div>
+        <%--</div>--%>
         <div class="btGroup">
             <label>优先级</label>
             <input type="text" class="form-control" name="priority" value="${requestScope.part.priority}"/>
             <span class="tips"></span>
         </div>
+
+        <div class="btGroup">
+            <label>优先级</label>
+            <select class="form-control" name="priority">
+                <option value="${requestScope.part.priority}" selected="selected">${requestScope.part.priority}</option>
+                <option value="1" selected="selected">1</option>
+                <option value="2" selected="selected">2</option>
+                <option value="3" selected="selected">3</option>
+                <option value="4" selected="selected">4</option>
+                <option value="5" selected="selected">5</option>
+                <option value="6" selected="selected">6</option>
+                <option value="7" selected="selected">7</option>
+                <option value="8" selected="selected">8</option>
+                <option value="9" selected="selected">9</option>
+                <option value="10" selected="selected">10</option>
+            </select>
+        </div>
+
         <div class="btGroup">
             <label>描述</label>
             <input type="text" class="form-control" name="describe" value="${requestScope.part.describe}"/>
@@ -163,7 +182,7 @@
         </div>--%>
         <!-- 添加产品 -->
         <p class="text-center">
-            <a href="javascript:void(0);" class="btnGreen" data-btn="addNewProduct">保存</a>
+            <a href="javascript:void(0);" class="btnGreen" data-btn="Save">保存</a>
         </p>
     </form>
 </div>
@@ -178,6 +197,8 @@
 <script src="../static/util/imessenger.js"></script>
 <!-- 确认框的js -->
 <script src="../static/libs/jquery-confirm/jquery-confirm.js"></script>
+<!-- 封装的iForm -->
+<script src="../static/util/iform.js"></script>
 
 <script type="text/javascript" src="<%=basePath%>js/partDetail.js" ></script>
 

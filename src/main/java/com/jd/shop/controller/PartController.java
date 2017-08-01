@@ -87,9 +87,9 @@ public class PartController extends BaseController{
     }
 
     //板块修改
-    @RequestMapping(value = "/update" , method = RequestMethod.POST  )
+    @RequestMapping(value = "/update" , method = RequestMethod.POST )
     @ResponseBody
-    public Map<String,String> alterPart(@RequestBody Part part)
+    public Map<String,String> alterPart(Part part)
     {
         Map<String ,String> map=new HashMap<String, String>();
         if(part.getPname()==null || part.getPriority()==null || part.getId()==null)
