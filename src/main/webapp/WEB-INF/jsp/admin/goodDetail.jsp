@@ -16,7 +16,8 @@
 </div>
 <div id="productDetail">
   <form id="goodDetailForm">
-      <span style="display: none" class="form-control" name="id" >${requestScope.goods.id}</span>
+      <%--<span style="display: none" class="form-control" name="id" >${requestScope.goods.id}</span>--%>
+      <input type="hidden" class="form-control" name="id" value="${requestScope.goods.id}"/>
     <div class="btGroup">
       <label>产品名称：</label>
       <input type="text" class="form-control" name="name" value="${requestScope.goods.name}"/>
@@ -25,8 +26,18 @@
   <div class="btGroup">
       <label for="">板块:</label>
       <select class="form-control" name="part">
-          <option >板块1</option>
-          <option >板块2</option>
+
+          <c:forEach items="${requestScope.parts}"  var="item">
+              <c:if test="${item.id==requestScope.partid}">
+                  <option name="${item.id}" selected="selected">${item.pname}</option>
+
+              </c:if>
+              <c:if test="${item.id!=requestScope.partid}">
+                <option name="${item.id}">${item.pname}</option>
+
+              </c:if>
+          </c:forEach>
+
       </select>
 
   </div>
@@ -82,7 +93,7 @@
     </div>
     <div id="cover" class="btGroup">
       <label for="">上架日期:</label>
-        <input type="text" class="form-control" name="shelf"  id="datetimepicker" value="${requestScope.goods.shelf}"/>
+        <input type="text" class="form-control" name="shelf"  id="datetimepicker" value="${requestScope.shelf}"/>
    <%--   <div class="photos">
         <div class="img" ></div>
         <i class="iconfont icon-add" style="line-height: 150px;"></i>
@@ -141,6 +152,7 @@
           </c:forEach>
           <c:if test="${requestScope.imgs.size()!=6}">
               <div class="photos" >
+                  <span  style="display: none"></span>
                   <div class="img" style="background-image: none"></div>
                   <i class="iconfont icon-add"></i>
                   <input type="file" name="file" id="listImg2"/>
@@ -213,7 +225,7 @@
   </form>
 </div>
 
-
+<script src="../static/libs/jquery/jquery.min.js"></script>
 <!-- 时间选择器 -->
 <script src="../static/libs/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
 <script src="../static/libs/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
@@ -223,6 +235,9 @@
 <script src="../static/util/imessenger.js"></script>
 <!-- 确认框的js -->
 <script src="../static/libs/jquery-confirm/jquery-confirm.js"></script>
+
+<%--解析表单数据--%>
+<script src="../static/util/iform.js"></script>
 
 <script type="text/javascript" src="<%=basePath%>js/goodDetail.js" ></script>
 

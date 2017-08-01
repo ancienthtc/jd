@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -45,7 +46,7 @@ public class GoodsController extends BaseController{
     //添加商品
     @RequestMapping(value = "/add" , method = RequestMethod.POST  /*, produces = "application/json"*/ )
     @ResponseBody
-    public Map<String,String> addGoods(@RequestBody Goods goods)
+    public Map<String,String> addGoods(Goods goods)
     {
         Map<String ,String> map=new HashMap<String, String>();
         if(goods.getName()==null || goods.getPrice()==null || goods.getParameter1()==null)
@@ -80,7 +81,7 @@ public class GoodsController extends BaseController{
     //商品修改(ajax)
     @RequestMapping(value = "/update" , method = RequestMethod.POST  )
     @ResponseBody
-    public Map<String,String> updateGoods(@RequestBody Goods goods)
+    public Map<String,String> updateGoods(Goods goods)
     {
         Map<String ,String> map=new HashMap<String, String>();
         System.out.println(goods);
@@ -215,7 +216,8 @@ public class GoodsController extends BaseController{
 
     //商品图片上传
     @RequestMapping(value="/goodsUpload/{goodsid}",method = RequestMethod.POST)
-    public void goodsUpload(@PathVariable String goodsid , @RequestParam("file") MultipartFile file) {
+    @ResponseBody
+    public Image goodsUpload(@PathVariable String goodsid , @RequestParam("file") MultipartFile file) {
         // 判断文件是否为空
         String filePath=null;
         //System.out.println(goodsid);
@@ -243,6 +245,7 @@ public class GoodsController extends BaseController{
         Image image=pictureService.goodsAndpicture(goodsid,title,filePath,serverPath);
         request.setAttribute("image",image);
 
+        return image;
         // 重定向
        /* return "redirect:/goods/list";*/
     }
@@ -336,11 +339,20 @@ public class GoodsController extends BaseController{
         Goods goods = goodsService.getGoods(id);
         req.setAttribute("goods",goods);
         Integer piclist_goods = goods.getPiclistGoods();
+        /*获取商品轮播图*/
         List<Image> imgs = null;
         if(piclist_goods!=null){
            imgs = goodsService.getGoodsPic(id);
         }
         req.setAttribute("imgs",imgs);
+        /*获取单个商品所属板块*/
+        req.setAttribute("partid",goods.getPartGoods());
+        /*获取所有板块*/
+        List<Part> parts  = partService.getAll();
+        req.setAttribute("parts",parts);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String shelf = sdf.format(goods.getShelf());
+        req.setAttribute("shelf",shelf);
         return "admin/goodDetail";
     }
 
