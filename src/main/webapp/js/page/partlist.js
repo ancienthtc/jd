@@ -27,6 +27,51 @@ part.event = function(){
         // });
 
     });
+
+    $("#dataGridTableJson").on("click",".icon-del",function () {
+        var id = $(this).parent().nextAll("span").text();
+
+        $.confirm({
+            title: '提示',
+            content: '确定要删除吗？',
+            confirm: function() {
+                $.ajax({
+                    url:"../part/partdel",
+                    data:{"pid":id},
+                    type:"get",
+                    dataType:"json",
+                    success:function(data){
+                        console.log(data)
+                        if(data=='true'){
+                            imessenger.success("删除成功");
+                            alert("删除成功");
+                        }else{
+                            imessenger.error("删除失败，请检查商品");
+                            alert("删除失败，请检查商品");
+                        }
+
+                        $.ajax({
+                            url:"../part/toPartList",
+                            type:"get",
+                            dataType:"html",
+                            success:function(data){
+                                $("#contentBoxId").html(data);
+                            },
+                            error:function(){
+                                alert("页面出错");
+                            }
+
+                        });
+                    },
+                    error:function(){
+                        imessenger.error("请求失败");
+                    }
+                })
+
+            },
+        });
+    });
+
 }
 
 

@@ -58,6 +58,15 @@
     <script type="text/javascript" src="<%=basePath%>js/page/b.page.js" ></script>
     <script type="text/javascript" src="<%=basePath%>js/page/partlist.js" ></script>
 
+    <!-- 确认框的js -->
+    <script src="../static/libs/jquery-confirm/jquery-confirm.js"></script>
+
+    <!-- 提示框的js -->
+    <script src="../static/libs/messenger/js/messenger.min.js"></script>
+    <script src="../static/util/imessenger.js"></script>
+
+    <%--解析表单数据--%>
+    <script src="../static/util/iform.js"></script>
 
     <script type="text/javascript">
         $(function(){

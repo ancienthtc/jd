@@ -147,11 +147,18 @@ public class PartController extends BaseController{
     //板块删除(异步)
     @RequestMapping("/partdel")
     @ResponseBody
-    public boolean deletePart(Integer pid)
+    public String deletePart(Integer pid)
     {
         String absolutePath=request.getSession().getServletContext().getRealPath("/")+ "upload/";
         //先删图片再删图片集最后删图片
-        return partService.partDel(pid,absolutePath);
+        if( partService.partDel(pid,absolutePath) )
+        {
+            return "true";
+        }
+        else
+        {
+            return "false";
+        }
     }
 
 

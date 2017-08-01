@@ -1,6 +1,7 @@
 package com.jd.shop.service.serviceimpl;
 
 import com.github.pagehelper.PageHelper;
+import com.jd.shop.dao.GoodsMapper;
 import com.jd.shop.dao.PartMapper;
 import com.jd.shop.dao.PicListMapper;
 import com.jd.shop.model.Goods;
@@ -31,6 +32,7 @@ public class PartServiceImpl implements PartService{
 
     @Resource
     private PicListMapper picListMapper;
+
 
     //所有板块
     public List<Part> getAll() {
@@ -78,9 +80,16 @@ public class PartServiceImpl implements PartService{
     //删除板块(并删除图片)
     public boolean partDel(Integer id,String ServerPath)
     {
+        //搜索该板块下有无商品
+        List<Goods> goodss=partMapper.getPartGoods(id);
+        if(!goodss.isEmpty())
+        {
+            return false;
+        }
         pictureService.partPicdel(id,ServerPath);//删图片
         //删图片集
         picListMapper.deleteByPrimaryKey( partMapper.selectByPrimaryKey(id).getPiclistPart() );
+
         if(partMapper.deleteByPrimaryKey(id) >0)//删板块
         {
             return true;
