@@ -88,8 +88,8 @@
             </table>
         </form>
     </div>
-    <div>
-        <input type="button" onclick="window.location.href='<%=basePath%>/admin/tohome'" value="返回">
-    </div>
+    <%--<div>--%>
+        <%--<input type="button" onclick="window.location.href='<%=basePath%>part/toPartList'" value="返回">--%>
+    <%--</div>--%>
 </body>
 </html>

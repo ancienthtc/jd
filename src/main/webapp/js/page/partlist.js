@@ -72,6 +72,19 @@ part.event = function(){
         });
     });
 
+    $("#addPart").click(function () {
+        var url = "../part/partadd";
+        $.post(url,function(result){ //通过Ajax发送请求到后台
+            layer.open({
+                type : 1,  //获取页面层信息
+                skin : "layui-layer-molv",
+                border : [1],
+                area : ['43%','70%'],
+                content : result    //把result转为jQuery对象
+            });
+        });
+    });
+
 }
 
 

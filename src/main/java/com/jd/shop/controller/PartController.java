@@ -76,6 +76,13 @@ public class PartController extends BaseController{
         return null;
     }
 
+    //板块添加
+    @RequestMapping("/partadd")
+    public String goPartAdd()
+    {
+        return "admin/partadd";
+    }
+
     //进入板块修改
     @RequestMapping(value = "/alter" )
     @Deprecated

@@ -33,6 +33,7 @@
 
 
 <div class="row-fluid">
+    <div><button id="addPart">板块添加</button></div>
     <div id="pageJsonContent">
         <table id="dataGridTableJson" class="table table-striped table-bordered table-hover table-condensed">
             <thead>
@@ -54,6 +55,7 @@
 
 
 
+
     <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
     <script type="text/javascript" src="<%=basePath%>js/page/b.page.js" ></script>
     <script type="text/javascript" src="<%=basePath%>js/page/partlist.js" ></script>
@@ -65,13 +67,16 @@
     <script src="../static/libs/messenger/js/messenger.min.js"></script>
     <script src="../static/util/imessenger.js"></script>
 
+    <!-- layer -->
+    <script type="text/javascript" src="<%=basePath%>js/layer.js" ></script>
+
     <%--解析表单数据--%>
     <script src="../static/util/iform.js"></script>
 
     <script type="text/javascript">
-        $(function(){
-            SyntaxHighlighter.all();
-        });
+//        $(function(){
+//            SyntaxHighlighter.all();
+//        });
     </script>
 </div>
 </body>

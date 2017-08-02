@@ -64,12 +64,7 @@ public class AdminController {
         return "admin/goodsadd";
     }
 
-    //板块添加
-    @RequestMapping("/partadd")
-    public String goPartAdd()
-    {
-        return "admin/partadd";
-    }
+
 
     //板块列表
     @RequestMapping("/partlist")
