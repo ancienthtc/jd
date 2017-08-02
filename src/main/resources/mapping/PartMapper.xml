@@ -72,6 +72,20 @@
     WHERE t_part.id=#{id,jdbcType=INTEGER}
   </select>
 
+  <select id="homepart" resultType="map">
+    SELECT
+    t_part.pname,
+    t_part.type,
+    t_part.priority,
+    t_image.title,
+    t_image.id
+    FROM
+    t_part
+    LEFT JOIN t_piclist ON t_part.piclist_part = t_piclist.id
+    LEFT JOIN t_image ON t_image.image_list = t_piclist.id
+    ORDER BY
+    t_part.`priority` DESC
+  </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_part

@@ -47,7 +47,8 @@ public class PartServiceImpl implements PartService{
 
     //首页板块/商品图片
     public List<Map<String, String>> getAllInfo() {
-        return partMapper.shophome();
+        //return partMapper.shophome();
+        return partMapper.homepart();
     }
 
     //板块下所有商品

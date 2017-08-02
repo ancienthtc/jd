@@ -33,7 +33,20 @@
 
 
 <div class="row-fluid">
-    <div><button id="addPart">板块添加</button><br></div>
+    <div class="location">
+        <span class="title">板块管理</span>
+        <!-- 搜索 -->
+        <form class="search form-inline">
+
+            <%--<input type="text" class="form-control" id="inlineFormInput" placeholder="请输入需要查询的内容" />
+            < a href=" " class="btnGreen">查询</ a>--%>
+            <button href="javascript:void(0);" class="btnGreen" id="addPart" >
+                <i class="iconfont icon-add" data-btn="add" data-toggle="tooltip" data-placement="bottom" data-original-title="添加">
+                </i>
+            </button>
+        </form>
+    </div>
+    <%--<div><button id="addPart">板块添加</button><br></div>--%>
     <div id="pageJsonContent">
         <table id="dataGridTableJson" class="table table-striped table-bordered table-hover table-condensed">
             <thead>

@@ -28,9 +28,12 @@ public interface PartMapper {
     
     int addpart(@Param("pname")String pname , @Param("type")String type, @Param("priority")int priority, @Param("describe")String describe);
 
+    @Deprecated
     List<Map<String,String>> shophome();
 
     List<Goods> getPartGoods(Integer id);
 
     List<Image> getPartPic(@Param("id")Integer pid);
+
+    List<Map<String,String>> homepart();
 }

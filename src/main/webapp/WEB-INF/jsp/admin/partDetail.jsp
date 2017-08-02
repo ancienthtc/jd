@@ -46,11 +46,11 @@
             </select>
             <span class="tips"></span>--%>
         <%--</div>--%>
-        <div class="btGroup">
-            <label>优先级</label>
-            <input type="text" class="form-control" name="priority" value="${requestScope.part.priority}"/>
-            <span class="tips"></span>
-        </div>
+        <%--<div class="btGroup">--%>
+            <%--<label>优先级</label>--%>
+            <%--<input type="text" class="form-control" name="priority" value="${requestScope.part.priority}"/>--%>
+            <%--<span class="tips"></span>--%>
+        <%--</div>--%>
 
         <div class="btGroup">
             <label>优先级</label>

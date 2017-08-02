@@ -48,6 +48,7 @@ public class LoginController extends BaseController{
         return "admin/alogin";
     }
 
+    //改!
     @RequestMapping(value = "/ton" /*, method = RequestMethod.POST*/)//tel or name
     public String login(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password , Model model)
     {
@@ -68,7 +69,7 @@ public class LoginController extends BaseController{
         return "login";
     }
 
-    //对于游客
+    //对于游客  //改!
     @RequestMapping("/view")
     public String view(Model model)
     {

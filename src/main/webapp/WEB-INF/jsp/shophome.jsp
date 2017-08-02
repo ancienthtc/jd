@@ -1,183 +1,166 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>无标题文档</title>
-<style type="text/css">
-#btn1{
-	float:left;
-    margin-top:1%;
-	margin-left:5%;
-	}
-#head ul{
-	float:right;
-	margin-right:10%;
-	
-	}
-#head ul li{
-	float:left;
-	list-style:none;
-    font-size:16px;
-	text-decoration:none;
-	}
-#head ul li a{
-	text-decoration:none;
-	
-	}
- a { color: #4183c4; text-decoration: none; font-weight: bold; }
-a:hover { text-decoration: underline; }
-
-h3 { color: #666; }
-ul { list-style: none; padding: 25px 0; }
-li {
-        display: inline;
-        margin: 10px 50px 10px 0px;
-      }
-input[type=text],
-input[type=password] {
-        font-size: 13px;
-        min-height: 32px;
-        margin: 0;
-        padding: 7px 8px;
-        outline: none;
-        color: #333;
-        background-color: #fff;
-        background-repeat: no-repeat;
-        background-position: right center;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        transition: all 0.15s ease-in;
-        -webkit-transition: all 0.15s ease-in 0;
-        vertical-align: middle;
-      }
-.button {
-        position: relative;
-        display: inline-block;
-        margin: 0;
-        padding: 8px 15px;
-        font-size: 13px;
-        font-weight: bold;
-        color: #333;
-        text-shadow: 0 1px 0 rgba(255,255,255,0.9);
-        white-space: nowrap;
-        background-color: #eaeaea;
-        background-image: -moz-linear-gradient(#fafafa, #eaeaea);
-        background-image: -webkit-linear-gradient(#fafafa, #eaeaea);
-        background-image: linear-gradient(#fafafa, #eaeaea);
-        background-repeat: repeat-x;
-        border-radius: 3px;
-        border: 1px solid #ddd;
-        border-bottom-color: #c5c5c5;
-        box-shadow: 0 1px 3px rgba(0,0,0,.05);
-        vertical-align: middle;
-        cursor: pointer;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        -webkit-appearance: none;
-      }
-      .button:hover,
-      .button:active {
-        background-position: 0 -15px;
-        border-color: #ccc #ccc #b5b5b5;
-      }
-      .button:active {
-        background-color: #dadada;
-        border-color: #b5b5b5;
-        background-image: none;
-        box-shadow: inset 0 3px 5px rgba(0,0,0,.15);
-      }
-      .button:focus,
-      input[type=text]:focus,
-      input[type=password]:focus {
-        outline: none;
-        border-color: #51a7e8;
-        box-shadow: inset 0 1px 2px rgba(0,0,0,.075), 0 0 5px rgba(81,167,232,.5);
-      }
-     
-label[for=search] {
-        display: block;
-        text-align: left;
-      }
-#search label {
-        font-weight: 200;
-        padding: 5px 0;
-      }
-#search input[type=text] {
-        font-size: 18px;
-        width: 805px;
-		margin-left:5%;
-		margin-top:1%;
-      }
-#search .button {
-        padding: 10px;
-        width: 90px;
-		margin-top:1%;
-      }
-
-#bb1 img{
-    width:150px;
-    height:300px;
-}
-#bb1 a{
-    float:left;
-    margin-left:15%;
-    margin-top: 5%;
-}
-
-</style>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
 <%
-    String path = request.getContextPath();
-    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+	String path = request.getContextPath();
+	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>无标题文档</title>
+	<!--轮播图开始-->
+	<script type="text/javascript" src="<%=basePath%>js/jquery-3.1.1.js"></script>
+	<script type="text/javascript" src="<%=basePath%>js/superslide.2.1.js"></script>
+	<link href="css/style.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+		<!--导航开始-->
+		.daohang ul{margin-left:10px;}
+		.daohang ul li{
+			float:left;
+			margin-left:150px;
+			list-style:none;
+			margin-top:30px;
+		}
+		.daohang a{font-size:24px;
+			color:#000;
+			text-decoration:none
+		}
+		.daohang a:hover{color:#F00;}
+		.daohang img{width:50px;
+			height:50px;
+			margin-left:20px;
+		}
+		<!--导航结束-->
+		<!--分类开始-->
+				/*.fenlei{
+                    width:1300px;
+                }
+                .fenlei ul li{
+                    float:left;
+                    margin-left:100px;
+                    width:180px;
+                    height:100px;
+
+                    }
+                .fenlei ul li a{color:#333;}
+                .fenlei a:hover{color:#F00; text-decoration:none;}
+                .fenlei ul li img{
+                    width:50px;
+                    height:50px;
+
+                    }*/
+
+		.tuijian{ width:1300px;}
+		.tuijian ul li{width:250px;margin-left:10px; float:left; border:1px solid #930;}
+		.tuijian a{color:#333; font-size:18px; text-align:center;}
+		.tuijian a:hover{color:#F00; text-decoration:none;}
+
+
+		.rexiao{ width:1300px;}
+		.rexiao ul li{width:250px;margin-left:10px; float:left;border:1px solid #930;}
+		.rexiao a{color:#333; font-size:20px;}
+		.rexiao a:hover{color:#F00; text-decoration:none;}
+	</style>
 </head>
 
-<body style="width:100%;">
-<div>
-<div id="head" style="background-image:url(/JDWebShop/image/1.jpg); width:100%; height:350px; background-repeat:no-repeat;">
+<body>
 
-	<c:if test="${not empty User.nickname}"><h3>欢迎登录 ${User.nickname}</h3></c:if>
-	<c:if test="${empty User.nickname}"> <a href="<%=basePath%>login/login">您好！请登录</a> </c:if>
-	
+<c:if test="${not empty User.nickname}"><h3>欢迎登录 ${User.nickname}</h3></c:if>
+<c:if test="${empty User.nickname}"> <a href="<%=basePath%>login/login">您好！请登录</a> </c:if>
+
+<!--轮播图开始-->
+<div class="fullSlide">
+	<div class="bd">
+		<ul>
+			<li _src="url(<%=basePath%>images/a.jpg)"><a href="#"></a></li>
+			<li _src="url(<%=basePath%>images/b.jpg)"><a href="#"></a></li>
+			<li _src="url(<%=basePath%>images/c.jpg)"><a href="#"></a></li>
+
+		</ul>
+	</div>
+	<div class="hd"><ul></ul></div>
+	<span class="prev"></span>
+	<span class="next"></span>
+</div><!--fullSlide end-->
+
+
+<script type="text/javascript">
+    $(".fullSlide").hover(function(){
+            $(this).find(".prev,.next").stop(true, true).fadeTo("show", 0.5)
+        },
+        function(){
+            $(this).find(".prev,.next").fadeOut()
+        });
+    $(".fullSlide").slide({
+        titCell: ".hd ul",
+        mainCell: ".bd ul",
+        effect: "fold",
+        autoPlay: true,
+        autoPage: true,
+        trigger: "click",
+        startFun: function(i) {
+            var curLi = jQuery(".fullSlide .bd li").eq(i);
+            if ( !! curLi.attr("_src")) {
+                curLi.css("background-image", curLi.attr("_src")).removeAttr("_src")
+            }
+        }
+    });
+</script>
+<!-- 轮播 结束 -->
+<!--导航开始-->
+<div class="daohang">
 	<ul>
-	<li><a href="index.html">商城首页</a></li>
-	<li><a href="all.html">所有商品</a></li>
-	<li><a href="new.html">新上商品</a></li>
-	<li><a href="myself.html">个人中心</a></li>
+		<li><a href="index.html"><img src="<%=basePath%>image/biao1.png"/><br />首&nbsp;&nbsp;&nbsp;页</a></li>
+		<li><a herf="#"><img src="<%=basePath%>image/biao2.png" /><br />所有商品</a></li>
+		<li><a herf="#"><img src="<%=basePath%>image/biao3.png" /><br />购&nbsp;物&nbsp;车</a></li>
+		<li><a herf="#"><img src="<%=basePath%>image/biao4.png" /><br />个人中心</a></li>
 	</ul>
 </div>
+<!--导航结束-->
 
-	<div id="search">
-	   
+<!--搜索框开始-->
+<div class="container">
+	<div class="search">
+
 		<input type="text" name="q">
 		<input class="button" type="submit" value="Search">
 	</div>
-
-	<div id="container" style="width:100%;">
-		<div id="bb1">
-			<c:forEach var="item" items="${parts}">
-			<a href="">
-                <img src="<%=basePath%>picture/show?pic=${item.get("title")}"/>
-                </br>
-                <p>${item.get("pname")}</p>
-            </a>
+</div>
+<!--搜索框结束-->
+<!--爆款推荐开始-->
+<div>
+	<div class="tuijian" style="background-color:#0CC; width:1300px; height:30px; margin-top:30px; margin-left:20px;">
+		<p style="font:18px 微软雅黑; margin-left:30px; margin-top:20px;">爆款推荐</p>
+		<ul>
+			<c:forEach var="item" items="${parts}" varStatus="vs">
+				<li>
+					<a href="#">
+						<img src="<%=basePath%>picture/show?pic=${item.get("title")}" /><br /><br />${item.get("pname")}<br /><br />${item.get("type")}
+					</a>
+				</li>
+				<c:if test="${vs.index%3==0 }"><br/></c:if>
 			</c:forEach>
-		</div>
+		</ul>
+		<div class="mask"></div>
 	</div>
 
 </div>
+<!--爆款推荐结束-->
+
+<!--本季热销开始-->
+<%--<div class="rexiao" style="background-color:#0CC; width:1300px; height:30px; margin-top:500px; margin-left:20px;">--%>
+	<%--<p style="font:18px 微软雅黑; margin-left:30px; margin-top:20px;">本季热销</p>--%>
+	<%--<ul>--%>
+		<%--<li><a href="#"><img src="images/cloth2.jpg" /><br /><br />夏季女装连衣裙<br /><br />￥220</a></li>--%>
+		<%--<li><a href="#"><img src="images/cloth2.jpg" /><br /><br />夏季女装连衣裙<br /><br />￥220</a></li>--%>
+		<%--<li><a href="#"><img src="images/cloth2.jpg" /><br /><br />夏季女装连衣裙<br /><br />￥220</a></li>--%>
+		<%--<li><a href="#"><img src="images/cloth2.jpg" /><br /><br />夏季女装连衣裙<br /><br />￥220</a></li>--%>
+	<%--</ul>--%>
+<%--</div>--%>
+<!--本季热销结束-->
+
 </body>
 </html>
