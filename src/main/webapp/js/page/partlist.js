@@ -42,12 +42,13 @@ part.event = function(){
                     dataType:"json",
                     success:function(data){
                         console.log(data)
-                        if(data=='true'){
+                        if(data=='true' || data==true){
                             imessenger.success("删除成功");
-                            alert("删除成功");
-                        }else{
+                        }else if(data=='false' || data==false){
                             imessenger.error("删除失败，请检查商品");
-                            alert("删除失败，请检查商品");
+                        }
+                        else {
+                            imessenger.error("删除失败");
                         }
 
                         $.ajax({

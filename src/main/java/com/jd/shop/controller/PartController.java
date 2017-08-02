@@ -64,7 +64,7 @@ public class PartController extends BaseController{
     public Map<String,String> addPart(@RequestBody Part part)
     {
         Map<String,String> map=new HashMap<String, String>();
-        if(part.getPname()==null)
+        if(part.getPname()==null || part.getPname().length()<=0)
         {
             return null;
         }

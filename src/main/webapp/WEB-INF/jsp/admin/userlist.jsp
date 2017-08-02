@@ -37,8 +37,9 @@
                 <th>性别</th>
                 <th>居住地</th>
                 <th>上次登录时间</th>
-                <th>居住地</th>
                 <th>积分</th>
+                <th>修改</th>
+                <th>删除</th>
             </tr>
             </thead>
             <tbody>

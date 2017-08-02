@@ -13,7 +13,6 @@ $(function(){
             if(data && data.dataList && data.dataList.length > 0){
                 $.each(data.dataList,function(i,row){
                     var tr = $('<tr>');
-                    $(tr).append('<td></td>');
                     $(tr).append('<td>'+row.nickname+'</td>');
                     $(tr).append('<td>'+row.tel+'</td>');
                     $(tr).append('<td>'+row.birth+'</td>');
@@ -34,4 +33,6 @@ $(function(){
             };
         }
     });
+
 });
+

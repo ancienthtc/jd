@@ -33,7 +33,7 @@
 
 
 <div class="row-fluid">
-    <div><button id="addPart">板块添加</button></div>
+    <div><button id="addPart">板块添加</button><br></div>
     <div id="pageJsonContent">
         <table id="dataGridTableJson" class="table table-striped table-bordered table-hover table-condensed">
             <thead>
