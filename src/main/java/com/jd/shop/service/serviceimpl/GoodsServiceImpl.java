@@ -45,9 +45,11 @@ public class GoodsServiceImpl implements GoodsService {
 
 
     //添加商品(未上架，把销量设为0)
-    public int addGoods(Goods goods) {
+    public Goods addGoods(Goods goods) {
         goods.setSales(0.0);
-        return goodsMapper.insertSelective(goods);
+        goodsMapper.insertSelective(goods);
+
+        return goods;
     }
 
     //获得某商品所有信息

@@ -84,7 +84,7 @@
       #{sales,jdbcType=DOUBLE}, #{stock,jdbcType=DOUBLE}, #{shelf,jdbcType=DATE}, #{partGoods,jdbcType=INTEGER}, 
       #{piclistGoods,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.jd.shop.model.Goods" >
+  <insert id="insertSelective" parameterType="com.jd.shop.model.Goods" useGeneratedKeys="true" keyProperty="id" >
     insert into t_goods
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

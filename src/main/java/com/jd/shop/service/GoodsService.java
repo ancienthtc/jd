@@ -15,7 +15,7 @@ public interface GoodsService {
 
     List<Image> getGoodsPic(int goodsid);
 
-    int addGoods(Goods goods);
+    Goods addGoods(Goods goods);
 
     Goods getGoods(int goodsid);
 
