@@ -3,7 +3,6 @@ package com.jd.shop.controller;
 import com.alibaba.fastjson.JSON;
 import com.jd.shop.model.User;
 import com.jd.shop.service.UserService;
-import com.jd.shop.util.Md5Utils;
 import com.jd.shop.util.PagedResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Created by ThinkPad on 2017/7/6.
@@ -41,7 +38,7 @@ public class UserController extends BaseController{
         if(nickname==null || nickname.equals("") || tel==null || tel.equals("") || pass==null || pass.equals(""))
         {
             model.addAttribute("message","注册失败");
-            return "login";
+            return "user/login";
         }
         if(userService.insertSelective(user) != 0 )
         {
@@ -51,7 +48,7 @@ public class UserController extends BaseController{
         {
             model.addAttribute("message","注册失败");
         }
-        return "login";
+        return "user/login";
     }
 
     //进入用户列表

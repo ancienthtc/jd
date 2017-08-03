@@ -4,7 +4,6 @@ import com.jd.shop.model.Admin;
 import com.jd.shop.model.User;
 import com.jd.shop.service.PartService;
 import com.jd.shop.service.loginService;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,13 +32,13 @@ public class LoginController extends BaseController{
     @RequestMapping("/login")
     public String login()
     {
-        return "login";
+        return "user/login";
     }
 
     @RequestMapping("/reg")
     public String reg()
     {
-        return "register";
+        return "user/register";
     }
 
     @RequestMapping("/admin")
@@ -63,10 +62,10 @@ public class LoginController extends BaseController{
             List<Map<String, String>> allinfo=partService.getAllInfo();
             model.addAttribute("parts",allinfo);
 
-            return "shophome";//改跳转到Controller 获取商品，用户信息
+            return "user/shophome";//改跳转到Controller 获取商品，用户信息
         }
         model.addAttribute("message","登录失败!");
-        return "login";
+        return "user/login";
     }
 
     //对于游客  //改!
@@ -75,7 +74,7 @@ public class LoginController extends BaseController{
     {
         List<Map<String, String>> allinfo=partService.getAllInfo();
         model.addAttribute("parts",allinfo);
-        return "shophome";
+        return "user/shophome";
     }
 
     /**

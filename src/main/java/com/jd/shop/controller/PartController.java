@@ -135,7 +135,7 @@ public class PartController extends BaseController{
         model.addAttribute("all",allgoods);
 
 
-        return "shoppart";
+        return "user/shoppart";
     }
 
     //板块图片删除
