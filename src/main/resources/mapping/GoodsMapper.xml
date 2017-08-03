@@ -67,8 +67,8 @@
     DELETE t_goods
     FROM
     t_goods
-     JOIN t_piclist ON t_goods.piclist_goods = t_piclist.id
-     JOIN t_image ON t_piclist.id = t_image.image_list
+    LEFT OUTER JOIN t_piclist ON t_goods.piclist_goods = t_piclist.id
+    LEFT OUTER JOIN t_image ON t_piclist.id = t_image.image_list
     WHERE t_goods.id = #{id,jdbcType=INTEGER}
   </delete>
 

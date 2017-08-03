@@ -43,10 +43,21 @@
     </script>
 </head>
 <body>
+<div class="location">
+    <span class="title">商品管理</span>
+    <!-- 搜索 -->
+    <form class="search form-inline">
+
+        <%--<input type="text" class="form-control" id="inlineFormInput" placeholder="请输入需要查询的内容" />
+        <a href="javascript:void(0);" class="btnGreen">查询</a>--%>
+        <a href="javascript:void(0);" class="btnGreen" data-btn="addNew">添加</a>
+    </form>
+</div>
 <div class="row-fluid">
     <div id="pageJsonContent">
         <table id="dataGridTableJson" class="table table-striped table-bordered table-hover table-condensed">
             <thead>
+
             <tr>
                 <th class="selectColumn">商品名称</th>
                 <th>单价</th>
@@ -71,6 +82,7 @@
             </tr>
             </thead>
             <tbody>
+
             </tbody>
         </table>
     </div>
@@ -306,6 +318,12 @@ a, a:visited{text-decoration:none;}
 <%--分页插件--%>
 <script type="text/javascript" src="<%=basePath%>js/page/b.page.js" ></script>
 <script type="text/javascript" src="<%=basePath%>js/page/goodslist.js" ></script>
+
+<!-- 提示框的js -->
+<script src="../static/libs/messenger/js/messenger.min.js"></script>
+<script src="../static/util/imessenger.js"></script>
+<!-- 确认框的js -->
+<script src="../static/libs/jquery-confirm/jquery-confirm.js"></script>
 
 
 

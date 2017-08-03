@@ -15,27 +15,20 @@
   <a href="javascript:void(0);" class="btnGreen addBtn" data-btn="backProduct">返回</a>
 </div>
 <div id="productDetail">
-  <form id="goodDetailForm">
+  <form id="goodAddForm" ENCTYPE="multipart/form-data">
       <%--<span style="display: none" class="form-control" name="id" >${requestScope.goods.id}</span>--%>
-      <input type="hidden" class="form-control" name="id" value="${requestScope.goods.id}"/>
+      <input type="hidden" class="form-control" name="id" />
     <div class="btGroup">
       <label>产品名称：</label>
-      <input type="text" class="form-control" name="name" value="${requestScope.goods.name}"/>
+      <input type="text" class="form-control" name="name"/>
       <span class="tips"></span>
     </div>
   <div class="btGroup">
       <label for="">板块:</label>
       <select class="form-control" name="part">
-
+          <option selected="selected">请选择板块...</option>
           <c:forEach items="${requestScope.parts}"  var="item">
-              <c:if test="${item.id==requestScope.partid}">
-                  <option name="${item.id}" selected="selected">${item.pname}</option>
-
-              </c:if>
-              <c:if test="${item.id!=requestScope.partid}">
-                <option name="${item.id}">${item.pname}</option>
-
-              </c:if>
+                  <option name="${item.id}">${item.pname}</option>
           </c:forEach>
 
       </select>
@@ -43,7 +36,7 @@
   </div>
     <div class="btGroup">
       <label>单价：</label>
-        <input type="text" class="form-control" name="price" value="${requestScope.goods.price}"/>
+        <input type="text" class="form-control" name="price"/>
         <span class="tips"></span>
           <%--<select class="form-control" id="parentType">
               <option  selected="selected">请选择分类</option>
@@ -57,43 +50,43 @@
     </div>
     <div class="btGroup">
       <label>计量单位：</label>
-        <input type="text" class="form-control" name="gclass" value="${requestScope.goods.gclass}"/>
+        <input type="text" class="form-control" name="gclass" />
         <span class="tips"></span>
     </div>
     <div class="btGroup">
       <label>参数1：</label>
-        <input type="text" class="form-control" name="parameter1" value="${requestScope.goods.parameter1}"/>
+        <input type="text" class="form-control" name="parameter1" />
         <span class="tips"></span>
     </div>
     <div class="btGroup">
       <label>参数2：</label>
-        <input type="text" class="form-control" name="parameter2" value="${requestScope.goods.parameter2}"/>
+        <input type="text" class="form-control" name="parameter2" />
         <span class="tips"></span>
     </div>
     <div class="btGroup">
       <label>参数3：</label>
-      <input type="text" class="form-control" name="parameter3" value="${requestScope.goods.parameter3}"/>
+      <input type="text" class="form-control" name="parameter3" />
       <span class="tips"></span>
     </div>
     <div class="btGroup">
       <label>运费：</label>
-      <input type="text" class="form-control" name="freight" value="${requestScope.goods.freight}"/>
+      <input type="text" class="form-control" name="freight" />
       <span class="tips"></span>
     </div>
-    <div class="btGroup">
+    <%--<div class="btGroup">
       <label for="">销量:</label>
-        <input type="text" class="form-control" name="sales" value="${requestScope.goods.sales}" readonly="readonly"/>
+        <input type="text" class="form-control" name="sales"  readonly="readonly"/>
         <span class="tips"></span>
-    </div>
+    </div>--%>
     <div class="btGroup">
       <label for="">库存:</label>
-        <input type="text" class="form-control" value="${requestScope.goods.stock}" name="stock" />
+        <input type="text" class="form-control" name="stock" />
         <span class="tips"></span>
 
     </div>
     <div id="cover" class="btGroup">
       <label for="">上架日期:</label>
-        <input type="text" class="form-control" name="shelf"  id="datetimepicker" value="${requestScope.shelf}"/>
+        <input type="text" class="form-control" name="shelf"  id="datetimepicker" />
    <%--   <div class="photos">
         <div class="img" ></div>
         <i class="iconfont icon-add" style="line-height: 150px;"></i>
@@ -104,7 +97,7 @@
     </div>
     <div id="bigCover" class="desGroup">
       <label for="">详情</label>
-        <textarea type="text" class="form-control" name="detail"  style="width: 72.4%">${requestScope.goods.detail}</textarea>
+        <textarea type="text" class="form-control" name="detail"  style="width: 72.4%"></textarea>
         <span class="tips"></span>
       <%--<div class="photos">
         <div class="img" ></div>
@@ -134,39 +127,20 @@
     </div>--%>
       <div id="imgBox" class="photoGroup" >
           <label for="">轮播图集合</label>
-          <!-- 上限6张 -->
-          <c:forEach items="${requestScope.imgs}"  var="item">
-             <%-- <p>${item.filename}</p>--%>
-              <div class="photos canSort"  >
-                  <div class="img" style="background-image: url('<%=basePath%>picture/show?pic=${item.title}')"></div>
-                  <span  style="display: none">${item.id}</span>
-                  <div class="mask"></div>
-                  <i class="iconfont icon-add"></i>
-                  <input type="file" name="file" id="listImg1"/>
-                  <div class="btnBox" style="display: block">
-                      <i class="iconfont icon-del"></i>
-                    <%--  <i class="iconfont icon-sort"></i>--%>
-                  </div>
-              </div>
-              <input  type="hidden" class="listImg2"/>
-          </c:forEach>
-           <%-- <c:forEach items="${requestScope.imgs}"  var="item">
-                <input  type="hidden" class="listImg2" id="" value=""/>
-            </c:forEach>--%>
-          <c:if test="${requestScope.imgs.size()!=6}">
-              <div class="photos" >
-                  <span  style="display: none"></span>
-                  <div class="img" style="background-image: none"></div>
-                  <i class="iconfont icon-add"></i>
-                  <input type="file" name="file" id="listImg2"/>
-                  <div class="btnBox">
 
-                      <i class="iconfont icon-del"></i>
-                      <%--<i class="iconfont icon-sort"></i>--%>
-                  </div>
+          <div class="photos" >
+              <span  style="display: none"></span>
+              <div class="img" style="background-image: none"></div>
+              <i class="iconfont icon-add"></i>
+              <input type="file" class="listImg2" name="file" id="listImg1"/>
+              <div class="btnBox">
+
+                  <i class="iconfont icon-del"></i>
+                  <%--<i class="iconfont icon-sort"></i>--%>
               </div>
-              <input  type="hidden" class="listImg2" />
-          </c:if>
+          </div>
+          <input type="hidden" class="listImg1" id="listImg12"/>
+              <%--<input  type="hidden"  />--%>
           <span class="tips"></span>
       </div>
     <%--<div class="btGroup" id="productDetailTime">
@@ -223,7 +197,7 @@
     </div>--%>
     <!-- 添加产品 -->
     <p class="text-center">
-      <a href="javascript:void(0);" class="btnGreen" data-btn="saveGood" >保存</a>
+      <a href="javascript:void(0);" class="btnGreen" data-btn="addNewGood" >保存</a>
     </p>
   </form>
 </div>
@@ -242,7 +216,7 @@
 <%--解析表单数据--%>
 <script src="../static/util/iform.js"></script>
 
-<script type="text/javascript" src="<%=basePath%>js/goodDetail.js" ></script>
+<script type="text/javascript" src="<%=basePath%>js/goodAdd.js" ></script>
 
 <script>
     $('#datetimepicker').datetimepicker({

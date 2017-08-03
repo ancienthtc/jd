@@ -9,11 +9,16 @@ import com.jd.shop.model.Image;
 import com.jd.shop.model.Part;
 import com.jd.shop.model.PicList;
 import com.jd.shop.service.PictureService;
+import com.mysql.jdbc.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by ThinkPad on 2017/7/7.
@@ -33,6 +38,60 @@ public class PictureServiceImpl implements PictureService {
 
     @Resource
     private PartMapper partMapper;
+
+    /**
+     * 字节输出流
+     */
+    private static FileOutputStream fos = null;
+
+    /**
+     * 字节输入流
+     */
+    private static FileInputStream fis = null;
+
+    /**
+     * 复制图片
+     * @param path 原始路径
+     */
+    public  boolean copyImg(String path,String newPath) {
+        if(StringUtils.isNullOrEmpty(path)||StringUtils.isNullOrEmpty(newPath)){
+            throw new RuntimeException("参数不能为空");
+        }
+        try {
+            fos = new FileOutputStream(newPath+"title");//复制文件
+            fis = new FileInputStream(path);//源文件
+            byte[] buf = new byte[1024];//缓冲区
+            int len = 0;
+            while ((len = fis.read(buf)) != -1) {
+                fos.write(buf, 0, len);//复制
+            }
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (fis != null)
+                    fis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+            try {
+                if (fos != null)
+                    fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+
+    }
+    
+
+
+
 
 
     //给商品添加图片
@@ -168,12 +227,11 @@ public class PictureServiceImpl implements PictureService {
     public boolean fileDel(String absolutePath) {
         //imagePath = request.getSession().getServletContext().getRealPath("/")+ "upload/" + pic;
         File file = new File(absolutePath);
-        if (file.exists())
-        {
-            file.delete();
-            return true;
+        if (file.exists()){
+            return file.delete();
+        }else{
+            return false;
         }
-        return false;
     }
 
 }

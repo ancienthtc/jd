@@ -17,6 +17,66 @@ good.event = function(){
 		})
     });
 
+    /*删除商品*/
+    $("#dataGridTableJson").on("click",".icon-del",function(){
+        var id = $(this).parent().nextAll("span").text();
+        $.confirm({
+            title: '提示',
+            content: '确定要删除商品吗？',
+            confirm: function() {
+                $.ajax({
+                    url:"../goods/goodsdel",
+                    data:{"id":id},
+                    type:"get",
+                    dataType:"json",
+                    success:function(data){
+                        if(data==true){
+                            imessenger.success("删除成功");
+                            $.ajax({
+                                url:"../goods/toGoodsList2",
+                                type:"get",
+                                dataType:"html",
+                                success:function(data){
+                                    $("#contentBoxId").html(data);
+                                    // layer.open({
+                                    //     type: 2,
+                                    //     area: ['800px', '800px'],
+                                    //     //content: '../goods/toGoodDetail'
+                                    //     content: data
+                                    // });
+                                },
+                                error:function(){
+                                    alert("页面出错");
+                                }
+                            });
+                        }else{
+                            imessenger.error("删除失败");
+                        }
+                    },
+                    error:function(){
+                        alert("请求失败");
+                    }
+                })
+            },
+        });
+
+    });
+
+    /*添加商品*/
+    $('[data-btn="addNew"]').click(function(){
+        $.ajax({
+            url:"../goods/toGoodAdd",
+            type:"get",
+            dataType:"html",
+            success:function(data){
+                $("#contentBoxId").html(data);
+            },
+            error:function(){
+                alert("请求失败");
+            }
+        })
+    });
+
 
 
 }
@@ -59,6 +119,20 @@ $(function(){
 	    	$(tb).empty();
 	    	if(data && data.dataList && data.dataList.length > 0){
 	    		$.each(data.dataList,function(i,row){
+                    for (var s in row) {
+                        if(row[s]==null||row[s]==""||row[s]==undefined){
+                        	row[s]="";
+						}
+                    };
+                    if(row.shelf!=""&&row.shelf!=undefined){
+                        /*将时间戳转化为日期*/
+                        var time = new Date(row.shelf);
+                        row.shelf = time.getFullYear() + "-" + (time.getMonth() + 1) + "-" + time.getDate();
+                    }else{
+                        row.shelf="";
+					}
+
+
 	    			var tr = $('<tr>');
 	    			$(tr).append('<td>'+row.name+'</td>');
 	    			$(tr).append('<td>'+row.price+'</td>');

@@ -42,8 +42,16 @@ jQuery
 				jQuery(oldElement).attr('id', fileId);
 				jQuery(oldElement).before(newElement);
 				jQuery(oldElement).appendTo(form);
+				/*多文件上传*/
+                /*for(var i in fileElementId){
+                    var oldElement = jQuery('#' + fileElementId[i]);
+                    var newElement = jQuery(oldElement).clone();
+                    jQuery(oldElement).attr('id', fileId);
+                    jQuery(oldElement).before(newElement);
+                    jQuery(oldElement).appendTo(form);
+                }*/
 
-				// set attributes
+                // set attributes
 				jQuery(form).css('position', 'absolute');
 				jQuery(form).css('top', '-1200px');
 				jQuery(form).css('left', '-1200px');

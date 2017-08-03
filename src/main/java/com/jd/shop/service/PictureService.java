@@ -46,4 +46,6 @@ public interface PictureService {
 
     //板块图片删除
     boolean partPicdel(Integer pid,String ServerPath);
+
+    boolean copyImg(String path,String newPath);
 }

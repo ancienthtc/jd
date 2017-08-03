@@ -9,12 +9,15 @@ import com.jd.shop.service.GoodsService;
 import com.jd.shop.service.PartService;
 import com.jd.shop.service.PictureService;
 import com.jd.shop.util.PagedResult;
-import com.sun.org.apache.xpath.internal.operations.Mod;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,25 +46,96 @@ public class GoodsController extends BaseController{
     @Autowired
     private PartService partService;
 
-    //添加商品
-    @RequestMapping(value = "/add" , method = RequestMethod.POST  /*, produces = "application/json"*/ )
+    /**
+     * 商品保存时先做图片本地上传,返回图片名
+     * @param file
+     * @return
+     */
+    @RequestMapping(value = "/addImg" , method = RequestMethod.POST  /*, produces = "application/json"*/ )
     @ResponseBody
-    public Map<String,String> addGoods(Goods goods)
-    {
-        Map<String ,String> map=new HashMap<String, String>();
-        if(goods.getName()==null || goods.getPrice()==null || goods.getParameter1()==null)
-        {
+    public String addGoods(@RequestParam("file") MultipartFile file){
+            String filePath=null;
+            Calendar now = Calendar.getInstance();//日期
+            String uuid = UUID.randomUUID().toString();//UUID
+            String title=uuid +"."+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
+            if (!file.isEmpty()) {
+                try {
+                    // 文件保存路径
+                    filePath = request.getSession().getServletContext().getRealPath("/") + "upload/" + title;
+                    // 转存文件
+                    file.transferTo(new File(filePath));
+                    return title;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }else{
+                return null;
+            }
+
+
+        /*Map<String ,String> map=new HashMap<String, String>();
+        if(goods.getName()==null || goods.getPrice()==null || goods.getParameter1()==null){
             return null;
         }
-        if(goodsService.addGoods(goods) > 0)
-        {
+        Goods good = goodsService.addGoods(goods);
+        good = goodsService.getGoods(good.getId());
+        if(good !=null){
             map.put("success","true");
-            return map;//true
-        }
-        else
-        {
+            return map;
+        }else{
+            return null;
+        }*/
+
+    }
+    //添加商品
+    @RequestMapping(value = "/add" , method = RequestMethod.POST  , produces = "application/json" )
+    @ResponseBody
+    public Map<String,String> addGoods(Goods goods,String imgName){
+        Map<String ,String> map=new HashMap<String, String>();
+        if(goods.getName()==null || goods.getPrice()==null || goods.getParameter1()==null){
             return null;
         }
+        Goods good = goodsService.addGoods(goods);
+        good = goodsService.getGoods(good.getId());
+        if(good !=null){
+            boolean flag = true;
+            if(!StringUtils.isBlank(imgName)){
+                String[] str = imgName.split(",");
+                for (String s:str) {
+                    String newPath = request.getSession().getServletContext().getRealPath("/") + "upload/"+s;
+                    String serverPath=request.getSession().getServletContext().getRealPath("/") + "upload";
+                    Image image=pictureService.goodsAndpicture(String.valueOf(good.getId()),s,newPath,serverPath);
+                    if(image==null){
+                        flag=false;
+                    }
+                }
+            }
+            if(flag==true){
+                map.put("success","true");
+                return map;//true
+            }else{
+                return null;
+            }
+        }else{
+            return null;
+        }
+
+
+
+    }
+
+    /**
+     * 跳转至添加商品页面
+     * @param req
+     * @return
+     */
+    @RequestMapping("/toGoodAdd")
+    public String toGoodAdd(HttpServletRequest req){
+        /*获取所有板块*/
+        List<Part> parts  = partService.getAll();
+        req.setAttribute("parts",parts);
+        return "admin/goodAdd";
     }
 
     //进入商品修改
@@ -184,15 +258,20 @@ public class GoodsController extends BaseController{
 
 
     //商品删除
+    @Transactional(rollbackFor = Exception.class)
     @RequestMapping("goodsdel")
     @ResponseBody
     public String goodsdel(Integer id)
+
     {
+        if(id==null){
+            throw new RuntimeException("id不能为空");
+        }
         if(goodsService.goodsDel(id) > 0) {
-            return "Success";
+            return "true";
         }
         else
-            return "Fail";
+            return "false";
     }
 
     //获取图片地址
@@ -217,7 +296,7 @@ public class GoodsController extends BaseController{
     //商品图片上传
     @RequestMapping(value="/goodsUpload/{goodsid}",method = RequestMethod.POST)
     @ResponseBody
-    public Image goodsUpload(@PathVariable String goodsid , @RequestParam("file") MultipartFile file) {
+    public String goodsUpload(@PathVariable String goodsid , @RequestParam("file") MultipartFile file) {
         // 判断文件是否为空
         String filePath=null;
         //System.out.println(goodsid);
@@ -244,8 +323,9 @@ public class GoodsController extends BaseController{
         String serverPath=request.getSession().getServletContext().getRealPath("/") + "upload";
         Image image=pictureService.goodsAndpicture(goodsid,title,filePath,serverPath);
         request.setAttribute("image",image);
-
-        return image;
+        String image_json = JSON.toJSONString(image);
+        System.out.print(image_json);
+        return image_json;
         // 重定向
        /* return "redirect:/goods/list";*/
     }
@@ -291,6 +371,12 @@ public class GoodsController extends BaseController{
         }
     }
 
+    /**
+     * 用于商品编辑时删除图片
+     * @param imageid
+     * @param model
+     * @return
+     */
     @RequestMapping("/deletepic")   //goodsid?
     @ResponseBody
     public boolean deletePic(String imageid,Model model)
@@ -299,6 +385,25 @@ public class GoodsController extends BaseController{
         String absolutePath=request.getSession().getServletContext().getRealPath("/")+ "upload/";
 
         boolean flag =  pictureService.deleteGoodsPic(imageid,absolutePath);
+
+        return flag;
+
+    }
+
+    /**
+     * 用于商品添加时删除图片
+     * @param imgName
+     * @return
+     */
+
+    @RequestMapping("/deletePicForAdd")   //goodsid?
+    @ResponseBody
+    public boolean deletePicForAdd(String imgName)
+    {
+
+        String absolutePath=request.getSession().getServletContext().getRealPath("/")+ "upload/"+imgName;
+
+        boolean flag =  pictureService.fileDel(absolutePath);
 
         return flag;
 
@@ -350,9 +455,14 @@ public class GoodsController extends BaseController{
         /*获取所有板块*/
         List<Part> parts  = partService.getAll();
         req.setAttribute("parts",parts);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String shelf = sdf.format(goods.getShelf());
-        req.setAttribute("shelf",shelf);
+
+        if(goods.getShelf()!=null){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String shelf = sdf.format(goods.getShelf());
+            req.setAttribute("shelf",shelf);
+        }else{
+            req.setAttribute("shelf","");
+        }
         return "admin/goodDetail";
     }
 

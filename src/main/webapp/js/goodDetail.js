@@ -1,6 +1,7 @@
 var goodDetail = new Object();
 goodDetail.id="";
 goodDetail.count = $('#imgBox').children('.photos').length;
+goodDetail.imgidspan = "";
 goodDetail.event = function(){
     /*返回按钮*/
     $('[data-btn="backProduct"]').on('click', function(){
@@ -22,9 +23,11 @@ goodDetail.event = function(){
     $('#imgBox').on('change','input[type="file"]',function(e) {
         var datas = iform.parseForm('goodDetailForm');
         var id = datas.id/*$(this).parents("form").children("span").eq(0).text()*/;
+        var imgid ;
         //判断图片的类型是否正确
         var img = $(this).val();
         goodDetail.id=$(this).attr('id');
+        goodDetail.imgidspan = $(this).prevAll("span")[0];
         var extStart = img.lastIndexOf(".");
         var ext = img.substring(extStart,img.length).toUpperCase();
         if(ext!=".BMP"&&ext!=".PNG"&&ext!=".GIF"&&ext!=".JPG"&&ext!=".JPEG") {
@@ -44,16 +47,14 @@ goodDetail.event = function(){
                     fileElementId : goodDetail.id, // 文件上传控件的id属性 <input
                     // $("form").serialize(),表单序列化。指把所有元素的ID，NAME 等全部发过去
                     type:'POST',
-                    dataType : 'JSON',// 返回值类型 一般设置为json
+                    dataType : 'json',// 返回值类型 一般设置为json
                     complete : function() {// 只要完成即执行，最后执行
 
                     },
                     success : function(data, status) {// 服务器成功响应处理函数
-                        var imgid = data.id;
-                        $this.prevAll("apan").text(imgid);
-                        /*var key=data.data.key;
-                        var id="#"+goodDetail.id+"2";
-                        $(id).val(key);*/
+                        //将返回后的图片id存入隐藏域,便于后期处理图片
+                        imgid = data.id;
+                        $(goodDetail.imgidspan).html(imgid);
                     },
                     error : function(data, status, e) {// 服务器响应失败处理函数
                         console.log("error");
@@ -72,7 +73,7 @@ goodDetail.event = function(){
             //判断个数
             //var count = $('#imgBox').children('.photos').length;
             if(goodDetail.count <= 5) {
-                $('#imgBox').append('<div class="photos"><span style="display: none"></span><div class="img" style="background-image: none"></div><div class="mask"></div><i class="iconfont icon-add"></i><input type="file" name="listImg1" id="listImg'+(goodDetail.count+1)+'"><div class="btnBox"><i class="iconfont icon-del"></i><i class="iconfont icon-sort"></i></div></div><input type="hidden" class="listImg2" id="listImg'+(goodDetail.count+1)+'2">');
+                $('#imgBox').append('<div class="photos"><span style="display: none"></span><div class="img" style="background-image: none"></div><div class="mask"></div><i class="iconfont icon-add"></i><input type="file" name="file" id="listImg'+(goodDetail.count+1)+'"><div class="btnBox"><i class="iconfont icon-del"></i></div></div><input type="hidden" class="listImg2" id="listImg'+(goodDetail.count+1)+'2">');
                 goodDetail.count=goodDetail.count+1;
             }
         }
@@ -107,17 +108,17 @@ goodDetail.event = function(){
                 })
                 if( ($('#imgBox').children('.canSort').length == 6 )){
                     var id=$this.parents('.photos').find("input").attr('id');
-                    var id="#"+id+"2";
+                    var id="#"+id;
                     $(id).remove();
                     $this.parents('.photos').remove();
-                    productDetail.count=productDetail.count-1;
-                    $('#imgBox').append('<div class="photos"><span  style="display: none"></span><div class="img" style="background-image: none"></div><div class="mask"></div><i class="iconfont icon-add"></i><input type="file" /><div class="btnBox"><i class="iconfont icon-del"></i><i class="iconfont icon-sort"></i></div></div><input type="hidden" class="listImg2" id="listImg62">');
+
+                    $('#imgBox').append('<div class="photos"><span  style="display: none"></span><div class="img" style="background-image: none"></div><i class="iconfont icon-add"></i><input type="file" name="file" id="listImg2"/><div class="btnBox"><i class="iconfont icon-del"></i></div></div><input  type="hidden" class="listImg2" />');
                 } else {
                     var id=$this.parents('.photos').find("input").attr('id');
-                    var id="#"+id+"2";
+                    var id="#"+id;
                     $(id).remove();
                     $this.parents('.photos').remove();
-                    productDetail.count=productDetail.count-1;
+                    goodDetail.count=goodDetail.count-1;
                 }
 
 
@@ -132,7 +133,7 @@ goodDetail.event = function(){
     })*/
 
     /*保存修改*/
-    $("form").on("click",'[data-btn="addNewProduct"]',function(){
+    $("form").on("click",'[data-btn="saveGood"]',function(){
         var datas = iform.parseForm('goodDetailForm');
         datas.partGoods = $('#goodDetailForm').find("option:selected").attr("name");
         datas.shelf = datas.shelf.replace(/-/g,"/");
@@ -145,7 +146,7 @@ goodDetail.event = function(){
             success:function(data){
 
                 if(data.success=='true'){
-                    alert("修改成功");
+                    imessenger.success("修改成功");
                     $.ajax({
                         url:"../goods/toGoodsList2",
                         type:"get",
@@ -164,7 +165,7 @@ goodDetail.event = function(){
                         }
                     });
                 }else{
-                    alert("修改失败");
+                    imessenger.error("修改失败");
                 }
             },
             error:function () {
