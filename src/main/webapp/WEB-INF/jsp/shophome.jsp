@@ -5,16 +5,15 @@
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>无标题文档</title>
 	<!--轮播图开始-->
-	<script type="text/javascript" src="<%=basePath%>js/jquery-3.1.1.js"></script>
+	<script type="text/javascript" src="<%=basePath%>js/jquery -1.7.js"></script>
 	<script type="text/javascript" src="<%=basePath%>js/superslide.2.1.js"></script>
-	<link href="css/style.css" rel="stylesheet" type="text/css" />
+	<link href="<%=basePath%>css/style.css" rel="stylesheet" type="text/css" />
 	<style type="text/css">
 		<!--导航开始-->
 		.daohang ul{margin-left:10px;}
@@ -52,8 +51,9 @@
                     height:50px;
 
                     }*/
-
-		.tuijian{ width:1300px;}
+		<!--分类结束-->
+			<script src="<%=basePath%>js/jquery1.42.min.js"></script>
+															  .tuijian{ width:1300px;}
 		.tuijian ul li{width:250px;margin-left:10px; float:left; border:1px solid #930;}
 		.tuijian a{color:#333; font-size:18px; text-align:center;}
 		.tuijian a:hover{color:#F00; text-decoration:none;}
@@ -66,18 +66,28 @@
 	</style>
 </head>
 
-<body>
 
-<c:if test="${not empty User.nickname}"><h3>欢迎登录 ${User.nickname}</h3></c:if>
-<c:if test="${empty User.nickname}"> <a href="<%=basePath%>login/login">您好！请登录</a> </c:if>
+
+<body>
+	<c:if test="${not empty User.nickname}">
+		<h3>欢迎登录 ${User.nickname}</h3>
+	</c:if>
+	<c:if test="${empty User.nickname}">
+		<a href="<%=basePath%>login/login">您好！请登录</a><br>
+	</c:if>
+
+<div align="center">
+
 
 <!--轮播图开始-->
-<div class="fullSlide">
+<div class="fullSlide" >
 	<div class="bd">
 		<ul>
-			<li _src="url(<%=basePath%>images/a.jpg)"><a href="#"></a></li>
-			<li _src="url(<%=basePath%>images/b.jpg)"><a href="#"></a></li>
-			<li _src="url(<%=basePath%>images/c.jpg)"><a href="#"></a></li>
+			<li _src="url(<%=basePath%>image/a.jpg)">
+			 <a href="#"></a>
+			</li>
+			<li _src="url(<%=basePath%>image/b.jpg)"> <a href="#"></a></li>
+			<li _src="url(<%=basePath%>image/c.jpg)"> <a href="#"></a></li>
 
 		</ul>
 	</div>
@@ -138,7 +148,8 @@
 			<c:forEach var="item" items="${parts}" varStatus="vs">
 				<li>
 					<a href="#">
-						<img src="<%=basePath%>picture/show?pic=${item.get("title")}" /><br /><br />${item.get("pname")}<br /><br />${item.get("type")}
+						<img style="width: 160px;height:300px;" src="<%=basePath%>picture/show?pic=${item.get("title")}" /><br />
+						<br />${item.get("pname")}<br /><br />${item.get("type")}
 					</a>
 				</li>
 				<c:if test="${vs.index%3==0 }"><br/></c:if>
@@ -152,15 +163,15 @@
 
 <!--本季热销开始-->
 <%--<div class="rexiao" style="background-color:#0CC; width:1300px; height:30px; margin-top:500px; margin-left:20px;">--%>
-	<%--<p style="font:18px 微软雅黑; margin-left:30px; margin-top:20px;">本季热销</p>--%>
-	<%--<ul>--%>
-		<%--<li><a href="#"><img src="images/cloth2.jpg" /><br /><br />夏季女装连衣裙<br /><br />￥220</a></li>--%>
-		<%--<li><a href="#"><img src="images/cloth2.jpg" /><br /><br />夏季女装连衣裙<br /><br />￥220</a></li>--%>
-		<%--<li><a href="#"><img src="images/cloth2.jpg" /><br /><br />夏季女装连衣裙<br /><br />￥220</a></li>--%>
-		<%--<li><a href="#"><img src="images/cloth2.jpg" /><br /><br />夏季女装连衣裙<br /><br />￥220</a></li>--%>
-	<%--</ul>--%>
+<%--<p style="font:18px 微软雅黑; margin-left:30px; margin-top:20px;">本季热销</p>--%>
+<%--<ul>--%>
+<%--<li><a href="#"><img src="images/cloth2.jpg" /><br /><br />夏季女装连衣裙<br /><br />￥220</a></li>--%>
+<%--<li><a href="#"><img src="images/cloth2.jpg" /><br /><br />夏季女装连衣裙<br /><br />￥220</a></li>--%>
+<%--<li><a href="#"><img src="images/cloth2.jpg" /><br /><br />夏季女装连衣裙<br /><br />￥220</a></li>--%>
+<%--<li><a href="#"><img src="images/cloth2.jpg" /><br /><br />夏季女装连衣裙<br /><br />￥220</a></li>--%>
+<%--</ul>--%>
 <%--</div>--%>
 <!--本季热销结束-->
-
+</div>
 </body>
 </html>
