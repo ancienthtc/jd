@@ -1,5 +1,6 @@
 package com.jd.shop.controller;
 
+import com.jd.shop.annotation.AdminLogin;
 import com.jd.shop.model.Admin;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Created by ThinkPad on 2017/7/7.
  */
-
+@AdminLogin
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -26,18 +27,21 @@ public class AdminController {
      */
     @RequestMapping("/tohome")
     public String home(HttpServletRequest req){
+
         //判断session是否存在
-        HttpSession session = req.getSession();
-        if(session == null){
-            return "admin/login";
-        }
+//        HttpSession session = req.getSession();
+//        if(session == null){
+//            return "admin/login";
+//        }
+
         //判断是否为登录状态
-        Admin admin = (Admin) session.getAttribute("admin");
-        if(admin==null){
-            return "admin/login";
-        }
+//        Admin admin = (Admin) session.getAttribute("admin");
+//        if(admin==null){
+//            return "admin/login";
+//        }
+
         //将权限标识存入request
-        req.setAttribute("alevel",admin.getAlevel());
+//        req.setAttribute("alevel",admin.getAlevel());
 
 
         return "admin/aindex";

@@ -1,6 +1,7 @@
 package com.jd.shop.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.jd.shop.annotation.AdminLogin;
 import com.jd.shop.model.User;
 import com.jd.shop.service.UserService;
 import com.jd.shop.util.PagedResult;
@@ -52,13 +53,15 @@ public class UserController extends BaseController{
     }
 
     //进入用户列表
-    @RequestMapping("tolist")
+    @AdminLogin
+    @RequestMapping("/tolist")
     public String toUserlist()
     {
         return "admin/userlist";
     }
 
     //分页 获取用户列表(json)
+    @AdminLogin
     @RequestMapping("/list_get")
     @ResponseBody
     public String selectUserList(Integer pageNo, Integer pageSize )

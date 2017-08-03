@@ -2,6 +2,7 @@ package com.jd.shop.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.jd.shop.annotation.AdminLogin;
 import com.jd.shop.model.Goods;
 import com.jd.shop.model.Image;
 import com.jd.shop.model.Part;
@@ -52,6 +53,7 @@ public class GoodsController extends BaseController{
      * @param file
      * @return
      */
+    @AdminLogin
     @RequestMapping(value = "/addImg" , method = RequestMethod.POST  /*, produces = "application/json"*/ )
     @ResponseBody
     public String addGoods(@RequestParam("file") MultipartFile file){
@@ -91,6 +93,7 @@ public class GoodsController extends BaseController{
 
     }
     //添加商品
+    @AdminLogin
     @RequestMapping(value = "/add" , method = RequestMethod.POST  , produces = "application/json" )
     @ResponseBody
     public Map<String,String> addGoods(Goods goods,String imgName){
@@ -138,6 +141,7 @@ public class GoodsController extends BaseController{
      * @param req
      * @return
      */
+    @AdminLogin
     @RequestMapping("/toGoodAdd")
     public String toGoodAdd(HttpServletRequest req){
         /*获取所有板块*/
@@ -147,6 +151,7 @@ public class GoodsController extends BaseController{
     }
 
     //进入商品修改
+    @AdminLogin
     @RequestMapping("/goodsalter/{goodsid}")
     public String goGoodsAlter(@PathVariable Integer goodsid , Model model)
     {
@@ -161,6 +166,7 @@ public class GoodsController extends BaseController{
     }
 
     //商品修改(ajax)
+    @AdminLogin
     @RequestMapping(value = "/update" , method = RequestMethod.POST  )
     @ResponseBody
     public Map<String,String> updateGoods(Goods goods)
@@ -183,6 +189,7 @@ public class GoodsController extends BaseController{
     }
 
     //获取所有商品列表
+    @AdminLogin
     @RequestMapping("/listpage")
     public String getgoddslist(Model model)
     {
@@ -193,6 +200,7 @@ public class GoodsController extends BaseController{
     }
 
     //获取所有商品列表，分页
+    @AdminLogin
     @RequestMapping("/goodslist")
     @ResponseBody
     public String getListPage(Integer pageNumber,Integer pageSize ,Model model)
@@ -208,6 +216,7 @@ public class GoodsController extends BaseController{
 
 
     //进入商品上架
+    @AdminLogin
     @RequestMapping("/goodsload/{goodsid}")
     public String togoodsload(@PathVariable Integer goodsid,Model model)
     {
@@ -222,6 +231,7 @@ public class GoodsController extends BaseController{
     }
 
     //商品上架
+    @AdminLogin
     @RequestMapping(value = "/goodsload" , method = RequestMethod.POST)
     public String goodsload(HttpServletRequest request,Model model)
     {
@@ -250,6 +260,7 @@ public class GoodsController extends BaseController{
     }
 
     //商品下架  (shelf)
+    @AdminLogin
     @RequestMapping("/under/{goodsid}")
     public String goodsunder(@PathVariable Integer goodsid,Model model)
     {
@@ -266,6 +277,7 @@ public class GoodsController extends BaseController{
 
 
     //商品删除
+    @AdminLogin
     @Transactional(rollbackFor = Exception.class)
     @RequestMapping("goodsdel")
     @ResponseBody
@@ -283,6 +295,7 @@ public class GoodsController extends BaseController{
     }
 
     //获取图片地址
+    @AdminLogin
     @RequestMapping("getGoodsPic/{goodsid}")
     public String getPic(@PathVariable Integer goodsid , Model model)
     {
@@ -293,6 +306,7 @@ public class GoodsController extends BaseController{
     }
 
     //选择商品上传图片(跳转)
+    @AdminLogin
     @RequestMapping("/idupload")
     public String gouploadpic(HttpServletRequest request,Model model,String id)
     {
@@ -302,6 +316,7 @@ public class GoodsController extends BaseController{
     }
 
     //商品图片上传
+    @AdminLogin
     @RequestMapping(value="/goodsUpload/{goodsid}",method = RequestMethod.POST)
     @ResponseBody
     public String goodsUpload(@PathVariable String goodsid , @RequestParam("file") MultipartFile file) {
@@ -342,6 +357,7 @@ public class GoodsController extends BaseController{
      * 读取上传文件中得所有文件并返回
      * @return
      */
+    @AdminLogin
     @RequestMapping("list")
     public ModelAndView list() {
         String filePath = request.getSession().getServletContext().getRealPath("/") + "upload/";
@@ -358,6 +374,7 @@ public class GoodsController extends BaseController{
 
 
     //商品图片删除   (ajax)//刷新问题
+    @AdminLogin
     @RequestMapping("/deletepic_json")   //goodsid?
     //@ResponseBody
     public String deletePicForJson(@RequestBody String json,Model model)
@@ -385,6 +402,7 @@ public class GoodsController extends BaseController{
      * @param model
      * @return
      */
+    @AdminLogin
     @RequestMapping("/deletepic")   //goodsid?
     @ResponseBody
     public boolean deletePic(String imageid,Model model)
@@ -403,7 +421,7 @@ public class GoodsController extends BaseController{
      * @param imgName
      * @return
      */
-
+    @AdminLogin
     @RequestMapping("/deletePicForAdd")   //goodsid?
     @ResponseBody
     public boolean deletePicForAdd(String imgName)
@@ -423,6 +441,7 @@ public class GoodsController extends BaseController{
      * @param session
      * @return
      */
+    @AdminLogin
     @RequestMapping("/toGoodsList")
     public ModelAndView toGoodsList(HttpServletRequest req,HttpSession session){
         Map<String,Integer> data = new HashMap<String, Integer>();
@@ -437,12 +456,14 @@ public class GoodsController extends BaseController{
      * @param session
      * @return
      */
+    @AdminLogin
     @RequestMapping("/toGoodsList2")
     public String toGoodsList2(HttpServletRequest req,HttpSession session){
 
         return "admin/goodslist";
     }
 
+    @AdminLogin
     @RequestMapping("/toGoodDetail")
     public String toGoodsDetail(HttpServletRequest req,HttpSession session,Integer id){
         //判断参数合法性
