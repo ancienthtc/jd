@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -61,9 +62,10 @@ public class GoodsController extends BaseController{
             if (!file.isEmpty()) {
                 try {
                     // 文件保存路径
-                    filePath = request.getSession().getServletContext().getRealPath("/") + "upload/" + title;
+                    filePath = request.getSession().getServletContext().getRealPath("/") + "cacheForImg/" + title;
                     // 转存文件
                     file.transferTo(new File(filePath));
+
                     return title;
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -103,7 +105,13 @@ public class GoodsController extends BaseController{
             if(!StringUtils.isBlank(imgName)){
                 String[] str = imgName.split(",");
                 for (String s:str) {
+                    //将缓存区的图片复制到图片区
+                    String path = request.getSession().getServletContext().getRealPath("/") + "cacheForImg/"+s;
                     String newPath = request.getSession().getServletContext().getRealPath("/") + "upload/"+s;
+                    boolean boo = pictureService.copyImg(path,newPath);
+                    if(boo==false){
+                        return null;
+                    }
                     String serverPath=request.getSession().getServletContext().getRealPath("/") + "upload";
                     Image image=pictureService.goodsAndpicture(String.valueOf(good.getId()),s,newPath,serverPath);
                     if(image==null){

@@ -52,7 +52,9 @@ goodAdd.event = function(){
                  complete : function() {// 只要完成即执行，最后执行
 
                  },
-                 success : function(data, status) {// 服务器成功响应处理函数
+                 success : function(data) {// 服务器成功响应处理函数
+                     /*data = $.parseJSON(jquery(data).text());*/
+                     /*data = $.parseJSON(data.replace(/<.*?>/ig,""));*/
                      console.log(data);
                      //将返回后的图片名存入隐藏域,便于后期处理图片
                      $(goodAdd.imgidspan).html(data);

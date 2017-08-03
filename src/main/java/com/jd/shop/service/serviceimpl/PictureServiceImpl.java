@@ -58,7 +58,7 @@ public class PictureServiceImpl implements PictureService {
             throw new RuntimeException("参数不能为空");
         }
         try {
-            fos = new FileOutputStream(newPath+"title");//复制文件
+            fos = new FileOutputStream(newPath);//复制文件
             fis = new FileInputStream(path);//源文件
             byte[] buf = new byte[1024];//缓冲区
             int len = 0;
