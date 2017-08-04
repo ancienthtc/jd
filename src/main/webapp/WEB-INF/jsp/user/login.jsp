@@ -21,7 +21,7 @@
         <h1>欢迎登录XX商城</h1>
     </div>
     <div align="center">
-        <form name="form1" action="<%=basePath %>/login/ton " method="post" >
+        <form name="form1" action="<%=basePath %>login/ton " method="post" >
             <table width="300" border="1" align="center">
                 <tr>
                     <td colspan="2">登入窗口</td>
@@ -41,7 +41,7 @@
                         <input type="submit" name="submit" value="登录"/>
                     </td>
                     <td>
-                        <input type="button" value="注册" onclick="window.location.href='<%=basePath %>/login/reg'">
+                        <input type="button" value="注册" onclick="window.location.href='<%=basePath %>login/reg'">
                     </td>
                 </tr>
             </table>

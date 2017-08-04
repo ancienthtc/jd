@@ -17,16 +17,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>注册</title>
     <script src="/JDWebShop/js/date.js" type="text/javascript"></script>
-    <!--  -->
-    <script type="text/javascript">
-        //添加用户
-        function addUser() {
-            var form = document.forms[0];
-            form.action = "${pageContext.request.contextPath}/user/register";
-            form.method = "post";
-            form.submit();
-        }
-    </script>
+
     <style type="text/css">
         *{margin:0;padding:0;list-style-type:none;}
         a,img{border:0;}
@@ -83,77 +74,124 @@
             background-color:#5a88c8;
         }
     </style>
+
 </head>
 <body>
     <div>
         <header> &gt;&gt; **商城用户注册系统</header>
 
     </div>
-    <div>
-        <form  class="reg-form" action="" method="post"><!-- action="/JDWebShop/user/register" method="post" -->
-            <table>
-                <tr>
-                    <td>用&nbsp;户&nbsp;名&nbsp;&nbsp;</td>
-                    <td>
-                        <input type="text" name="nickname"  class="uid"
-                               easyform="length:4-16;char-normal;real-time;"
-                               message="用户名必须为4—16位的英文字母或数字"
-                               easytip="disappear:lost-focus;theme:blue;"
-                               ajax-message="用户名已存在!">
-                    </td>
-                </tr>
 
-                <tr>
-                    <td>密&nbsp;&nbsp;&nbsp;&nbsp;码&nbsp;&nbsp;</td>
-                    <td>
-                        <input type="text" name="tel" class="psw1" easyform="length:6-16;"
-                               message="密码必须为6—16位" easytip="disappear:lost-focus;theme:blue;">
-                    </td>
-                </tr>
+    <div id="user">
+        <form id="userForm">
+            <div class="btGroup">
+                <label>用户名</label>
+                <input type="text" class="form-control" name="nickname" id="nickname"/>
+                <span class="tips"></span>
+            </div>
+            <div class="btGroup">
+                <label>密码</label>
+                <input type="password" class="form-control" name="pass" id="pass"/>
+                <span class="tips"></span>
+            </div>
 
-                <tr>
-                    <td>确认密码&nbsp;&nbsp;</td>
-                    <td>
-                        <input type="password" name="pass" class="psw2" easyform="length:6-16;equal:#psw1;"
-                               message="两次密码输入要一致" easytip="disappear:lost-focus;theme:blue;">
-                    </td>
-                </tr>
-                <tr>
-                    <td>email</td>
-                    <td><input name="email" type="text" class="email" easyform="email;real-time;" message="Email格式要正确" easytip="disappear:lost-focus;theme:blue;" ajax-message="这个Email地址已经被注册过，请换一个吧!"></td>
-                </tr>
-                <tr>
-                    <td>生&nbsp;&nbsp;&nbsp;&nbsp;日&nbsp;&nbsp;</td>
-                    <td>
-                        <input type="text" name="birth" onfocus="HS_setDate(this)">
-                    </td>
-                </tr>
+            <div class="btGroup">
+                <label>确认密码</label>
+                <input type="password" class="form-control" id="repass"/>
+                <span class="tips"></span>
+            </div>
 
-                <tr>
-                    <td style="line-height: 30px;">性&nbsp;&nbsp;&nbsp;&nbsp;别&nbsp;&nbsp;</td>
-                    <td>
-                        &nbsp;&nbsp;男<input type="radio" name="sex" value="男" checked="checked">&nbsp;&nbsp;
-                        女<input type="radio" name="sex" value="女">&nbsp;&nbsp;
-                        保密<input type="radio" name="sex" value="保密">
-                    </td>
-                </tr>
+            <div class="btGroup">
+                <label>手机</label>
+                <input type="text" class="form-control" name="tel" />
+                <span class="tips"></span>
+            </div>
 
-                <tr>
-                    <td>居&nbsp;住&nbsp;地&nbsp;&nbsp;</td>
-                    <td>
-                        <input type="text" name="live">
-                    </td>
-                </tr>
+            <div id="cover" class="btGroup">
+                <label>生日:</label>
+                <input type="text" class="form-control" name="birth" id="datetimepicker"/>
+            </div>
 
-                <tr>
-                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    <td style="padding: 30px;">
-                        <input type="button" value="提交" onclick="addUser()">
-                    </td>
-                </tr>
+            <div class="btGroup">
+                <label>性别</label>
+                <select class="form-control" name="sex">
+                    <option value="男" selected="selected">男</option>
+                    <option value="女" >女</option>
+                </select>
+            </div>
 
-            </table>
+            <div class="btGroup">
+                <label>居住地</label>
+                <input type="text" class="form-control" name="live"/>
+                <span class="tips"></span>
+            </div>
+
+            <!-- 添加产品 -->
+            <p class="text-center">
+                <a href="javascript:void(0);" class="btnGreen" data-btn="Save">保存</a>
+            </p>
         </form>
     </div>
+
+
+    <%--<script src="<%=basePath%>js/jquery-3.1.1.js"></script>--%>
+    <script src="../static/libs/jquery/jquery.min.js"></script>
+    <!-- 时间选择器 -->
+    <script src="../static/libs/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+    <script src="../static/libs/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="../static/libs/file/ajaxfileupload.js"></script>
+    <!-- 提示框的js -->
+    <script src="../static/libs/messenger/js/messenger.min.js"></script>
+    <script src="../static/util/imessenger.js"></script>
+    <!-- 确认框的js -->
+    <script src="../static/libs/jquery-confirm/jquery-confirm.js"></script>
+    <!-- 封装的iForm -->
+    <script src="../static/util/iform.js"></script>
+
+    <!-- layer -->
+    <script type="text/javascript" src="<%=basePath%>js/layer.js" ></script>
+
+    <script>
+        $('#datetimepicker').datetimepicker({
+            language: 'zh-CN', //显示中文
+            format: 'yyyy-mm-dd', //显示格式
+            minView: "month", //设置只显示到月份
+            initialDate: new Date(), //初始化当前日期
+            autoclose: true, //选中自动关闭
+        });
+    </script>
+
+    <script type="text/javascript">
+
+        $('[data-btn="Save"]').click(function(){
+            var datas = iform.parseForm('userForm');
+            datas.sex = $('#userForm').find("option:selected").attr("value");
+            $.ajax({
+                url:"../user/register",
+                data:datas,
+                type:"post",
+                dataType:"json",
+                success:function(data){
+                    if(data=="0")
+                    {
+                        alert("注册失败!");
+                    }
+                    else if(data=="-1")
+                    {
+                        alert("用户名已存在!");
+                    }
+                    else if(data=="1")
+                    {
+                        alert("注册成功!");
+                        window.location.href="<%=basePath%>login/login";
+                    }
+                },
+                error:function () {
+                    alert("请求失败");
+                }
+            })
+        })
+    </script>
+
 </body>
 </html>

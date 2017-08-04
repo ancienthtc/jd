@@ -40,6 +40,15 @@
     FROM t_user
   </select>
 
+  <select id="username" resultType="java.lang.String" parameterType="java.lang.String">
+    SELECT
+    nickname
+    FROM
+    t_user
+    where nickname=#{nickname,jdbcType=VARCHAR}
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_user
     where id = #{id,jdbcType=INTEGER}

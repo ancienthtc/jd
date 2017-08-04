@@ -57,6 +57,20 @@
     <!--
     <mvc:default-servlet-handler />
     -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
     <mvc:annotation-driven />
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/*"/>
+            <mvc:mapping path="/part/*"/>
+            <mvc:mapping path="/goods/*"/>
+            <mvc:mapping path="/admin/*"/>
+            <mvc:mapping path="/user/*"/>
+            <mvc:exclude-mapping path="/logon/admin"/>
+            <bean class="com.jd.shop.filter.AdminInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
 </beans>

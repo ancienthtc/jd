@@ -1,5 +1,6 @@
 package com.jd.shop.controller;
 
+import com.jd.shop.annotation.AdminLogin;
 import com.jd.shop.model.Admin;
 import com.jd.shop.model.User;
 import com.jd.shop.service.PartService;
@@ -85,6 +86,7 @@ public class LoginController extends BaseController{
      * @param model
      * @return
      */
+    @AdminLogin
     @RequestMapping(value = "/alogin" , method = RequestMethod.POST)
     public String adminlogin(@RequestParam(value = "admin") String admin, @RequestParam(value = "pass") String pass , HttpServletRequest request,Model model)
     {

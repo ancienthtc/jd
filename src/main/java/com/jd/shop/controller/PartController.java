@@ -1,6 +1,7 @@
 package com.jd.shop.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.jd.shop.annotation.AdminLogin;
 import com.jd.shop.model.Goods;
 import com.jd.shop.model.Image;
 import com.jd.shop.model.Part;
@@ -37,6 +38,7 @@ public class PartController extends BaseController{
     private HttpServletRequest request;
 
     //查询所有板块后跳转
+    @AdminLogin
     @RequestMapping("/list")
     public String getPartlist(Model model) {
 //        List<Part> parts = partService.getAll();
@@ -45,6 +47,7 @@ public class PartController extends BaseController{
     }
 
     //分页查询所有板块 分页
+    @AdminLogin
     @RequestMapping("/list_get")
     @ResponseBody
     public String selectPartList(Integer pageNo, Integer pageSize , Model model)
@@ -59,6 +62,7 @@ public class PartController extends BaseController{
     }
 
     //板块添加
+    @AdminLogin
     @RequestMapping(value = "/add" , method = RequestMethod.POST)
     @ResponseBody
     public Map<String,String> addPart(@RequestBody Part part)
@@ -77,6 +81,7 @@ public class PartController extends BaseController{
     }
 
     //板块添加
+    @AdminLogin
     @RequestMapping("/partadd")
     public String goPartAdd()
     {
@@ -84,6 +89,7 @@ public class PartController extends BaseController{
     }
 
     //进入板块修改
+    @AdminLogin
     @RequestMapping(value = "/alter" )
     @Deprecated
     public String toalter(Integer pid,Model model)
@@ -94,6 +100,7 @@ public class PartController extends BaseController{
     }
 
     //板块修改
+    @AdminLogin
     @RequestMapping(value = "/update" , method = RequestMethod.POST )
     @ResponseBody
     public Map<String,String> alterPart(Part part)
@@ -116,6 +123,7 @@ public class PartController extends BaseController{
 
     //首页获得板块和商品
     //返回json串
+    @AdminLogin
     @RequestMapping("/all")
     @ResponseBody
     public String getinfo(HttpServletResponse response)
@@ -139,6 +147,7 @@ public class PartController extends BaseController{
     }
 
     //板块图片删除
+    @AdminLogin
     @RequestMapping("/picdel")
     @ResponseBody
     public boolean partPicDel(Integer pid)
@@ -152,6 +161,7 @@ public class PartController extends BaseController{
     }
 
     //板块删除(异步)
+    @AdminLogin
     @RequestMapping("/partdel")
     @ResponseBody
     public String deletePart(Integer pid)
@@ -169,8 +179,8 @@ public class PartController extends BaseController{
     }
 
 
-
     //板块添加图片(添加1张)
+    @AdminLogin
     @RequestMapping("/picupload/{partid}")
     //@ResponseBody
     public void partUploadPic(@PathVariable Integer partid , @RequestParam("file") MultipartFile file)
@@ -202,6 +212,7 @@ public class PartController extends BaseController{
         //return pictureService.partPicdel(partid,serverPath);
     }
 
+    @AdminLogin
     @RequestMapping("/deletepic")   //goodsid?
     @ResponseBody
     public boolean deletePic(Integer pid,Model model)
@@ -218,6 +229,7 @@ public class PartController extends BaseController{
 
 
     //进入板块列表
+    @AdminLogin
     @RequestMapping("/toPartList")
     public String toPartList(HttpServletRequest req,HttpSession session){
 
@@ -225,6 +237,7 @@ public class PartController extends BaseController{
     }
 
     //进入板块细节(板块修改)
+    @AdminLogin
     @RequestMapping("/partDetail")
     public String getPartDetail(HttpServletRequest req,Integer id)
     {
