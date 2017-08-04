@@ -62,6 +62,70 @@ good.event = function(){
 
     });
 
+    /*设置上架*/
+    $("#dataGridTableJson").on("click",".icon-putaway",function(){
+        var $this = $(this);
+        var id = $(this).parent().prevAll("span").text();
+        $.ajax({
+            url:"../goods/goodsload",
+            data:{"goodId":id},
+            type:"post",
+            dataType:"json",
+            success:function(data){
+                if(data.msg=="true"){
+                    imessenger.success("上架成功");
+                    $.ajax({
+                        url:"../goods/toGoodsList2",
+                        type:"get",
+                        dataType:"html",
+                        success:function(data){
+                            $("#contentBoxId").html(data);
+                        },
+                        error:function(){
+                            alert("页面出错");
+                        }
+                    });
+                }else{
+                    imessenger.error(data.msg);
+                }
+            },
+            error:function(){
+                alert("请求失败");
+            }
+        })
+    })
+
+    /*设置下架*/
+    $("#dataGridTableJson").on("click",".icon-soldout",function(){
+        var id = $(this).parent().prevAll("span").text();
+        $.ajax({
+            url:"../goods/under/"+id,
+            type:"post",
+            dataType:"json",
+            success:function(data){
+                if(data.msg=="true"){
+                    imessenger.success("下架成功");
+                    $.ajax({
+                        url:"../goods/toGoodsList2",
+                        type:"get",
+                        dataType:"html",
+                        success:function(data){
+                            $("#contentBoxId").html(data);
+                        },
+                        error:function(){
+                            alert("页面出错");
+                        }
+                    });
+                }else{
+                    imessenger.error(data.msg);
+                }
+            },
+            error:function(){
+                alert("请求失败");
+            }
+        })
+    })
+
     /*添加商品*/
     $('[data-btn="addNew"]').click(function(){
         $.ajax({
@@ -148,6 +212,11 @@ $(function(){
                     $(tr).append('<td>'+'<span class="iconfont icon-view"></span>'+'</td>');
                     $(tr).append('<td>'+'<span class="iconfont icon-del"></span>'+'</td>');
                     $(tr).append('<span  style="display:none">'+row.id+'</span>');
+                    if(row.shelf==""){
+                        $(tr).append('<td>'+' <i class="iconfont icon-putaway" data-toggle="tooltip" data-placement="bottom" title="上架" ></i>'+'</td>');
+                    }else{
+                        $(tr).append('<td>'+' <i class="iconfont icon-soldout" data-toggle="tooltip" data-placement="bottom" title="下架" ></i>'+'</td>');
+                    }
 	    			$(tb).append(tr);
 	    		});
 	    	}

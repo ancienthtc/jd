@@ -72,6 +72,7 @@
                 <th>上架日期</th>
                 <th>修改</th>
                 <th>删除</th>
+                <th>上/下架</th>
                <%-- <th class="selectColumn" >选择</th>
                 <th>板块名称</th>
                 <th>价格</th>

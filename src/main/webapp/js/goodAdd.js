@@ -24,6 +24,8 @@ goodAdd.event = function(){
 
     /*商品图片添加*/
     $('#imgBox').on('change','input[type="file"]',function(e) {
+        var val =  $(this).nextAll("input").val();
+        $(this).nextAll("input").val("1");
         var imgid ;
         //判断图片的类型是否正确
         var img = $(this).val();
@@ -75,9 +77,11 @@ goodAdd.event = function(){
             $('#imgBox .tips').text('');
             //判断个数
             //var count = $('#imgBox').children('.photos').length;
-            if(goodAdd.count <= 5) {
-                $('#imgBox').append('<div class="photos"><span style="display: none"></span><div class="img" style="background-image: none"></div><div class="mask"></div><i class="iconfont icon-add"></i><input class="listImg2" type="file" name="file" id="listImg'+(goodAdd.count+1)+'"><div class="btnBox"><i class="iconfont icon-del"></i></div></div> <input type="hidden" class="listImg1" id="listImg'+(goodAdd.count+1)+'2">');
-                goodAdd.count=goodAdd.count+1;
+            if(val==2){
+                if(goodAdd.count <= 5) {
+                    $('#imgBox').append('<div class="photos"><span style="display: none"></span><div class="img" style="background-image: none"></div><div class="mask"></div><i class="iconfont icon-add"></i><input class="listImg2" type="file" name="file" id="listImg'+(goodAdd.count+1)+'"><div class="btnBox"><i class="iconfont icon-del"></i></div><input type="hidden" value="2" class="listImg1" id="listImg'+(goodAdd.count+1)+'2"></div> ');
+                    goodAdd.count=goodAdd.count+1;
+                }
             }
         }
     })
@@ -115,7 +119,7 @@ goodAdd.event = function(){
                     $(id).remove();
                     $this.parents('.photos').remove();
 
-                    $('#imgBox').append('<div class="photos"><span  style="display: none"></span><div class="img" style="background-image: none"></div><i class="iconfont icon-add"></i><input type="file" name="file" id="listImg2"/><div class="btnBox"><i class="iconfont icon-del"></i></div></div><input  type="hidden" class="listImg2" />');
+                    $('#imgBox').append('<div class="photos"><span  style="display: none"></span><div class="img" style="background-image: none"></div><i class="iconfont icon-add"></i><input type="file" name="file" id="listImg2"/><div class="btnBox"><i class="iconfont icon-del"></i></div><input  type="hidden" value="2" class="listImg2" /></div>');
                 } else {
                     var id=$this.parents('.photos').find("input").attr('id');
                     var id="#"+id;

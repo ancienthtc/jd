@@ -21,6 +21,8 @@ goodDetail.event = function(){
 
     //轮播图的添加
     $('#imgBox').on('change','input[type="file"]',function(e) {
+        var val =  $(this).nextAll("input").val();
+        $(this).nextAll("input").val("1")
         var datas = iform.parseForm('goodDetailForm');
         var id = datas.id/*$(this).parents("form").children("span").eq(0).text()*/;
         var imgid ;
@@ -72,9 +74,12 @@ goodDetail.event = function(){
             $('#imgBox .tips').text('');
             //判断个数
             //var count = $('#imgBox').children('.photos').length;
-            if(goodDetail.count <= 5) {
-                $('#imgBox').append('<div class="photos"><span style="display: none"></span><div class="img" style="background-image: none"></div><div class="mask"></div><i class="iconfont icon-add"></i><input type="file" name="file" id="listImg'+(goodDetail.count+1)+'"><div class="btnBox"><i class="iconfont icon-del"></i></div></div><input type="hidden" class="listImg2" id="listImg'+(goodDetail.count+1)+'2">');
-                goodDetail.count=goodDetail.count+1;
+            if(val==2){
+                if(goodDetail.count <= 5) {
+                    $('#imgBox').append('<div class="photos"><span style="display: none"></span><div class="img" style="background-image: none"></div><div class="mask"></div><i class="iconfont icon-add"></i><input type="file" name="file" id="listImg'+(goodDetail.count+1)+'"><div class="btnBox"><i class="iconfont icon-del"></i></div><input type="hidden" value="2" class="listImg2" id="listImg'+(goodDetail.count+1)+'2"></div>');
+                    goodDetail.count=goodDetail.count+1;
+                }
+
             }
         }
     })
@@ -112,7 +117,7 @@ goodDetail.event = function(){
                     $(id).remove();
                     $this.parents('.photos').remove();
 
-                    $('#imgBox').append('<div class="photos"><span  style="display: none"></span><div class="img" style="background-image: none"></div><i class="iconfont icon-add"></i><input type="file" name="file" id="listImg2"/><div class="btnBox"><i class="iconfont icon-del"></i></div></div><input  type="hidden" class="listImg2" />');
+                    $('#imgBox').append('<div class="photos"><span  style="display: none"></span><div class="img" style="background-image: none"></div><i class="iconfont icon-add"></i><input type="file" name="file" id="listImg2"/><div class="btnBox"><i class="iconfont icon-del"></i></div><input  type="hidden" value="2" class="listImg2" /></div>');
                 } else {
                     var id=$this.parents('.photos').find("input").attr('id');
                     var id="#"+id;
