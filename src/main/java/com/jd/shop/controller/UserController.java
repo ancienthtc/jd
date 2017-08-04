@@ -8,11 +8,13 @@ import com.jd.shop.util.PagedResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 /**
  * Created by ThinkPad on 2017/7/6.
@@ -25,31 +27,48 @@ public class UserController extends BaseController{
     @Autowired
     private UserService userService;
 
+    //用户注册
     @RequestMapping(value = "register" , method = RequestMethod.POST)
-    public String register(User user, HttpServletRequest request , Model model) throws Exception
+    @ResponseBody
+    public String register( User user, HttpServletRequest request , Model model) throws Exception
     {
         //impleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
-        String nickname=request.getParameter("nickname");//昵称(not null)
-        String tel=request.getParameter("tel");//手机(not null)
-        String birth=request.getParameter("birth"); //生日
-        String sex=request.getParameter("sex");//性别
-        String live=request.getParameter("live");//居住地
-        String pass=request.getParameter("pass");//密码(not null)
+//        String nickname=request.getParameter("nickname");//昵称(not null)
+//        String tel=request.getParameter("tel");//手机(not null)
+//        String birth=request.getParameter("birth"); //生日
+//        String sex=request.getParameter("sex");//性别
+//        String live=request.getParameter("live");//居住地
+//        String pass=request.getParameter("pass");//密码(not null)
+        String nickname=user.getNickname();
+        String tel=user.getTel();
+        Date birth=user.getBirth();
+        String sex=user.getSex();
+        String live=user.getLive();
+        String pass=user.getPass();
 
         if(nickname==null || nickname.equals("") || tel==null || tel.equals("") || pass==null || pass.equals(""))
         {
             model.addAttribute("message","注册失败");
-            return "user/login";
+            //return "user/login";
+            return "0";
         }
-        if(userService.insertSelective(user) != 0 )
+        int i=userService.insertSelective(user);
+        if(i > 0 )
         {
             model.addAttribute("message","注册成功");
+            return "1";
+        }
+        else if(i < 0)
+        {
+            model.addAttribute("message","用户名已存在");
+            return "-1";
         }
         else
         {
             model.addAttribute("message","注册失败");
+            return "0";
         }
-        return "user/login";
+        //return "user/login";
     }
 
     //进入用户列表

@@ -67,6 +67,7 @@
             <mvc:mapping path="/part/*"/>
             <mvc:mapping path="/goods/*"/>
             <mvc:mapping path="/admin/*"/>
+            <mvc:mapping path="/user/*"/>
             <mvc:exclude-mapping path="/logon/admin"/>
             <bean class="com.jd.shop.filter.AdminInterceptor"/>
         </mvc:interceptor>

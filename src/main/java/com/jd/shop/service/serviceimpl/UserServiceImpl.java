@@ -10,6 +10,7 @@ import com.jd.shop.util.PagedResult;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by ThinkPad on 2017/7/6.
@@ -23,10 +24,19 @@ public class UserServiceImpl implements UserService{
 
     //注册
     public int insertSelective(User user) {
-        //MD5 密码加密
-        user.setPass(Md5Utils.string2MD5(user.getPass()));
+        //验证nickname是否重复
+        List<String> nicknames=userMapper.username(user.getNickname());
+        if(nicknames.isEmpty())
+        {
+            //MD5 密码加密
+            user.setPass(Md5Utils.string2MD5(user.getPass()));
+            return userMapper.insertSelective(user);
+        }
+        else
+        {
+            return -1;
+        }
 
-        return userMapper.insertSelective(user);
     }
 
     //获取用户列表 分页
