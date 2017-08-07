@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.jd.shop.annotation.AdminLogin;
 import com.jd.shop.model.User;
 import com.jd.shop.service.UserService;
+import com.jd.shop.util.DateUtil;
 import com.jd.shop.util.PagedResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 /**
@@ -90,5 +92,24 @@ public class UserController extends BaseController{
         String json= JSON.toJSONString(parts);
         return json;
     }
+
+
+    /**
+     * 跳转至用户个人中心页面
+     * @return
+     */
+    @RequestMapping("/toShopCenter")
+    public String toShopCenter(HttpSession session,HttpServletRequest req){
+        User user = (User)session.getAttribute("user");
+        req.setAttribute("user",user);
+        String loginDate = DateUtil.getStringDate(user.getLogin(),2);
+        req.setAttribute("loginDate",loginDate);
+        return "user/shopCenter";
+    }
+
+    public void updatePersonalInfo(){
+
+    }
+
 
 }

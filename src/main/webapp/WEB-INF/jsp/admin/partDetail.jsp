@@ -33,9 +33,10 @@
             <span class="tips"></span>
         </div>
         <div class="btGroup">
-            <label>类型</label>
+            <label>类型:</label>
             <input type="text" class="form-control" name="type" value="${requestScope.part.type}"/>
             <span class="tips"></span>
+        </div>
             <%--<select class="form-control" id="parentType">
                 <option  selected="selected">请选择分类</option>
                 <option >类别一</option>
@@ -53,7 +54,7 @@
         <%--</div>--%>
 
         <div class="btGroup">
-            <label>优先级</label>
+            <label>优先级:</label>
             <select class="form-control" name="priority">
                 <option value="${requestScope.part.priority}" selected="selected">${requestScope.part.priority}</option>
                 <option value="1" selected="selected">1</option>
@@ -70,7 +71,7 @@
         </div>
 
         <div class="btGroup">
-            <label>描述</label>
+            <label>描述:</label>
             <input type="text" class="form-control" name="describe" value="${requestScope.part.describe}"/>
             <span class="tips"></span>
         </div>
@@ -94,7 +95,7 @@
              <span class="tips"></span>
            </div>--%>
         <div id="imgBox" class="photoGroup" >
-            <label for="">轮播图集合</label>
+            <label for="">轮播图集合:</label>
             <!-- 上限6张 -->
             <c:forEach items="${requestScope.images}"  var="item">
                 <%-- <p>${item.filename}</p>--%>

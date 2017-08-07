@@ -126,7 +126,7 @@
 		<li><a href="index.html"><img src="<%=basePath%>image/biao1.png"/><br />首&nbsp;&nbsp;&nbsp;页</a></li>
 		<li><a herf="#"><img src="<%=basePath%>image/biao2.png" /><br />所有商品</a></li>
 		<li><a herf="#"><img src="<%=basePath%>image/biao3.png" /><br />购&nbsp;物&nbsp;车</a></li>
-		<li><a herf="#"><img src="<%=basePath%>image/biao4.png" /><br />个人中心</a></li>
+		<li><a herf="javascript:void(0)" onclick="window.location.href='<%=basePath%>user/toShopCenter'"><img src="<%=basePath%>image/biao4.png" /><br />个人中心</a></li>
 	</ul>
 </div>
 <!--导航结束-->

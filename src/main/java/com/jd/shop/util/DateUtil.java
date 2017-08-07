@@ -239,7 +239,7 @@ public class DateUtil {
 //		String pattern = "yyyy-MM-dd HH:mm:ss";
 //		return getTimeStampInt(dateTimeSourceStr, size, pattern);
 //	}
-	
+
 	/**
 	 * 
 	    * @Discription 根据传入的默认格式的时间字符串,获取对应的int类型的时间戳
@@ -503,6 +503,29 @@ public class DateUtil {
 		}
 		return 0;
 	}
+
+	/**
+	 * 将对应的Date日期转化为制定格式输出的字符串
+	 * @param date
+	 * @param i
+	 * @return
+	 */
+	public static String getStringDate(Date date,int i){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		switch (i){
+			case 1:{
+				return sdf.format(date);
+			}
+			case 2:{
+				return sdf2.format(date);
+			}
+			default:{
+				return null;
+			}
+		}
+	}
+
 	public static void main(String[] args) {
 		Calendar cal = Calendar.getInstance();
 		System.out.println(getTimeStr10());

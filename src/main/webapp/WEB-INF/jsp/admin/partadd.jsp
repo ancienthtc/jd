@@ -74,6 +74,33 @@
             display:block;outline:none;text-shadow:0 1px 1px #777;float:left;
             margin-top: 10px;}
         #submit:hover {background-color:#d8d8d8;color:#666;text-shadow:1px 1px 1px #fff;}
+
+        .file {
+            position: relative;
+            display: inline-block;
+            background: #D0EEFF;
+            border: 1px solid #99D3F5;
+            border-radius: 4px;
+            padding: 4px 12px;
+            overflow: hidden;
+            color: #1E88C7;
+            text-decoration: none;
+            text-indent: 0;
+            line-height: 20px;
+        }
+        .file input {
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+        }
+        .file:hover {
+            background: #AADFFD;
+            border-color: #78C3F3;
+            color: #004974;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -84,34 +111,50 @@
 <div>
     <form id="form" method="post">
         <table class="biaoge">
-            <tr>
-                <th>板块名称&nbsp;</th>
-                <td><input type="text" name="pname" ></td>
-            </tr>
+            <div>
+                <tr>
+                    <th>板块名称&nbsp;</th>
+                    <td><input type="text" name="pname" ></td>
+                </tr>
+            </div>
 
-            <tr>
-                <th>板块类型&nbsp;</th>
-                <td><input type="text" name="type" ></td>
-            </tr>
+            <div>
+                <tr>
+                    <th>板块类型&nbsp;</th>
+                    <td><input type="text" name="type" ></td>
+                </tr>
+            </div>
+            <div>
+                <tr>
+                    <th>优先级&nbsp;</th>
+                    <td>
+                        <select name="priority" class="youxianji">
+                            <%
+                                for (n=0;n<=10;n++)
+                                {
+                                    out.print("<option value="+n+">"+n+"</option>");
+                                }
+                            %>
+                        </select>
+                    </td>
+                </tr>
+            </div>
 
-            <tr>
-                <th>优先级&nbsp;</th>
-                <td>
-                    <select name="priority" class="youxianji">
-                        <%
-                            for (n=0;n<=10;n++)
-                            {
-                                out.print("<option value="+n+">"+n+"</option>");
-                            }
-                        %>
-                    </select>
-                </td>
-            </tr>
+            <div>
+                <tr>
+                    <th>板块描述&nbsp;</th>
+                    <td><input type="text" name="describe" ></td>
+                </tr>
+            </div>
 
-            <tr>
-                <th>板块描述&nbsp;</th>
-                <td><input type="text" name="describe" ></td>
-            </tr>
+            <div>
+                <tr>
+                    <a href="javascript:;" class="file">选择文件
+                        <input type="file" name="file" >
+                        <input type="hidden">
+                    </a>
+                </tr>
+            </div>
 
             <tr>
                 <td colspan="2"> <input type="button" value="添加" id="submit" /></td>

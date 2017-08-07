@@ -16,4 +16,6 @@ public interface UserService {
     //获取用户列表(分页)
     PagedResult<User> queryByPage(Integer pageNo, Integer pageSize);
 
+
+
 }
