@@ -55,7 +55,14 @@
     WHERE t_goods.id = #{goodsid,jdbcType=INTEGER}
   </select>
 
-
+  <select id="getGoodsByPart" parameterType="java.lang.Integer" resultType="map">
+    SELECT g.id as gid,g.`name` as gname ,g.price ,i.title
+    FROM t_goods as g
+    LEFT JOIN (SELECT * FROM t_image) as i
+    ON i.image_list=g.piclist_goods
+    WHERE g.part_goods=#{pid,jdbcType=INTEGER}
+    GROUP BY g.id
+  </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_goods

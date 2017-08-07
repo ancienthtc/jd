@@ -30,4 +30,6 @@ public interface PartService {
     boolean partDel(Integer id,String ServerPath);
 
     List<Image> getAllPic(Integer pid);
+
+    List<Map<String,String>> getGoodsByPart(Integer pid);
 }

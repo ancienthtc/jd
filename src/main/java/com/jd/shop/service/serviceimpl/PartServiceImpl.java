@@ -33,6 +33,9 @@ public class PartServiceImpl implements PartService{
     @Resource
     private PicListMapper picListMapper;
 
+    @Resource
+    private GoodsMapper goodsMapper;
+
 
     //所有板块
     public List<Part> getAll() {
@@ -105,6 +108,12 @@ public class PartServiceImpl implements PartService{
     public List<Image> getAllPic(Integer pid) {
         List<Image> image=partMapper.getPartPic(pid);
         return image;
+    }
+
+    //获取的该板块所有商品以及其第一张图片
+    public List<Map<String,String>> getGoodsByPart(Integer pid)
+    {
+        return goodsMapper.getGoodsByPart(pid);
     }
 
 }

@@ -23,7 +23,17 @@
 
 </head>
 <body>
+<div class="location">
+    <span class="title">用户管理</span>
+    <!-- 搜索 -->
+    <form class="search form-inline">
 
+        <%--<input type="text" class="form-control" id="inlineFormInput" placeholder="请输入需要查询的内容" />
+        <a href="javascript:void(0);" class="btnGreen">查询</a>--%>
+        <%--<a href="javascript:void(0);" class="btnGreen" data-btn="addNew">添加</a>--%>
+    </form>
+</div>
+<!-- 此页验证管理员权限，超级管理员能看到删除选项(未做) -->
 
 <div class="row-fluid">
     <div id="pageJsonContent">
