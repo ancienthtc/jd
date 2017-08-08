@@ -28,4 +28,6 @@ public interface GoodsService {
     PagedResult<Goods> queryByPage(Integer pageNo, Integer pageSize);
 
     int goodsDel(Integer goodsid);
+
+    List<Image> getGoodsImgs(Integer piclist);
 }

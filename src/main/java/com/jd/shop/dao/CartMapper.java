@@ -1,7 +1,10 @@
 package com.jd.shop.dao;
 
 import com.jd.shop.model.Cart;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface CartMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +17,9 @@ public interface CartMapper {
     int updateByPrimaryKeySelective(Cart record);
 
     int updateByPrimaryKey(Cart record);
+
+    //new
+    //查询购物车
+    Cart selectCartByUser(@Param("userid") Integer uid);
+
 }

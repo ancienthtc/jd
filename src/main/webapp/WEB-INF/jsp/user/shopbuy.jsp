@@ -12,81 +12,127 @@
 <title>无标题文档</title>
 <!--购物数量加减-->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="js/num-alignment.js"></script>
+	<script type="text/javascript" src="<%=basePath%>js/jquery-3.1.1.js"></script>
+	<script type="text/javascript" src="<%=basePath%>js/user/num-alignment.js"></script>
 <!--购物数量加减结束-->
-<style>
-<!--头部开始-->
-.head{width:100%; height:100px; background:#993;}
-.h_left{ height:100px; margin-left:50px; float:left;}
-.h_left a{color:#000; font-size:16px; text-decoration:none;}
-.h_left a:hover{color:#999; font-size:18px;}
-.h_right{margin-right:150px; margin-top:-5px;  height:100px;}
-.h_right ul{ float:right;}
-.h_right ul li{ float:left; list-style:none; font-size:16px; margin-left:35px;}
-.h_right ul li a{font-size:16px; text-decoration:none; color:#000;}
-.h_right ul li a:hover{font-size:18px; color:#999;}
-<!--搜索框开始-->
-form { 
-margin-top:20px; 
-} 
-#search_box {
-margin-top:-42px;
-margin-left:950px; 
-width: 201px; 
-height: 31px; 
-background: url(http://files.jb51.net/demoimg/200912/bg_search_box.gif); 
-} 
-#search_box #s { 
-float: left; 
-padding: 0; 
-margin: 6px 0 0 6px; 
-border: 0; 
-width: 159px; 
-background: none; 
-font-size: .8em; 
-} 
-#search_box #go { 
-float: right; 
-margin: 3px 4px 0 0; 
-} 
-<!--头部结束-->
-<!--产品开始-->
-<!--introduce开始-->
-.detail{ width:100%;}
-<!--产品结束-->
-<!--分栏开始-->
-.TTSlider{width:980px;margin: 30px auto}
-.TTSlider li{list-style-type:none;float: left;}
-.TTSlider li img{border: none;}
-.TTSliderTitle{background: #FAFAFA;height: 63px;}
-.TTSliderTitle ul{width: 980px;}
-.TTSliderTitle li{width: 140px;height: 63px;position: relative;z-index: 3;left: 0;}
-.TTSliderTitle li div{border-right: 1px solid #C3C5C7;border-top: 1px solid #C3C5C7;left: 0;right: 0;top: 0;bottom: 0;position: absolute;_width:139px;_height:62px}
-.TTSliderTitle .cur div{border: 2px solid #C3C5C7;background: #fff;z-index: 3;border-bottom: none;bottom: -2px;_height:63px;_width:136px}
-.TTSliderTitle .noneBorRight div{border-right: none;}
-.TTSliderTitle li a{display: block;width: 50%;float: left;height: 100%;line-height: 61px;text-decoration: none;overflow: hidden;*width:49%;font-size: 12px; text-align:center; margin-left:30px;}
-.TTSliderTitle li a img{height: 50px;margin: 6px;width: 50px}
+	<style>
+		<!--头部开始-->
+		.head{width:100%; height:100px; background:#993;}
+		.h_left{ height:100px; margin-left:50px; float:left;}
+		.h_left a{color:#000; font-size:16px; text-decoration:none;}
+		.h_left a:hover{color:#999; font-size:18px;}
+		.h_right{margin-right:150px; margin-top:-5px;  height:100px;}
+		.h_right ul{ float:right;}
+		.h_right ul li{ float:left; list-style:none; font-size:16px; margin-left:35px;}
+		.h_right ul li a{font-size:16px; text-decoration:none; color:#000;}
+		.h_right ul li a:hover{font-size:18px; color:#999;}
+		<!--搜索框开始-->
+			form {
+				margin-top:20px;
+			}
+		#search_box {
+			margin-top:-42px;
+			margin-left:950px;
+			width: 201px;
+			height: 31px;
+			background: url(http://files.jb51.net/demoimg/200912/bg_search_box.gif);
+		}
+		#search_box #s {
+			float: left;
+			padding: 0;
+			margin: 6px 0 0 6px;
+			border: 0;
+			width: 159px;
+			background: none;
+			font-size: .8em;
+		}
+		#search_box #go {
+			float: right;
+			margin: 3px 4px 0 0;
+		}
+		<!--头部结束-->
+		<!--产品开始-->
+		<!--introduce开始-->
+			.detail{ width:450px; height:450px; float:left;}
+		.introduce{width:600px; height:450px; float:right;}
+		<!--产品结束-->
+		<!--分栏开始-->
+			.TTSlider{width:980px;margin: 30px auto}
+		.TTSlider li{list-style-type:none;float: left;}
+		.TTSlider li img{border: none;}
+		.TTSliderTitle{background: #FAFAFA;height: 63px;}
+		.TTSliderTitle ul{width: 980px;}
+		.TTSliderTitle li{width: 140px;height: 63px;position: relative;z-index: 3;left: 0;}
+		.TTSliderTitle li div{border-right: 1px solid #C3C5C7;border-top: 1px solid #C3C5C7;left: 0;right: 0;top: 0;bottom: 0;position: absolute;_width:139px;_height:62px}
+		.TTSliderTitle .cur div{border: 2px solid #C3C5C7;background: #fff;z-index: 3;border-bottom: none;bottom: -2px;_height:63px;_width:136px}
+		.TTSliderTitle .noneBorRight div{border-right: none;}
+		.TTSliderTitle li a{display: block;width: 50%;float: left;height: 100%;line-height: 61px;text-decoration: none;overflow: hidden;*width:49%;font-size: 12px; text-align:center; margin-left:30px;}
+		.TTSliderTitle li a img{height: 50px;margin: 6px;width: 50px}
 
-.TTSliderPic{width:1050px;padding: 13px 33px;border: 2px solid #C3C5C7;position: relative;height: 180px;z-index: 1}
-.TTSliderPicList{position: relative;width:100%;overflow: hidden;height:180px;}
-.TTSliderPic ul{position: absolute;display: none;top:3px;left: 0}
-.TTSliderPic ul.show{display: block;}
-.TTSliderPic li img{width:150px }
-.TTSliderPic li{width: 150px;padding: 0 14px;height: 180px;}
-.TTSliderPic li a{display: block;height: 150px;overflow: hidden;}
-.TTSliderPic li p{height: 30px;line-height: 30px;text-align: center;color: #ED0A0A}
-<!--评论开始-->
-.comment h2{ margin-left:50px;}
-.comment table{ margin-left:100px; line-height:30px;}
+		.TTSliderPic{width:1050px;padding: 13px 33px;border: 2px solid #C3C5C7;position: relative;height: 180px;z-index: 1}
+		.TTSliderPicList{position: relative;width:100%;overflow: hidden;height:180px;}
+		.TTSliderPic ul{position: absolute;display: none;top:3px;left: 0}
+		.TTSliderPic ul.show{display: block;}
+		.TTSliderPic li img{width:150px }
+		.TTSliderPic li{width: 150px;padding: 0 14px;height: 180px;}
+		.TTSliderPic li a{display: block;height: 150px;overflow: hidden;}
+		.TTSliderPic li p{height: 30px;line-height: 30px;text-align: center;color: #ED0A0A}
+		<!--评论开始-->
+			.comment h2{ margin-left:50px;}
+		.comment table{ margin-left:100px; line-height:30px;}
 
-<!--底部版权开始-->
-.bottom{width:100%;clear:both;text-align:center;padding:10px 0;line-height:25px;color:#666;border-top:#ddd 1px solid;}
-.footer{ background-color:#999; height:50px; margin-top:260px;}
-.bottom a{margin-top:50px;color:#666; padding-top:30px; margin-left:15px;}
-.bottom a:hover{color:#000;text-decoration:underline;}
-.bottom p{ text-align:center; line-height:25px;}
-</style>
+		<!--底部版权开始-->
+			.bottom{width:100%;clear:both;text-align:center;padding:10px 0;line-height:25px;color:#666;border-top:#ddd 1px solid;}
+		.footer{ background-color:#999; height:50px; margin-top:260px;}
+		.bottom a{margin-top:50px;color:#666; padding-top:30px; margin-left:15px;}
+		.bottom a:hover{color:#000;text-decoration:underline;}
+		.bottom p{ text-align:center; line-height:25px;}
+	</style>
+
+	<!-- 加入购物车script -->
+	<script type="text/javascript">
+            $(document).ready(function(){
+                <!-- 加入购物车 -->
+                $("#addcart").click(function() {
+					var count=$("#buycount").attr("value");
+					var userid=$("#user_id").attr("value");
+                    var goodsid=$("#goods_id").attr("value");
+                    if(userid.length<=0)
+					{
+					    userid='null';
+					}
+                    if(goodsid.length<=0)
+                    {
+                        goodsid='null';
+                    }
+                    var date='{count:'+count+',userid:'+userid+',goodsid:'+goodsid+'}';
+                    $.ajax( {
+                        type : 'POST',
+                        contentType : 'application/json',
+                        url : '<%=basePath%>cart/add',
+                        data : date,
+                        dataType : 'json',
+                        success : function(data) {
+                            //alert(data);
+                            if(data==false)
+							{
+                                alert("添加失败!");
+							}
+							else if(data==true)
+							{
+                                alert("添加成功!");
+							}
+
+                        },
+                        error : function(data) {
+                            alert("错误!")
+                        }
+                    });
+                });
+
+			})
+	</script>
+
 </head>
 
 <body>
@@ -115,20 +161,31 @@ margin: 3px 4px 0 0;
 <div class="detail">
 <div class="box-datouwang">	
 	<div class="bigpic">
-		<img class="bpic" src="img/good2.png"/>
+		<!-- 第一图 -->
+		<img class="bpic" src="<%=basePath%>picture/show?pic=${first.title}"/>
 		<div class="intro">
-        <link href="css/datouwang.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/datouwang.js"></script>
+        <link href="<%=basePath%>css/user/datouwang.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="<%=basePath%>js/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="<%=basePath%>js/user/datouwang.js"></script>
 		</div>
 	</div>
 	<div id="ztbox">
 		<div class="spic">
 			<div id="conter"> 	 
 				<ul>
-				  <li class="on"><img class="smallpic" src="img/good2.png"/><span class="snum"><b></b>/<strong></strong></span></li>
-				  <li><img class="smallpic" src="img/good3.png" /><span class="snum"><b></b>/<strong></strong></span></li>
-				  <li><img class="smallpic" src="img/good4.png"/><span class="snum"><b></b>/<strong></strong></span></li>
+					<!-- 其他图 -->
+					<li class="on">
+						<img class="smallpic" src="<%=basePath%>picture/show?pic=${first.title}"/><span class="snum">
+						<b></b>/<strong></strong></span>
+					</li>
+					<c:forEach var="imgs" items="${imgs}">
+						<li>
+							<img class="smallpic" src="<%=basePath%>picture/show?pic=${imgs.title}"><span class="snum">
+						<b></b>/<strong></strong></span>
+						</li>
+					</c:forEach>
+					<%--<li><img class="smallpic" src="img/good3.png" /><span class="snum"><b></b>/<strong></strong></span></li>--%>
+					<%--<li><img class="smallpic" src="img/good4.png"/><span class="snum"><b></b>/<strong></strong></span></li>--%>
 				</ul>	
 			</div>
 		</div>
@@ -138,23 +195,28 @@ margin: 3px 4px 0 0;
 <div class="introduce">
 <table border="1" style="float:right; width:600px; height:300px; margin-top:-450px; margin-right:350px; text-align:center;">
   <tr>
-    <td colspan="2"><h2 style=" margin-left:-185px;">赵丽颖同款长裙</h2></td>
-    
+    <td colspan="2"><h2 style=" margin-left:-185px;font-size: 32px">${goods.name}</h2></td>
+
   </tr>
   <tr>
-    <td><h4>单&nbsp;&nbsp;价</h4></td>
-    <td><h4 style="margin-left:-280px;">￥138.00</h4></td>
+    <td><h4 style="font-size: 25px">单&nbsp;&nbsp;价</h4></td>
+    <td><h4 style="margin-left:-280px;font-size: 25px">${goods.price}</h4></td>
   </tr>
   <tr>
-    <td><h4>购物数量</h4></td>
-    <td><input id="5" data_step="1" data_min="1" data_max="100" data_digit="0" value="1" style="width:80px; padding-left:130px;"/></td>
+    <td><h4 style="font-size: 25px">购物数量</h4></td>
+    <td><input id="buycount" data_step="1" data_min="1" data_max="100" data_digit="0" value="1" style="width:80px;height: 25px; padding-left:130px;"/></td>
   </tr>
   <tr>
     <td><input type="button" name="buy" value="购买"></td>
-    <td><input type="button" name="add" value="加入购物车" style="margin-left:-280px;"></td>
+    <td><input type="button" name="add" id="addcart" value="加入购物车" style="margin-left:-280px;"></td>
   </tr>
-</table>
 
+	<%--<input type="hidden" name="user_id" value="${sessionScope.User.id}" />--%>
+	<%--<input type="hidden" name="goods_id" value="${goods.id}"/>--%>
+	<span id="user_id" value="${sessionScope.User.id}" style="display:none"></span>
+	<span id="goods_id" value="${goods.id}" style="display:none"></span>
+
+</table>
 </div>
 </div>
 <!--滚动图结束-->

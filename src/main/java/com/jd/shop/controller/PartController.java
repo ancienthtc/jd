@@ -141,7 +141,7 @@ public class PartController extends BaseController{
         //查询板块下所有商品
         //List<Goods> allgoods=partService.partGoods(pid);
         List<Map<String ,String>> allgoods=partService.getGoodsByPart(pid);
-        model.addAttribute("allgoods",allgoods);
+        model.addAttribute("allgoods",allgoods);//gid , gname , price , title
         List<Part> allparts=partService.getAll();
         model.addAttribute("allparts",allparts);
         model.addAttribute("pid",pid);

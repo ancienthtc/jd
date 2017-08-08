@@ -50,14 +50,14 @@ public class LoginController extends BaseController{
 
     //改!
     @RequestMapping(value = "/ton" /*, method = RequestMethod.POST*/)//tel or name
-    public String login(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password , Model model)
+    public String login(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password , Model model,HttpSession session)
     {
         User user=new User();
         user=loginService.login(username,password);
         if(user!=null)
         {
-            model.addAttribute("User",user);
-
+            //model.addAttribute("User",user);
+            session.setAttribute("User",user);
             //取消主页异步请求，改为跳转前获取数据。
             //获取板块-代表
             List<Map<String, String>> allinfo=partService.getAllInfo();
