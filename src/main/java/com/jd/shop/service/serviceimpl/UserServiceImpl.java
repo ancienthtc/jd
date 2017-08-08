@@ -47,4 +47,9 @@ public class UserServiceImpl implements UserService{
 
         return BeanUtil.toPagedResult( userMapper.getAll() );
     }
+
+    public int updatePersonalInfo(User user){
+        int num = userMapper.updateByPrimaryKeySelective(user);
+        return num;
+    }
 }

@@ -70,10 +70,24 @@ margin: 3px 4px 0 0;
   <script src="../static/libs/jquery/jquery.min.js"></script>
 
 
+
   <script type="text/javascript">
       $(function (){
           initComplexArea('seachprov', 'seachcity', 'seachdistrict', area_array, sub_array, '44', '0', '0');
+          $("#liveSpan").click(function(){
+              if($("#liveDiv").css("display")=="none"){
+                  $("#liveDiv").show();
+                  $("#livaInput").hide();
+                  $("#liveSpan").text("取消修改");
+              }else{
+                  $("#liveDiv").hide();
+                  $("#livaInput").show();
+                  $("#liveSpan").text("修改地址");
+              }
+          });
       });
+
+
 
       //得到地区码
       function getAreaID(){
@@ -112,12 +126,15 @@ margin: 3px 4px 0 0;
           return areaName;
       }
   </script>
+  <!-- 提示框的样式引入 -->
+  <link rel="stylesheet" href="../static/libs/messenger/css/messenger.css" />
+  <link rel="stylesheet" href="../static/libs/messenger/css/messenger-theme-future.css" />
 </head>
 
 <body>
 <!--头部开始-->
 <div class="head">
-<div class="h_left"><p>欢迎光临***&nbsp;&nbsp; <a href="">退出</a></p></div>
+<div class="h_left"><p>欢迎光临${requestScope.user.nickname}&nbsp;&nbsp; <a href="">退出</a></p></div>
 <div class="h_right">
 <ul>
 <li><a href="">****</a></li>
@@ -138,10 +155,10 @@ margin: 3px 4px 0 0;
 <!--左边菜单开始-->
 <div class="all_left">
 <ul>
-<li><a href="">用户管理</a></li>
-<li><a href="">收货地址管理</a></li>
-<li><a href="">评论管理</a></li>
-<li><a href="">订单管理</a></li>
+<li><a onclick="window.location.href='<%=basePath%>user/toShopCenter'">用户管理</a></li>
+<li><a href="javascript:void(0)" id="recieverAddress">收货地址管理</a></li>
+<li><a href="javascript:void(0)">评论管理</a></li>
+<li><a href="javascript:void(0)">订单管理</a></li>
 </ul>
 </div>
 <!--左边菜单结束-->
@@ -155,40 +172,59 @@ margin: 3px 4px 0 0;
     <td>生&nbsp;日</td>
     <td>
 
-        <input name="member.birth" type="text" value="" size="14" readonly onClick="showcalendar(event,this);" onFocus="showcalendar(event, this);if(this.value=='0000-00-00')this.value=''">
+        <input name="member.birth" type="text" value="${requestScope.birth}" size="14" readonly onClick="showcalendar(event,this);" onFocus="showcalendar(event, this);if(this.value=='0000-00-00')this.value=''">
 
     </td>
   </tr>
   <tr>
     <td>性&nbsp;别</td>
-    <td><input name="sex" type="radio" value="男" checked>男 &nbsp;&nbsp;
-    <input name="sex" type="radio" value="女">女</td>
+    <td>
+      <input name="sex" type="radio" ${requestScope.user.sex=='男'?"checked":""} value="男">男 &nbsp;&nbsp;
+      <input name="sex" type="radio" ${requestScope.user.sex=='女'?"checked":""} value="女">女
+      <%--<input name="sex" type="radio" <c:if test="${requestScope.user.sex=='男'}">checked="checked"</c:if> value="男">男 &nbsp;&nbsp;
+      <input name="sex" type="radio" <c:if test="${requestScope.user.sex=='女'}">checked="checked"</c:if> value="女">女--%>
+    </td>
     <td>居住地</td>
     <td>
-      <input type="text" />
-      <center>
-        <select id="seachprov" name="seachprov" onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');"></select>&nbsp;&nbsp;
-        <select id="seachcity" name="homecity" onChange="changeCity(this.value,'seachdistrict','seachdistrict');"></select>&nbsp;&nbsp;
-        <span id="seachdistrict_div"><select id="seachdistrict" name="seachdistrict"></select></span>
-
-      </center>
-
+      <input id="liveInput" type="text" value="${requestScope.user.live}" disabled />
+      <div id="liveDiv" style="display: none">
+        <center>
+          <select id="seachprov" name="seachprov" onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');"></select>&nbsp;&nbsp;
+          <select id="seachcity" name="homecity" onChange="changeCity(this.value,'seachdistrict','seachdistrict');"></select>&nbsp;&nbsp;
+          <span id="seachdistrict_div"><select id="seachdistrict" name="seachdistrict"></select></span>
+        </center>
+      </div>
+      <span id="liveSpan">修改地址</span>
     </td>
   </tr>
   <tr>
     <td>手机号码</td>
-    <td><input type="text"></td>
-    <td colspan="2"><input  style=" text-align:left; margin-left:-200px;"  type="reset" value="修改"> &nbsp;&nbsp;<span>是否允许手机登录<input type="checkbox" value="1" name="istel"></span></td>
+    <td><input type="text" value="${requestScope.user.tel}" ></td>
+    <td colspan="2"><input  style=" text-align:left; margin-left:-200px;"  type="reset" value="修改"> &nbsp;&nbsp;
+      <span>是否允许手机登录
+        <c:choose>
+
+          <c:when test="${requestScope.user.tellogin==1}">
+            <input type="checkbox" value="1" name="istel" checked>
+          </c:when>
+
+          <c:otherwise>
+            <input type="checkbox"  name="istel">
+          </c:otherwise>
+        </c:choose>
+
+      </span>
+    </td>
 
   </tr>
   <tr>
     <td>上次登录</td>
-    <td colspan="3" >2012-9-18 12：11：21</td>
+    <td colspan="3" >${requestScope.loginDate}</td>
     
   </tr>
   <tr>
     <td>积分</td>
-    <td colspan="3">1200</td>
+    <td colspan="3">${requestScope.user.score}</td>
     
   </tr>
 </table>
@@ -198,10 +234,10 @@ margin: 3px 4px 0 0;
 <div class="bottom">
 <div class="footer">
 <P>
-<a href="#" rel="nofollow">关于我们</a> &nbsp;|<a href="#" rel="nofollow">联系我们</a>&nbsp;|<a href="#" rel="nofollow"><a href='http://www.veryhuo.com/z/falvapp/' target='_blank'><b>法律</b></a>声明</a>&nbsp;|<a href="#" rel="nofollow">网站地图</a>&nbsp;|<a target="_blank" href="#">版权声明</a>&nbsp;|<a href="#" rel="nofollow">帮助中心</a><br />
+<a href="#" rel="nofollow">关于我们</a> &nbsp;|<a href="#" rel="nofollow">联系我们</a>&nbsp;|<a href="#" rel="nofollow"><a href='' target='_blank'>法律声明</a></a>&nbsp;|<a href="#" rel="nofollow">网站地图</a>&nbsp;|<a target="_blank" href="#">版权声明</a>&nbsp;|<a href="#" rel="nofollow">帮助中心</a><br />
 ***商城 版权所有　© 2005-2020　京ICP备********号</P>
 </div>
-</div><input name="sex" type="radio" value="男" checked>
+</div>
 </div>
 </body>
 <%--省市县三级联动插件--%>
@@ -209,6 +245,9 @@ margin: 3px 4px 0 0;
 <script src="../js/area/AreaData_min.js" type="text/javascript"></script>
 <%--日期插件--%>
 <script type="text/javascript" src="../js/date/date.js"></script>
+<!-- 提示框的js -->
+<script src="../static/libs/messenger/js/messenger.min.js"></script>
+<script src="../static/util/imessenger.js"></script>
 <%--页面单独js--%>
 <script src="<%=basePath%>js/user/shopCenter.js"  type="text/javascript"></script>
 </html>

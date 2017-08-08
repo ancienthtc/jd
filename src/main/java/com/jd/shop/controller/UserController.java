@@ -9,14 +9,17 @@ import com.jd.shop.util.PagedResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ThinkPad on 2017/7/6.
@@ -104,12 +107,55 @@ public class UserController extends BaseController{
         req.setAttribute("user",user);
         String loginDate = DateUtil.getStringDate(user.getLogin(),2);
         req.setAttribute("loginDate",loginDate);
+        String birth = DateUtil.getStringDate(user.getBirth(),1);
+        req.setAttribute("birth",birth);
         return "user/shopCenter";
     }
 
-    public void updatePersonalInfo(){
-
+    /**
+     * 用户修改个人信息
+     * @param user
+     * @param birth
+     * @param session
+     * @return
+     */
+    @RequestMapping(value="/updatePersonalInfo",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,String> updatePersonalInfo(User user,String birth,HttpSession session){
+        Map<String,String> map = new HashMap<String,String>();
+        if(birth==null){
+            map.put("msg","生日不能为空");
+            return map;
+        }
+        User use = (User)session.getAttribute("user");
+        user.setId(use.getId());
+        SimpleDateFormat sdf=  new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        try {
+            date = sdf.parse(birth);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            map.put("msg","生日转换失败");
+            return map;
+        }
+        user.setBirth(date);
+        int num = userService.updatePersonalInfo(user);
+        if(num!=1){
+            map.put("msg","修改用户信息失败");
+            return map;
+        }
+        map.put("msg","success");
+        /*重置session*/
+        use.setNickname(user.getNickname());
+        use.setBirth(date);
+        use.setLive(user.getLive());
+        use.setSex(user.getSex());
+        use.setTellogin(user.getTellogin());
+        session.setAttribute("user",use);
+        return map;
     }
+
+
 
 
 }

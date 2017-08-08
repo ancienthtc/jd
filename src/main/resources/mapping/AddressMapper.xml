@@ -160,4 +160,12 @@
       user_id = #{userId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!--根据用户id查询收货地址-->
+  <select id="findAddressByUserId" resultType="com.jd.shop.model.Address" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from t_address
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
 </mapper>
