@@ -139,11 +139,13 @@ public class PartController extends BaseController{
     public String getgoods(@PathVariable Integer pid, Model model)
     {
         //查询板块下所有商品
-        List<Goods> allgoods=partService.partGoods(pid);
-        model.addAttribute("all",allgoods);
-
-
-        return "user/shoppart";
+        //List<Goods> allgoods=partService.partGoods(pid);
+        List<Map<String ,String>> allgoods=partService.getGoodsByPart(pid);
+        model.addAttribute("allgoods",allgoods);//gid , gname , price , title
+        List<Part> allparts=partService.getAll();
+        model.addAttribute("allparts",allparts);
+        model.addAttribute("pid",pid);
+        return "user/shoplist";
     }
 
     //板块图片删除

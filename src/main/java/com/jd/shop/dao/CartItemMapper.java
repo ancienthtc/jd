@@ -1,7 +1,9 @@
 package com.jd.shop.dao;
 
 import com.jd.shop.model.CartItem;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface CartItemMapper {
     int deleteByPrimaryKey(Integer id);
 

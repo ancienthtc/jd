@@ -147,7 +147,7 @@
 		<ul>
 			<c:forEach var="item" items="${parts}" varStatus="vs">
 				<li>
-					<a href="#">
+					<a href="<%=basePath%>part/view/${item.get("pid")}">
 						<img style="width: 160px;height:300px;" src="<%=basePath%>picture/show?pic=${item.get("title")}" /><br />
 						<br />${item.get("pname")}<br /><br />${item.get("type")}
 					</a>

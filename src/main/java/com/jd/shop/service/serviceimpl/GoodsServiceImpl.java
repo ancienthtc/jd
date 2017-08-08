@@ -2,6 +2,7 @@ package com.jd.shop.service.serviceimpl;
 
 import com.github.pagehelper.PageHelper;
 import com.jd.shop.dao.GoodsMapper;
+import com.jd.shop.dao.PicListMapper;
 import com.jd.shop.model.Goods;
 import com.jd.shop.model.Image;
 import com.jd.shop.service.GoodsService;
@@ -21,6 +22,9 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Resource
     private GoodsMapper goodsMapper;
+
+    @Resource
+    private PicListMapper picListMapper;
 
     //全部商品
     public List<Goods> getAll()
@@ -88,4 +92,7 @@ public class GoodsServiceImpl implements GoodsService {
         return goodsMapper.deleteGoodsAll(goodsid);
     }
 
+    public List<Image> getGoodsImgs(Integer piclist) {
+        return picListMapper.getImagesList(piclist);
+    }
 }

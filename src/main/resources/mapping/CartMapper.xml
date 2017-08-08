@@ -14,6 +14,15 @@
     from t_cart
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <!-- new -->
+  <select id="selectCartByUser" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from t_cart
+    where user_cart = #{userid,jdbcType=INTEGER}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_cart
     where id = #{id,jdbcType=INTEGER}
@@ -22,7 +31,7 @@
     insert into t_cart (id, user_cart)
     values (#{id,jdbcType=INTEGER}, #{userCart,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.jd.shop.model.Cart" >
+  <insert id="insertSelective" parameterType="com.jd.shop.model.Cart" useGeneratedKeys="true" keyProperty="id">
     insert into t_cart
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

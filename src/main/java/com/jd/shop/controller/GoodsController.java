@@ -501,4 +501,23 @@ public class GoodsController extends BaseController{
         return "admin/goodDetail";
     }
 
+    //获取商品详情
+    @RequestMapping("/getGoods/{id}")
+    public String getGoods(@PathVariable Integer id,Model model)
+    {
+        Goods goods=new Goods();
+        //获取商品信息
+        goods=goodsService.getGoods(id);
+        model.addAttribute("goods",goods);
+        List<Image> images=goodsService.getGoodsImgs(goods.getPiclistGoods());
+        model.addAttribute("imgs",images);
+        Image first=null;
+        if(!images.isEmpty())
+        {
+            first= images.get(0);
+
+        }
+        model.addAttribute("first",first);
+        return "user/shopbuy";
+    }
 }

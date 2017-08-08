@@ -74,11 +74,12 @@
 
   <select id="homepart" resultType="map">
     SELECT
+    t_part.id as pid,
     t_part.pname,
     t_part.type,
     t_part.priority,
     t_image.title,
-    t_image.id
+    t_image.id as imgid
     FROM
     t_part
     LEFT JOIN t_piclist ON t_part.piclist_part = t_piclist.id

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface GoodsMapper {
@@ -29,6 +30,8 @@ public interface GoodsMapper {
     int goodsunder(@Param("goodsid")Integer goodsid);
 
     List<Goods> getOther();
+
+    List<Map<String,String>> getGoodsByPart(@Param("pid")Integer pid);
 
     //删除该商品全部信息(多表关联删除)
     int deleteGoodsAll(@Param("id")Integer id);
