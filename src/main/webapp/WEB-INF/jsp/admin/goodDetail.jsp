@@ -93,7 +93,7 @@
     </div>
     <div id="cover" class="btGroup">
       <label for="">上架日期:</label>
-        <input type="text" class="form-control" name="shelf"  id="datetimepicker" value="${requestScope.shelf}"/>
+        <input type="text" class="form-control" name="shelf" readonly=“readonly” id="datetimepicker" value="${requestScope.shelf}"/>
    <%--   <div class="photos">
         <div class="img" ></div>
         <i class="iconfont icon-add" style="line-height: 150px;"></i>
@@ -147,8 +147,8 @@
                       <i class="iconfont icon-del"></i>
                     <%--  <i class="iconfont icon-sort"></i>--%>
                   </div>
+                  <input  type="hidden" value="1" class="listImg2"/>
               </div>
-              <input  type="hidden" class="listImg2"/>
           </c:forEach>
            <%-- <c:forEach items="${requestScope.imgs}"  var="item">
                 <input  type="hidden" class="listImg2" id="" value=""/>
@@ -164,8 +164,8 @@
                       <i class="iconfont icon-del"></i>
                       <%--<i class="iconfont icon-sort"></i>--%>
                   </div>
+                  <input  type="hidden" value="2" class="listImg2" />
               </div>
-              <input  type="hidden" class="listImg2" />
           </c:if>
           <span class="tips"></span>
       </div>

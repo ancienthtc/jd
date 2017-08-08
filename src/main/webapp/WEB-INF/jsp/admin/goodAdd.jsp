@@ -138,8 +138,8 @@
                   <i class="iconfont icon-del"></i>
                   <%--<i class="iconfont icon-sort"></i>--%>
               </div>
+              <input type="hidden" value="2" class="listImg1" id="listImg12"/>
           </div>
-          <input type="hidden" class="listImg1" id="listImg12"/>
               <%--<input  type="hidden"  />--%>
           <span class="tips"></span>
       </div>

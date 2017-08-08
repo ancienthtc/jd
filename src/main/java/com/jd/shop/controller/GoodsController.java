@@ -17,8 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -233,46 +231,54 @@ public class GoodsController extends BaseController{
     //商品上架
     @AdminLogin
     @RequestMapping(value = "/goodsload" , method = RequestMethod.POST)
-    public String goodsload(HttpServletRequest request,Model model)
+    @ResponseBody
+    public Map<String, String> goodsload(HttpServletRequest request,Model model, Integer goodId)
     {
-        Goods goods=new Goods();
-        goods.setId( Integer.parseInt(request.getParameter("goodsid")) );
-        goods.setStock( Double.valueOf(request.getParameter("stock")) );
-        goods.setPartGoods( Integer.parseInt(request.getParameter("partid")) );
+        Map<String,String> map = new HashMap<String, String>();
+      //判断数据合法性
+        if(goodId==null){
+                map.put("msg","产品id为空");
+           return map;
 
-        if(goods.getId()==null || goods.getStock()==null || goods.getPartGoods()==null)
-        {
-            model.addAttribute("message","上架失败,不能为空");
         }
-        else
-        {
-            //save
-            if(goodsService.goodsLoad(goods)>0)
-            {
-                model.addAttribute("message","上架成功");
-            }
-            else
-            {
-                model.addAttribute("message","上架失败,数值错误");
-            }
+        //产品库存必须大于0,产品必须和板块关联
+        Goods good = goodsService.getGoods(goodId);
+        if(good==null){
+            map.put("msg","产品不存在");
+            return map;
         }
-        return "redirect:/goods/goodslist";
+        if(good.getStock()<=0){
+            map.put("msg","产品库存必须大于0");
+            return map;
+        }
+        if(good.getPartGoods()==null){
+            map.put("msg","产品未关联板块");
+            return map;
+        }
+       int num = goodsService.goodsLoad(good);
+        if(num>0){
+            map.put("msg","true");
+        }
+        return map;
     }
 
     //商品下架  (shelf)
     @AdminLogin
     @RequestMapping("/under/{goodsid}")
-    public String goodsunder(@PathVariable Integer goodsid,Model model)
+    @ResponseBody
+    public Map<String,String> goodsunder(@PathVariable Integer goodsid,Model model)
     {
+        Map<String,String> map = new HashMap<String, String>();
         if(goodsService.goodsunder(goodsid) > 0 )
         {
-            model.addAttribute("message","下架完成");
+            map.put("msg","true");
+            return map;
         }
         else
         {
-            model.addAttribute("message","下架失败");
+           map.put("msg","下架失败");
         }
-        return "redirect:/goods/goodslist";
+        return map;
     }
 
 
@@ -427,7 +433,7 @@ public class GoodsController extends BaseController{
     public boolean deletePicForAdd(String imgName)
     {
 
-        String absolutePath=request.getSession().getServletContext().getRealPath("/")+ "upload/"+imgName;
+        String absolutePath=request.getSession().getServletContext().getRealPath("/")+ "cacheForImg/"+imgName;
 
         boolean flag =  pictureService.fileDel(absolutePath);
 
