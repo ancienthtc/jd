@@ -213,7 +213,7 @@
 
 	<%--<input type="hidden" name="user_id" value="${sessionScope.User.id}" />--%>
 	<%--<input type="hidden" name="goods_id" value="${goods.id}"/>--%>
-	<span id="user_id" value="${sessionScope.User.id}" style="display:none"></span>
+	<span id="user_id" value="${sessionScope.user.id}" style="display:none"></span>
 	<span id="goods_id" value="${goods.id}" style="display:none"></span>
 
 </table>

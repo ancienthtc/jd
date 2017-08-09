@@ -69,10 +69,10 @@
 
 
 <body>
-	<c:if test="${not empty User.nickname}">
-		<h3>欢迎登录 ${User.nickname}</h3>
+	<c:if test="${not empty user.nickname}">
+		<h3>欢迎登录 ${user.nickname}</h3>
 	</c:if>
-	<c:if test="${empty User.nickname}">
+	<c:if test="${empty user.nickname}">
 		<a href="<%=basePath%>login/login">您好！请登录</a><br>
 	</c:if>
 

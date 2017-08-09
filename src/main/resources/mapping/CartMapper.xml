@@ -23,6 +23,21 @@
     where user_cart = #{userid,jdbcType=INTEGER}
   </select>
 
+  <select id="cartitem" resultType="com.jd.shop.model.Cart" parameterType="java.lang.Integer">
+    SELECT
+    t_goods.`name`,
+    t_goods.price,
+    t_goods.freight,
+    t_cartitem.amount,
+    t_cart.user_cart,
+    t_goods.price*t_cartitem.amount as `all`
+    FROM
+    t_cart
+    Right JOIN t_cartitem ON t_cartitem.item_cart = t_cart.user_cart
+    LEFT JOIN t_goods ON t_cartitem.item_goods = t_goods.id
+    WHERE user_cart=#{userid,jdbcType=INTEGER}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_cart
     where id = #{id,jdbcType=INTEGER}

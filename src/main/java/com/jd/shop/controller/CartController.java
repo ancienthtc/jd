@@ -49,4 +49,12 @@ public class CartController extends BaseController{
 
     }
 
+    //购物车界面
+    @RequestMapping("/toCart")
+    public String toCart(Integer id)//用户id
+    {
+
+        return "user/shopcart";
+    }
+
 }

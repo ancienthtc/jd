@@ -4,6 +4,9 @@ import com.jd.shop.model.Cart;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Map;
+
 @Repository
 public interface CartMapper {
     int deleteByPrimaryKey(Integer id);
@@ -22,4 +25,5 @@ public interface CartMapper {
     //查询购物车
     Cart selectCartByUser(@Param("userid") Integer uid);
 
+    List<Map<String,String>> cartitem(@Param("userid") Integer uid);
 }

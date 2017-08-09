@@ -63,7 +63,7 @@
       #{login,jdbcType=TIMESTAMP}, #{score,jdbcType=INTEGER}, #{tellogin,jdbcType=INTEGER}, 
       #{userPiclist,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.jd.shop.model.User" >
+  <insert id="insertSelective" parameterType="com.jd.shop.model.User" useGeneratedKeys="true" keyProperty="id">
     insert into t_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
