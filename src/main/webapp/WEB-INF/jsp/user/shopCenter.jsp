@@ -57,11 +57,16 @@ margin: 3px 4px 0 0;
 .all_right{ float:right;margin-top:-450px; margin-right:350px;}
 .all_right table{ margin-top:30px; text-align:center;}
 <!--底部版权开始-->
-.bottom{width:100%;clear:both;text-align:center;padding:10px 0;line-height:25px;color:#666;border-top:#ddd 1px solid;}
+.footer{width:100%;clear:both;text-align:center;padding:10px 0;line-height:25px;color:#666;border-top:#ddd 1px solid;}
+.footer{ background-color:#999; height:100px; position: fixed;}
+.footer a{margin-top:50px;color:#666; padding-top:30px; margin-left:15px;}
+.footer a:hover{color:#000;text-decoration:underline;}
+.footer p{ text-align:center; line-height:25px;}
+/*.bottom{width:100%;clear:both;text-align:center;padding:10px 0;line-height:25px;color:#666;border-top:#ddd 1px solid;}
 .footer{ background-color:#999; height:50px; margin-top:50px;}
 .bottom a{margin-top:50px;color:#666; padding-top:30px; margin-left:15px;}
 .bottom a:hover{color:#000;text-decoration:underline;}
-.bottom p{ text-align:center; line-height:25px;}
+.bottom p{ text-align:center; line-height:25px;}*/
 </style>
 
 
@@ -157,7 +162,7 @@ margin: 3px 4px 0 0;
 <ul>
 <li><a onclick="window.location.href='<%=basePath%>user/toShopCenter'">用户管理</a></li>
 <li><a href="javascript:void(0)" id="recieverAddress">收货地址管理</a></li>
-<li><a href="javascript:void(0)">评论管理</a></li>
+<li><a href="javascript:void(0)" id="commentManager">评论管理</a></li>
 <li><a href="javascript:void(0)">订单管理</a></li>
 </ul>
 </div>
@@ -231,13 +236,13 @@ margin: 3px 4px 0 0;
 <input style="text-align:center; margin-left:300px; margin-top:20px; width:60px; height:25px;" data-btn="savePersonalInfo" type="button" value="保存">
 </div>
 <!--右边信息结束-->
-<div class="bottom">
-<div class="footer">
+
+<%--<div class="footer" style=" width:100%;">
 <P>
 <a href="#" rel="nofollow">关于我们</a> &nbsp;|<a href="#" rel="nofollow">联系我们</a>&nbsp;|<a href="#" rel="nofollow"><a href='' target='_blank'>法律声明</a></a>&nbsp;|<a href="#" rel="nofollow">网站地图</a>&nbsp;|<a target="_blank" href="#">版权声明</a>&nbsp;|<a href="#" rel="nofollow">帮助中心</a><br />
 ***商城 版权所有　© 2005-2020　京ICP备********号</P>
-</div>
-</div>
+</div>--%>
+
 </div>
 </body>
 <%--省市县三级联动插件--%>

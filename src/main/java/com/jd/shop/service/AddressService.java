@@ -9,4 +9,10 @@ import java.util.List;
  */
 public interface AddressService {
     List<Address> findAddressByUserId(Integer userId);
+
+    int saveAddress(Address address);
+
+    Address findByIsmain(Integer inmain);
+
+    int updateByPrimaryKeySelective(Address address);
 }

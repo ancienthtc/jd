@@ -103,4 +103,13 @@
       comment_goods = #{commentGoods,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!--new -->
+  <!--根据用户id查询-->
+  <select id="findByUserId" resultType="com.jd.shop.model.Comment" parameterType="java.lang.Integer" >
+    select
+      c.* , g.id goodId ,g.name , g.price
+    from t_comment c LEFT OUTER JOIN t_goods g ON c.comment_goods = g.id
+    where comment_user = #{userId,jdbcType=INTEGER}
+  </select>
 </mapper>

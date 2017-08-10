@@ -168,11 +168,11 @@
             border-top: #ddd 1px solid;
         }
 
-        .footer {
+       /* .footer {
             background-color: #999;
             height: 50px;
             margin-top: 260px;
-        }
+        }*/
 
         .bottom a {
             margin-top: 50px;
@@ -229,11 +229,11 @@
             border-top: #ddd 1px solid;
         }
 
-        .footer {
+       /* .footer {
             background-color: #999;
             height: 50px;
             margin-top: 10px;
-        }
+        }*/
 
         .bottom a {
             margin-top: 50px;
@@ -372,6 +372,7 @@
                                 <td>邮编</td>
                                 <td>手机</td>
                                 <td>电话</td>
+                                <td style="display: none"></td>
                                 <td>操作</td>
                             </tr>
                             <c:if test="${requestScope.addr!=null && requestScope.addr!=''}">
@@ -383,7 +384,8 @@
                                         <td>${item.zip}</td>
                                         <td>${item.tel}</td>
                                         <td>${item.phone}</td>
-                                        <c:if test="${item.ismain==0}"><td><input type="button" value="设为默认"></td></c:if>
+                                        <td style="display: none">${item.id}</td>
+                                        <c:if test="${item.ismain==0}"><td><input type="button" data-btn="setDefault" value="设为默认"></td></c:if>
                                         <c:if test="${item.ismain==1}"><td><input type="button" value="默认地址"></td></c:if>
                                     </tr>
                                 </c:forEach>
@@ -418,8 +420,8 @@
 
 <script src="<%=basePath%>js/user/addressManager.js" type="text/javascript"></script>
 
-<div style="display:none">
+<%--<div style="display:none">
     <script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script>
-</div>
+</div>--%>
 </body>
 </html>
