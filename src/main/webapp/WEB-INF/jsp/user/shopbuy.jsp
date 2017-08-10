@@ -143,7 +143,7 @@
 <ul>
 <li><a href="">****</a></li>
 <li><a href="">用户管理</a></li>
-<li><a href="">购&nbsp;&nbsp;物&nbsp;&nbsp;车</a></li>
+<li><a href="<%=basePath%>cart/toCart/${sessionScope.user.id}">购&nbsp;&nbsp;物&nbsp;&nbsp;车</a></li>
 </ul>
 </div>
 </div>

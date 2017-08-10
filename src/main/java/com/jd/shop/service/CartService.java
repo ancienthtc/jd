@@ -12,6 +12,9 @@ public interface CartService {
 
     int cartadd(Integer userid,Integer goodsid,Double count);
 
-    List<Map<String,String>> cartItem(Integer uid);
+    List<Map<String,Object>> cartItem(Integer uid);
 
+    int DelCartItem(Integer ciid);
+
+    int ClearCartItem(Integer uid);
 }

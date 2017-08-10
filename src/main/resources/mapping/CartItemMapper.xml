@@ -16,6 +16,17 @@
     from t_cartitem
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <!-- new -->
+  <select id="queryByGoods" parameterType="java.lang.Integer" resultType="com.jd.shop.model.CartItem">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    t_cartitem
+    WHERE
+    item_goods= #{gid,jdbcType=INTEGER}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_cartitem
     where id = #{id,jdbcType=INTEGER}
@@ -79,4 +90,13 @@
       item_cart = #{itemCart,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!-- new -->
+  <update id="updateCountOfItem" parameterType="java.lang.Number">
+    UPDATE
+     t_cartitem set amount=amount+#{count,jdbcType=DOUBLE}
+    WHERE
+     item_goods=#{gid,jdbcType=INTEGER}
+  </update>
+
 </mapper>

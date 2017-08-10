@@ -28,18 +28,42 @@ public class CartServiceImpl implements CartService{
     public int cartadd(Integer userid, Integer goodsid, Double count) {
 
         //1.查找该用户的购物车，没有就创建   --->放入了用户注册 2017/8/9
-        //2.获取购物车id，填入记录，成功返回 1， 失败返回 0
+        //2.获取购物车id，判断是否存在goodsid
+        //3.不存在就填入记录，存在就更新数量
+        //4.成功返回 1， 失败返回 0
 
-        Cart cart=cartMapper.selectCartByUser(userid);
-        CartItem cartItem=new CartItem();
-        cartItem.setAmount(count);
-        cartItem.setItemGoods(goodsid);
-        cartItem.setItemCart(cart.getId());
+        //2
 
-        return cartItemMapper.insertSelective(cartItem);
+        CartItem cartItem=cartItemMapper.queryByGoods(goodsid);
+        if(cartItem != null)  //已存在相同商品
+        {
+            return cartItemMapper.updateCountOfItem(goodsid,count);
+        }
+        else //没有已存在商品,添加记录
+        {
+            //3
+            Cart cart=cartMapper.selectCartByUser(userid);
+            CartItem cartItem1=new CartItem();
+            cartItem1.setAmount(count);
+            cartItem1.setItemGoods(goodsid);
+            cartItem1.setItemCart(cart.getId());
+            return cartItemMapper.insertSelective(cartItem1);
+        }
+
+
+
+
     }
 
-    public List<Map<String, String>> cartItem(Integer uid) {
-        return null;
+    public List<Map<String, Object>> cartItem(Integer uid) {
+        return cartMapper.cartitem(uid);
+    }
+
+    public int DelCartItem(Integer ciid) {
+        return cartItemMapper.deleteByPrimaryKey(ciid);
+    }
+
+    public int ClearCartItem(Integer uid) {
+        return cartMapper.clearCart(uid);
     }
 }

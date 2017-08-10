@@ -25,5 +25,7 @@ public interface CartMapper {
     //查询购物车
     Cart selectCartByUser(@Param("userid") Integer uid);
 
-    List<Map<String,String>> cartitem(@Param("userid") Integer uid);
+    List<Map<String,Object>> cartitem(@Param("userid") Integer uid);
+
+    int clearCart(@Param("uid") Integer uid);
 }

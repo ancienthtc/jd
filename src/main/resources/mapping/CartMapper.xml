@@ -23,25 +23,44 @@
     where user_cart = #{userid,jdbcType=INTEGER}
   </select>
 
-  <select id="cartitem" resultType="com.jd.shop.model.Cart" parameterType="java.lang.Integer">
+  <select id="cartitem" resultType="map" parameterType="java.lang.Integer">
     SELECT
+    t_goods.id,
     t_goods.`name`,
     t_goods.price,
     t_goods.freight,
+    t_goods.gclass,
+    t_cartitem.id as ciid,
     t_cartitem.amount,
     t_cart.user_cart,
-    t_goods.price*t_cartitem.amount as `all`
+    t_goods.price*t_cartitem.amount as `all`,
+    t_image.title
     FROM
     t_cart
     Right JOIN t_cartitem ON t_cartitem.item_cart = t_cart.user_cart
     LEFT JOIN t_goods ON t_cartitem.item_goods = t_goods.id
+    LEFT JOIN t_image ON t_image.image_list=t_goods.piclist_goods
     WHERE user_cart=#{userid,jdbcType=INTEGER}
+    GROUP BY t_cartitem.id
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_cart
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+  <!-- new -->
+  <delete id="clearCart" parameterType="java.lang.Integer">
+    DELETE
+    t_cartitem
+    FROM
+    t_user
+    JOIN t_cart ON t_user.id = t_cart.user_cart
+    JOIN t_cartitem ON t_cart.user_cart = t_cartitem.item_cart
+    WHERE t_user.id=#{uid,jdbcType=INTEGER}
+  </delete>
+
+
   <insert id="insert" parameterType="com.jd.shop.model.Cart" >
     insert into t_cart (id, user_cart)
     values (#{id,jdbcType=INTEGER}, #{userCart,jdbcType=INTEGER})

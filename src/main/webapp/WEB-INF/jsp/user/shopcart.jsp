@@ -70,12 +70,76 @@
         .bottom a:hover{color:#000;text-decoration:underline;}
         .bottom p{ text-align:center; line-height:25px;}
     </style>
+
+    <script type="text/javascript" src="<%=basePath%>js/jquery-3.1.1.js"></script>
+    <!-- 从购物车删除 -->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            <!-- 加入购物车 -->
+            $(".delete").click(function() {
+                var itemid=$(this).attr("name");
+                var date='{cartitemid:'+itemid+'}';
+                $.ajax( {
+                    type : 'POST',
+                    contentType : 'application/json',
+                    url : '<%=basePath%>cart/del',
+                    data : date,
+                    dataType : 'json',
+                    success : function(data) {
+                        //alert(data);
+                        if(data==false)
+                        {
+                            alert("删除失败!");
+                        }
+                        else if(data==true)
+                        {
+                            alert("删除成功!");
+                            window.location.href="<%=basePath%>cart/toCart/${sessionScope.user.id}";
+                        }
+
+                    },
+                    error : function(data) {
+                        alert("错误!")
+                    }
+                });
+            });
+
+            $("#alldel").click(function () {
+                var uid=$("#uid").attr("value");
+                var date='{uid:'+uid+'}';
+                $.ajax( {
+                    type : 'POST',
+                    contentType : 'application/json',
+                    url : '<%=basePath%>cart/delall',
+                    data : date,
+                    dataType : 'json',
+                    success : function(data) {
+                        //alert(data);
+                        if(data==false)
+                        {
+                            alert("删除失败!");
+                        }
+                        else if(data==true)
+                        {
+                            alert("删除成功!");
+                            window.location.href="<%=basePath%>cart/toCart/${sessionScope.user.id}";
+                        }
+                    },
+                    error : function(data) {
+                        alert("错误!")
+                    }
+                });
+            });
+
+        })
+    </script>
+
 </head>
 
 <body>
 <!--头部开始-->
 <div class="head">
-    <div class="h_left"><p>欢迎光临 ${sessionScope.user.name}&nbsp;&nbsp; <a href="">退出</a></p></div>
+    <div class="h_left"><p>欢迎光临 ${sessionScope.user.nickname}&nbsp;&nbsp; <a href="">退出</a></p></div>
     <div class="h_right">
         <ul>
             <li><a href="">****</a></li>
@@ -96,6 +160,7 @@
 <!--主体开始-->
 <div class="main">
     <h2>商品列表</h2>
+    <input type="hidden" id="uid" value="${sessionScope.user.id}">
     <table class="t1" width="92%">
         <tr>
             <th scope="col">&nbsp;</th>
@@ -105,30 +170,52 @@
             <th scope="col">总&nbsp;额</th>
             <th scope="col">&nbsp;</th>
         </tr>
-        <tr>
-            <td><img src="img/good2.png"></td>
-            <td>长裙</td>
-            <td>￥22.8</td>
-            <td>4</td>
-            <td>￥91.2</td>
-            <td><input type="button" name="delete" value="删除"></td>
-        </tr>
-        <tr>
-            <td><img src="img/good4.png"></td>
-            <td>富士山</td>
-            <td>￥4.5</td>
-            <td>1</td>
-            <td>￥4.5</td>
-            <td><input type="button" name="delete" value="删除"></td>
-        </tr>
+        <c:if test="${not empty items}">
+            <c:forEach var="col" items="${items}">
+                <tr>
+                    <c:if test="${empty col.get('id')}" >
+                        <td colspan="5">该商品已下架</td>
+                    </c:if>
+                    <c:if test="${not empty col.get('id')}" >
+                        <td><img src="<%=basePath%>picture/show?pic=${col.get("title")}"></td>
+                        <td>${col.get("name")}</td>
+                        <td>￥ ${col.get("price")}</td>
+                        <td>${col.get("amount")} / ${col.get("gclass")}</td>
+                        <td>￥ ${col.get("all")}</td>
+                    </c:if>
+
+                    <td><input type="button" class="delete" name="${col.get("ciid")}" id="del${col.get("ciid")}" value="删除"></td>
+                </tr>
+            </c:forEach>
+        </c:if>
+        <c:if test="${empty items}">
+            <tr>
+                <td colspan="6"><a href="<%=basePath%>login/view">暂无商品，前去购买</a></td>
+            </tr>
+        </c:if>
+        <%--<tr>--%>
+            <%--<td><img src="img/good2.png"></td>--%>
+            <%--<td>长裙</td>--%>
+            <%--<td>￥22.8</td>--%>
+            <%--<td>4</td>--%>
+            <%--<td>￥91.2</td>--%>
+            <%--<td><input type="button" name="delete" value="删除"></td>--%>
+        <%--</tr>--%>
+        <%--<tr>--%>
+            <%--<td><img src="img/good4.png"></td>--%>
+            <%--<td>富士山</td>--%>
+            <%--<td>￥4.5</td>--%>
+            <%--<td>1</td>--%>
+            <%--<td>￥4.5</td>--%>
+            <%--<td><input type="button" name="delete" value="删除"></td>--%>
+        <%--</tr>--%>
     </table>
     <table class="t2" width="92%">
         <tr>
-            <th scope="col"><input type="button" name="delete" value="全部删除" style=" margin-left:-10px;"></th>
-            <th scope="col">运费：5.5</th>
-            <th scope="col">商品共&nbsp;3&nbsp;件</th>
-            <th scope="col">合计：&nbsp;119.2</th>
-            <th scope="col"><input type="submit" name="sub" value="结算" style="margin-right:15px;"></th>
+            <th scope="col"><input type="button" id="alldel" name="delete" value="全部删除" style=" margin-left:-10px;"></th>
+            <th scope="col">商品共&nbsp;${cal.get("count")}&nbsp;件</th>
+            <th scope="col">合计：&nbsp;${cal.get("total")}</th>
+            <th scope="col"><input type="button" id="cal" name="sub" value="结算" style="margin-right:15px;"></th>
         </tr>
     </table>
 
