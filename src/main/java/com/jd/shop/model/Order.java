@@ -15,13 +15,11 @@ public class Order {
 
     private Integer limit;
 
-    private Double amount;
+    private Double allprice;
 
-    private Double allprice;    //新增-支付总价
+    private String detail;
 
     private Integer orderUser;
-
-    private Integer orderGoods;
 
     public Integer getId() {
         return id;
@@ -71,14 +69,6 @@ public class Order {
         this.limit = limit;
     }
 
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
     public Double getAllprice() {
         return allprice;
     }
@@ -87,19 +77,19 @@ public class Order {
         this.allprice = allprice;
     }
 
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail == null ? null : detail.trim();
+    }
+
     public Integer getOrderUser() {
         return orderUser;
     }
 
     public void setOrderUser(Integer orderUser) {
         this.orderUser = orderUser;
-    }
-
-    public Integer getOrderGoods() {
-        return orderGoods;
-    }
-
-    public void setOrderGoods(Integer orderGoods) {
-        this.orderGoods = orderGoods;
     }
 }
