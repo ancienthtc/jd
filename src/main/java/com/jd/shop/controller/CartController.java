@@ -1,14 +1,13 @@
 package com.jd.shop.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.jd.shop.model.Address;
+import com.jd.shop.service.AddressService;
 import com.jd.shop.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +24,9 @@ public class CartController extends BaseController{
 
     @Autowired
     private CartService cartService;
+
+    @Autowired
+    private AddressService addressService;
 
     //购物车添加
     @RequestMapping("/add")
@@ -61,31 +63,13 @@ public class CartController extends BaseController{
     {
         List<Map<String,Object>> cartitem=cartService.cartItem(id);
         model.addAttribute("items",cartitem);   //id,name,price,freight,gclass,ciid,amount,user_cart,all,title
-        Map<String,Number> cal=new HashMap<String, Number>();
-        Double total=0.0;
-        int count=0;
-        //结算
 
-        for (int i = 0; i < cartitem.size(); i++) {
-            if (cartitem.get(i).get("id") != null) {
-                count++;
-            }
-            if (cartitem.get(i).get("all") != null) {
-                try {
-                System.out.print(cartitem.get(i).get("all"));
-                total = total + Double.parseDouble( cartitem.get(i).get("all").toString() );
-                }catch (ClassCastException e)
-                {
-                }
-            }
-        }
-
-        cal.put("total",total);
-        cal.put("count",count);
+        Map<String,Number> cal=cartService.getCal(cartitem);//放入service
         model.addAttribute("cal",cal);
         return "user/shopcart";
     }
 
+    //删除一个
     @RequestMapping("/del")
     @ResponseBody
     public String delCartItem(@RequestBody String json)
@@ -100,6 +84,7 @@ public class CartController extends BaseController{
         return "false";
     }
 
+    //清空购物车
     @RequestMapping("/delall")
     @ResponseBody
     public String clearCratItem(@RequestBody String json)
@@ -111,6 +96,20 @@ public class CartController extends BaseController{
             return "true";
         }
         return "false";
+    }
+
+    //进入结算
+    @RequestMapping(value = "/tocommit/{json}")
+    public String toCommit(Model model,@PathVariable String json)
+    {
+        JSONObject date=new JSONObject( JSONObject.parseObject(json)  );
+        String uid=date.getString("uid");
+        //获取收货地址
+        List<Address> addresses=addressService.findAddressByUserId( Integer.parseInt(uid) );
+        model.addAttribute("addresses",addresses);
+        //获取发货价格(API接口)
+
+        return "user/shopcommit";
     }
 
 }

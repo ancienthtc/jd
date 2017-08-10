@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,5 +66,30 @@ public class CartServiceImpl implements CartService{
 
     public int ClearCartItem(Integer uid) {
         return cartMapper.clearCart(uid);
+    }
+
+    public Map<String, Number> getCal(List<Map<String, Object>> cartitem) {
+        Map<String,Number> cal=new HashMap<String, Number>();
+        Double total=0.0;
+        int count=0;
+        //结算
+
+        for (int i = 0; i < cartitem.size(); i++) {
+            if (cartitem.get(i).get("id") != null) {
+                count++;
+            }
+            if (cartitem.get(i).get("all") != null) {
+                try {
+                    System.out.print(cartitem.get(i).get("all"));
+                    total = total + Double.parseDouble( cartitem.get(i).get("all").toString() );
+                }catch (ClassCastException e)
+                {
+                }
+            }
+        }
+
+        cal.put("total",total);
+        cal.put("count",count);
+        return cal;
     }
 }

@@ -131,6 +131,13 @@
                 });
             });
 
+            $("#cal").click(function () {
+                var userid=$("#uid").attr("value");
+                var total=$("#total").attr("name");
+                var json'{uid:'+uid+',total:'+total+'}';
+                window.location.href="<%=basePath%>cart/tocommit/json";
+            });
+
         })
     </script>
 
@@ -214,7 +221,7 @@
         <tr>
             <th scope="col"><input type="button" id="alldel" name="delete" value="全部删除" style=" margin-left:-10px;"></th>
             <th scope="col">商品共&nbsp;${cal.get("count")}&nbsp;件</th>
-            <th scope="col">合计：&nbsp;${cal.get("total")}</th>
+            <th scope="col" id="total" name="${cal.get("total")}">合计：&nbsp;${cal.get("total")}</th>
             <th scope="col"><input type="button" id="cal" name="sub" value="结算" style="margin-right:15px;"></th>
         </tr>
     </table>
