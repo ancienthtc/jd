@@ -35,4 +35,8 @@ public interface GoodsMapper {
 
     //删除该商品全部信息(多表关联删除)
     int deleteGoodsAll(@Param("id")Integer id);
+
+    //更新库存(OrderService)
+    int updateStock(@Param("amount") Double amount,@Param("gid") Integer gid);
+
 }

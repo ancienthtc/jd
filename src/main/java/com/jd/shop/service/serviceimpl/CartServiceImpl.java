@@ -5,6 +5,8 @@ import com.jd.shop.dao.CartMapper;
 import com.jd.shop.model.Cart;
 import com.jd.shop.model.CartItem;
 import com.jd.shop.service.CartService;
+import com.jd.shop.service.GoodsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +26,9 @@ public class CartServiceImpl implements CartService{
 
     @Resource
     private CartItemMapper cartItemMapper;
+
+    @Autowired
+    private GoodsService goodsService;
 
     @Transactional
     public int cartadd(Integer userid, Integer goodsid, Double count) {
@@ -91,5 +96,18 @@ public class CartServiceImpl implements CartService{
         cal.put("total",total);
         cal.put("count",count);
         return cal;
+    }
+
+    public Double getMaxFreight(List<HashMap> goodses) {
+        Double Freight=0.0;
+        double[] f=new double[goodses.size()];
+        for(int i=0;i<goodses.size();i++)
+        {
+            f[i]=goodsService.getGoods( Integer.parseInt( goodses.get(i).get("gid").toString() )  ).getFreight();
+            if(f[i]>Freight) {// 判断最大值
+                Freight = f[i];
+            }
+        }
+        return Freight;
     }
 }

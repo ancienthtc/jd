@@ -1,7 +1,9 @@
 package com.jd.shop.dao;
 
 import com.jd.shop.model.Order;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface OrderMapper {
     int deleteByPrimaryKey(Integer id);
 

@@ -255,4 +255,10 @@
     WHERE id = #{goodsid,jdbcType=INTEGER}
   </update>
 
+  <update id="updateStock" parameterType="java.lang.Number">
+    UPDATE t_goods
+    SET stock=stock-#{amount,jdbcType=DOUBLE}
+    WHERE id=#{gid,jdbcType=INTEGER}
+  </update>
+
 </mapper>

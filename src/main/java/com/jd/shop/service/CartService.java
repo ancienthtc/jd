@@ -2,6 +2,7 @@ package com.jd.shop.service;
 
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,4 +25,6 @@ public interface CartService {
      * @return
      */
     Map<String,Number> getCal(List<Map<String,Object>> cartitem);
+
+    Double getMaxFreight(List<HashMap> goodses);
 }

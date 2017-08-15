@@ -204,6 +204,7 @@
   </tr>
   <tr>
     <td><h4 style="font-size: 25px">购物数量</h4></td>
+	<!-- 改! -->
     <td><input id="buycount" data_step="1" data_min="1" data_max="100" data_digit="0" value="1" style="width:80px;height: 25px; padding-left:130px;"/></td>
   </tr>
   <tr>

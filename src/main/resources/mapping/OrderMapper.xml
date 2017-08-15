@@ -3,6 +3,7 @@
 <mapper namespace="com.jd.shop.dao.OrderMapper" >
   <resultMap id="BaseResultMap" type="com.jd.shop.model.Order" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="uuid" property="uuid" jdbcType="VARCHAR" />
     <result column="ordertime" property="ordertime" jdbcType="TIMESTAMP" />
     <result column="shopstatus" property="shopstatus" jdbcType="INTEGER" />
     <result column="paystatus" property="paystatus" jdbcType="INTEGER" />
@@ -13,7 +14,7 @@
     <result column="order_user" property="orderUser" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, ordertime, shopstatus, paystatus, paytime, limit, allprice, detail, order_user
+    id, uuid, ordertime, shopstatus, paystatus, paytime, limit, allprice, detail, order_user
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
@@ -26,20 +27,23 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.jd.shop.model.Order" >
-    insert into t_order (id, ordertime, shopstatus,
-    paystatus, paytime, limit,
-    allprice, detail, order_user
-    )
-    values (#{id,jdbcType=INTEGER}, #{ordertime,jdbcType=TIMESTAMP}, #{shopstatus,jdbcType=INTEGER},
-    #{paystatus,jdbcType=INTEGER}, #{paytime,jdbcType=TIMESTAMP}, #{limit,jdbcType=INTEGER},
-    #{allprice,jdbcType=DOUBLE}, #{detail,jdbcType=VARCHAR}, #{orderUser,jdbcType=INTEGER}
-    )
+    insert into t_order (id, uuid, ordertime,
+    shopstatus, paystatus, paytime,
+    limit, allprice, detail,
+    order_user)
+    values (#{id,jdbcType=INTEGER}, #{uuid,jdbcType=VARCHAR}, #{ordertime,jdbcType=TIMESTAMP},
+    #{shopstatus,jdbcType=INTEGER}, #{paystatus,jdbcType=INTEGER}, #{paytime,jdbcType=TIMESTAMP},
+    #{limit,jdbcType=INTEGER}, #{allprice,jdbcType=DOUBLE}, #{detail,jdbcType=VARCHAR},
+    #{orderUser,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.jd.shop.model.Order" >
+  <insert id="insertSelective" parameterType="com.jd.shop.model.Order" useGeneratedKeys="true" keyProperty="id">
     insert into t_order
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="uuid != null" >
+        uuid,
       </if>
       <if test="ordertime != null" >
         ordertime,
@@ -54,7 +58,7 @@
         paytime,
       </if>
       <if test="limit != null" >
-        limit,
+        `limit`,
       </if>
       <if test="allprice != null" >
         allprice,
@@ -69,6 +73,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
       </if>
       <if test="ordertime != null" >
         #{ordertime,jdbcType=TIMESTAMP},
@@ -99,6 +106,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.jd.shop.model.Order" >
     update t_order
     <set >
+      <if test="uuid != null" >
+        uuid = #{uuid,jdbcType=VARCHAR},
+      </if>
       <if test="ordertime != null" >
         ordertime = #{ordertime,jdbcType=TIMESTAMP},
       </if>
@@ -128,14 +138,15 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jd.shop.model.Order" >
     update t_order
-    set ordertime = #{ordertime,jdbcType=TIMESTAMP},
-    shopstatus = #{shopstatus,jdbcType=INTEGER},
-    paystatus = #{paystatus,jdbcType=INTEGER},
-    paytime = #{paytime,jdbcType=TIMESTAMP},
-    limit = #{limit,jdbcType=INTEGER},
-    allprice = #{allprice,jdbcType=DOUBLE},
-    detail = #{detail,jdbcType=VARCHAR},
-    order_user = #{orderUser,jdbcType=INTEGER}
+    set uuid = #{uuid,jdbcType=VARCHAR},
+      ordertime = #{ordertime,jdbcType=TIMESTAMP},
+      shopstatus = #{shopstatus,jdbcType=INTEGER},
+      paystatus = #{paystatus,jdbcType=INTEGER},
+      paytime = #{paytime,jdbcType=TIMESTAMP},
+      limit = #{limit,jdbcType=INTEGER},
+      allprice = #{allprice,jdbcType=DOUBLE},
+      detail = #{detail,jdbcType=VARCHAR},
+      order_user = #{orderUser,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

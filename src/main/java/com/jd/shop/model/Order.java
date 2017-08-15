@@ -1,16 +1,22 @@
 package com.jd.shop.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Order {
     private Integer id;
 
+    private String uuid;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date ordertime;
 
     private Integer shopstatus;
 
     private Integer paystatus;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date paytime;
 
     private Integer limit;
@@ -27,6 +33,14 @@ public class Order {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid == null ? null : uuid.trim();
     }
 
     public Date getOrdertime() {

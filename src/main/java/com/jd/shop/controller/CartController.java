@@ -1,5 +1,7 @@
 package com.jd.shop.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jd.shop.model.Address;
 import com.jd.shop.service.AddressService;
@@ -98,18 +100,79 @@ public class CartController extends BaseController{
         return "false";
     }
 
-    //进入结算
-    @RequestMapping(value = "/tocommit/{json}")
-    public String toCommit(Model model,@PathVariable String json)
+    //计算当前价格
+    @RequestMapping("/getcal")
+    @ResponseBody
+    public String calPrice(@RequestBody String a)
     {
-        JSONObject date=new JSONObject( JSONObject.parseObject(json)  );
-        String uid=date.getString("uid");
+        try{
+            JSONObject object = JSON.parseObject(a);
+            //JSONObject data = (JSONObject) object.get("goods");
+            JSONArray jsonArray = object.getJSONArray("goods");
+
+            List<HashMap> goodslist = JSON.parseArray(jsonArray.toJSONString(), HashMap.class);
+            Map<String,Object> map=new HashMap<String, Object>();
+            Integer goodses=0;
+            Double allof=0.0;
+            for(int i=0;i<goodslist.size();i++)
+            {
+                goodses++;
+                allof=allof+ Double.valueOf( goodslist.get(i).get("all").toString() );
+            }
+            map.put("count",goodses);
+            map.put("allof",allof);
+
+            System.out.print(JSON.toJSONString(map, true));
+            return JSON.toJSONString(map, true);
+        }catch (Exception e)
+        {
+            return "false";
+        }
+
+    }
+
+    //进入结算
+    @RequestMapping(value = "/tocommit")
+
+    public String toCommit(String json, Model model , String uid,String total)
+    {
+        //解析JSON
+        JSONObject object = JSON.parseObject(json);
+        //取得JSON中的数组
+        JSONArray jsonArray = object.getJSONArray("goods");
+        //转换List<Map<>>
+        List<HashMap> goodslist = JSON.parseArray(jsonArray.toJSONString(), HashMap.class);
+        //取得最大运费
+        Double freight=cartService.getMaxFreight(goodslist);
+        model.addAttribute("freight",freight);
+        //取得选中商品总价
+        total=object.getString("total");
+        model.addAttribute("total",Double.parseDouble(total) );
         //获取收货地址
+        uid=object.getString("userid");
         List<Address> addresses=addressService.findAddressByUserId( Integer.parseInt(uid) );
         model.addAttribute("addresses",addresses);
-        //获取发货价格(API接口)
-
+        //传递JSON
+        model.addAttribute("cart",json);
+        //return "user/shopcommit";
         return "user/shopcommit";
     }
+
+    @RequestMapping("/commit")
+    public String toC()
+    {
+        return "user/shopcommit";
+    }
+
+    //获取发货价格(API接口)
+//    @RequestMapping(value = "/freight")
+//    @ResponseBody
+//    public String getFreight(@RequestBody Integer aid,Model model)
+//    {
+//        model.addAttribute("freight",Double.valueOf( aid%5 ));
+//        //return Double.valueOf( aid%5 ) ;//模拟接口
+//        //return "user/shopcommit";
+//        return Double.valueOf( aid%5 ).toString() ;
+//    }
 
 }

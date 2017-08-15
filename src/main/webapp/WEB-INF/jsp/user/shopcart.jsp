@@ -131,14 +131,164 @@
                 });
             });
 
+            //结算
             $("#cal").click(function () {
                 var userid=$("#uid").attr("value");
-                var total=$("#total").attr("name");
-                var json'{uid:'+uid+',total:'+total+'}';
-                window.location.href="<%=basePath%>cart/tocommit/json";
+                var total=$("#info2").text();
+                var checkbox_count=0;
+                var goodslist="";
+                goodslist=goodslist+"{'goods':[";
+                $('input[name="choose"]:checked').each(function(t,n){//每个checkbox
+                    var tablerow = $(this).parent().parent();
+                    //console.log(tablerow);
+                    var title = tablerow.find("[name='title']").attr("value");
+                    var gid = tablerow.find("[name='title']").attr("value2");
+                    var name= tablerow.find("[name='name']").attr("value");
+                    var price= tablerow.find("[name='price']").attr("value");
+                    var amount= tablerow.find("[name='gclass']").attr("value");
+                    var gclass= tablerow.find("[name='gclass']").attr("value2");
+                    var all= tablerow.find("[name='all']").attr("value");
+                    var ciid= tablerow.find("[name='all']").attr("value2");
+                    goodslist=goodslist+"{'title':'"+title+ "','gid':'"+gid+"','name':'"+name+"','price':'"+price+"','amount':'"+amount+"','gclass':'"+gclass+"','all':'"+all+"','ciid':'"+ciid+"'},";
+                    //console.log(a);
+                    checkbox_count++;
+                });
+                goodslist=goodslist.substr(0,goodslist.length-1);
+                //a.append("]}");
+                goodslist=goodslist+"]}";
+                //console.log(goodslist);
+                //嵌入goodslist
+                var json=goodslist.substr(0,goodslist.length-1)+",'userid':'"+userid+"','total':'"+total+"'}";
+                //console.log(json);
+                if(!checkbox_count>0)
+                {
+                    alert("请选择结算商品");
+                    return;
+                }
+                //alert("开始提交");
+                <%--submitForm("<%=basePath%>cart/tocommit","{name:json,val:"+json+"}");--%>
+
+                var form = $("<form></form>");
+                form.attr('action', "<%=basePath%>cart/tocommit");
+                form.attr('method', 'post');
+                form.attr('target', '_self');
+
+                var input1 = $("<input type='hidden' name='json' />");
+                input1.attr('value', json);
+                form.append(input1);
+
+                form.appendTo("body");
+                form.css('display', 'none');
+                form.submit();
+
+                <%--$.ajax({--%>
+                    <%--type : "POST",--%>
+                    <%--contentType : 'application/json',--%>
+                    <%--url : "<%=basePath%>cart/tocommit",--%>
+                    <%--data : json,--%>
+                    <%--async : false,--%>
+                    <%--success : function(data){--%>
+                        <%--console.log(data);--%>
+                    <%--}--%>
+                <%--});--%>
+
+                <%--$.ajax( {--%>
+                    <%--type : 'POST',--%>
+                    <%--contentType : 'application/json',--%>
+                    <%--url : '<%=basePath%>cart/tocommit',--%>
+                    <%--data : json,--%>
+                    <%--//dataType : 'text',--%>
+                    <%--success : function(data) {--%>
+                        <%--//window.location=data;--%>
+                        <%--//window.location.reload(data);--%>
+                        <%--//console.log(data);--%>
+                        <%--//alert(data);--%>
+                        <%--&lt;%&ndash;window.location.href = "'<%=basePath%>"+data+"'";&ndash;%&gt;--%>
+                        <%--console.log(data);--%>
+                        <%--&lt;%&ndash;window.location.href = "<%=basePath%>cart/commit";&ndash;%&gt;--%>
+                        <%--window.open("<%=basePath%>cart/commit");--%>
+                    <%--},--%>
+                    <%--error : function(data) {--%>
+                        <%--console.log("1 "+data);--%>
+                        <%--alert(data);--%>
+                        <%--alert("错误");--%>
+                    <%--}--%>
+                <%--});--%>
             });
 
-        })
+            //选择商品
+
+            $(".choose").click(function () {
+                var a="";
+                //a.append("{'goods':[");
+                a=a+"{'goods':[";
+                $('input[name="choose"]:checked').each(function(t,n){//每个checkbox
+                    var tablerow = $(this).parent().parent();
+                    //console.log(tablerow);
+                    var title = tablerow.find("[name='title']").attr("value");
+                    var gid = tablerow.find("[name='title']").attr("value2");
+                    var name= tablerow.find("[name='name']").attr("value");
+                    var price= tablerow.find("[name='price']").attr("value");
+                    var amount= tablerow.find("[name='gclass']").attr("value");
+                    var gclass= tablerow.find("[name='gclass']").attr("value2");
+                    var all= tablerow.find("[name='all']").attr("value");
+                    var ciid= tablerow.find("[name='all']").attr("ciid");
+                    a=a+"{'title':'"+title+ "','gid':'"+gid+"','name':'"+name+"','price':'"+price+"','amount':'"+amount+"','gclass':'"+gclass+"','all':'"+all+"','ciid':'"+ciid+"'},";
+                    //console.log(a);
+                });
+                a=a.substr(0,a.length-1);
+                //a.append("]}");
+                a=a+"]}";
+                //console.log(a);
+                $.ajax( {
+                    type : 'POST',
+                    contentType : 'application/json',
+                    url : '<%=basePath%>cart/getcal',
+                    data : a,
+                    dataType : 'json',
+                    success : function(data) {
+                        //console.log(data.allof);
+                        if(data.length != false)
+                        {
+                            $("#info1").html("");//清空info内容
+                            $("#info2").html("");
+                            $("#info1").append( data.count );
+                            $("#info2").append( data.allof );
+                        }
+                        if(data==null || data.length<=0 || data==false)
+                        {
+                            $("#info1").html("");//清空info内容
+                            $("#info2").html("");
+                            $("#info1").append( 0 );
+                            $("#info2").append( 0 );
+                        }
+                    },
+                    error : function(data) {
+                        //alert("错误!");
+                        $("#info1").html("");//清空info内容
+                        $("#info2").html("");
+                        $("#info1").append( 0 );
+                        $("#info2").append( 0 );
+                    }
+                });
+            });
+
+//            function submitForm(action, params) {
+//                var form = $("<form></form>");
+//                form.attr('action', action);
+//                form.attr('method', 'post');
+//                form.attr('target', '_self');
+//                for(var i=0 ; i < params.length;i ++){
+//                    var input1 = $("<input type='hidden' name='"+params[i].name+"' />");
+//                    input1.attr('value', params[i].val);
+//                    form.append(input1);
+//                }
+//                form.appendTo("body");
+//                form.css('display', 'none');
+//                form.submit();
+//            }
+
+        });
     </script>
 
 </head>
@@ -170,25 +320,27 @@
     <input type="hidden" id="uid" value="${sessionScope.user.id}">
     <table class="t1" width="92%">
         <tr>
-            <th scope="col">&nbsp;</th>
+            <th scope="col">选择</th>
+            <th scope="col">图片</th><!-- 图片 -->
             <th scope="col">商品名</th>
             <th scope="col">单&nbsp;价</th>
             <th scope="col">数&nbsp;量</th>
             <th scope="col">总&nbsp;额</th>
-            <th scope="col">&nbsp;</th>
+            <th scope="col">删除</th><!-- 删除 -->
         </tr>
         <c:if test="${not empty items}">
             <c:forEach var="col" items="${items}">
                 <tr>
                     <c:if test="${empty col.get('id')}" >
-                        <td colspan="5">该商品已下架</td>
+                        <td colspan="6">该商品已下架</td>
                     </c:if>
                     <c:if test="${not empty col.get('id')}" >
-                        <td><img src="<%=basePath%>picture/show?pic=${col.get("title")}"></td>
-                        <td>${col.get("name")}</td>
-                        <td>￥ ${col.get("price")}</td>
-                        <td>${col.get("amount")} / ${col.get("gclass")}</td>
-                        <td>￥ ${col.get("all")}</td>
+                        <td><input type="checkbox" name="choose" class="choose"></td>
+                        <td name="title" value="${col.get("title")}" value2="${col.get("id")}"><img src="<%=basePath%>picture/show?pic=${col.get("title")}"></td><!-- 图片名 -->
+                        <td name="name" value="${col.get("name")}">${col.get("name")}</td><!-- 商品名 -->
+                        <td name="price" value="${col.get("price")}">￥ ${col.get("price")}</td><!-- 单价 -->
+                        <td name="gclass" value="${col.get("amount")}" value2="${col.get("gclass")}">${col.get("amount")} / ${col.get("gclass")}</td><!-- 单位 -->
+                        <td name="all" value="${col.get("all")}" value2="${col.get("ciid")}">￥ ${col.get("all")}</td><!-- 总额 -->
                     </c:if>
 
                     <td><input type="button" class="delete" name="${col.get("ciid")}" id="del${col.get("ciid")}" value="删除"></td>
@@ -197,7 +349,7 @@
         </c:if>
         <c:if test="${empty items}">
             <tr>
-                <td colspan="6"><a href="<%=basePath%>login/view">暂无商品，前去购买</a></td>
+                <td colspan="7"><a href="<%=basePath%>login/view">暂无商品，前去购买</a></td>
             </tr>
         </c:if>
         <%--<tr>--%>
@@ -220,11 +372,15 @@
     <table class="t2" width="92%">
         <tr>
             <th scope="col"><input type="button" id="alldel" name="delete" value="全部删除" style=" margin-left:-10px;"></th>
-            <th scope="col">商品共&nbsp;${cal.get("count")}&nbsp;件</th>
-            <th scope="col" id="total" name="${cal.get("total")}">合计：&nbsp;${cal.get("total")}</th>
+            <%--<th scope="col">商品共&nbsp;${cal.get("count")}&nbsp;件</th>--%>
+            <%--<th scope="col" id="total" name="${cal.get("total")}">合计：&nbsp;${cal.get("total")}</th>--%>
+            <%--<th scope="col"><input type="button" id="cal" name="sub" value="结算" style="margin-right:15px;"></th>--%>
+            <th scope="col">商品共&nbsp; <label id="info1">0</label> &nbsp;件</th>
+            <th scope="col" id="total" name="">合计：￥<label id="info2">0</label>&nbsp;</th>
             <th scope="col"><input type="button" id="cal" name="sub" value="结算" style="margin-right:15px;"></th>
         </tr>
     </table>
+
 
 </div>
 <!--主体结束-->
