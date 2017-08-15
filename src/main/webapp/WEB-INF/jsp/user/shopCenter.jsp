@@ -5,84 +5,71 @@
   String path = request.getContextPath();
   String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+
+
 <html>
 <head>
-<meta charset="utf-8">
-<title>用户管理</title>
+  <meta charset="utf-8">
+  <title>用户管理</title>
   <%--按钮样式--%>
   <link href="../css/button.css" rel="stylesheet" type="text/css"/>
   <%--日期选择插件样式--%>
   <link href="../css/date/date.css" type="text/css" rel="stylesheet" />
-<style>
-.head{width:100%; height:100px; background:#996;}
-.h_left{ height:100px; margin-left:50px; float:left;}
-.h_left a{color:#000; font-size:16px; text-decoration:none;}
-.h_left a:hover{color:#999; font-size:18px;}
-.h_right{margin-right:150px; margin-top:-5px;  height:100px;}
-.h_right ul{ float:right;}
-.h_right ul li{ float:left; list-style:none; font-size:16px; margin-left:35px;}
-.h_right ul li a{font-size:16px; text-decoration:none; color:#000;}
-.h_right ul li a:hover{font-size:18px; color:#999;}
-<!--搜索框开始-->
-form { 
-margin-top:20px; 
-} 
-#search_box {
-margin-top:-42px;
-margin-left:950px; 
-width: 201px; 
-height: 31px; 
-background: url(http://files.jb51.net/demoimg/200912/bg_search_box.gif); 
-} 
-#search_box #s { 
-float: left; 
-padding: 0; 
-margin: 6px 0 0 6px; 
-border: 0; 
-width: 159px; 
-background: none; 
-font-size: .8em; 
-} 
-#search_box #go { 
-float: right; 
-margin: 3px 4px 0 0; 
-} 
+  <style>
+    .head{width:100%; height:80px; background:#3399ff; overflow:hidden;}
+    .h_left{ height:80px; margin-left:50px; float:left; width:150px;}
+    .h_left a{color:#FFF; font-size:16px; text-decoration:none;}
+    .h_left p{color:#FFF; font-size:16px;}
+    .h_left a:hover{color:#999; font-size:18px;}
+    .h_right{margin-right:150px; margin-top:0px;  height:80px; width:1000; float:right;}
+    form {
+      margin-top:20px; width:180px; float:left; height:15px; margin-right:20px;
+    }
+    .search_text{width:120px; height:15px; border:2px solid #CCC; background:#3399ff; border-radius:5px;}
+    .search_btn{ background:#CCC; width:50px; height:20px; border-radius:5px; font-size:10px; color:#FFF;}
+    .h_right ul{ float:right;}
+    .h_right ul li{ float:left; list-style:none; font-size:16px; margin-left:35px;}
+    .h_right ul li a{font-size:16px; text-decoration:none; color:#fff;}
+    .h_right ul li a:hover{font-size:18px; color:#999;}
 
-<!--左边菜单开始-->
-.all{width:100%;}
-.all_left .all_right{ float:left;}
-.all_left{ width:200px; height:800px; background:#993; margin-top:-10px;}
-.all_left ul li{ line-height:20px; list-style:none; padding-bottom:10px; padding-top:10px; }
-.all_left ul li a{ text-decoration:none; font-size:18px; color:#000;}
-.all_left ul li a:hover{ font-size:20px;}
-.all_left ul li a:active{ font-size:20px;}
-.all_right{ float:right;margin-top:-750px; width: 1250px;}
-/*.all_right table{ margin-top:30px; text-align:center;}*/
-<!--底部版权开始-->
-.footer{width:100%;clear:both;text-align:center;padding:10px 0;line-height:25px;color:#666;border-top:#ddd 1px solid;}
-.footer{ background-color:#999; height:100px; position: fixed;}
-.footer a{margin-top:50px;color:#666; padding-top:30px; margin-left:15px;}
-.footer a:hover{color:#000;text-decoration:underline;}
-.footer p{ text-align:center; line-height:25px;}
-/*.bottom{width:100%;clear:both;text-align:center;padding:10px 0;line-height:25px;color:#666;border-top:#ddd 1px solid;}
-.footer{ background-color:#999; height:50px; margin-top:50px;}
-.bottom a{margin-top:50px;color:#666; padding-top:30px; margin-left:15px;}
-.bottom a:hover{color:#000;text-decoration:underline;}
-.bottom p{ text-align:center; line-height:25px;}*/
+    <!--左边菜单开始-->
+        .all{width:100%; overflow:hidden;}
+    .all_left .all_right{ float:left;}
+    .all_left{ width:150px; height:800px; background:#fff; margin-top:-16px;}
+    .all_left hr{ width:150px; margin-left:-40px;color:#999;}
+    .all_left ul li{ line-height:10px; list-style:none; padding-top:5px; }
+    .all_left .jt{width:7px; height:10px; margin-left:15px;}
+    .all_left ul li a{ text-decoration:none; font-size:14px; color:#666;}
+    .all_left ul li a:hover{ font-size:16px;}
+    .all_left ul li a:active{ font-size:16px;}
+    .all_left>ul>li>ul>li{ line-height:25px; font-size:14px; color:#666;}
+    .all_right{ float:right;margin-top:-750px; width: 1250px;}
+    /*.all_right table{ margin-top:30px; text-align:center;}*/
+    <!--底部版权开始-->
+        .footer{width:100%;clear:both;text-align:center;padding:10px 0;line-height:25px;color:#666;border-top:#ddd 1px solid;}
+    .footer{ background-color:#999; height:100px; position: fixed;}
+    .footer a{margin-top:50px;color:#666; padding-top:30px; margin-left:15px;}
+    .footer a:hover{color:#000;text-decoration:underline;}
+    .footer p{ text-align:center; line-height:25px;}
+    /*.bottom{width:100%;clear:both;text-align:center;padding:10px 0;line-height:25px;color:#666;border-top:#ddd 1px solid;}
+    .footer{ background-color:#999; height:50px; margin-top:50px;}
+    .bottom a{margin-top:50px;color:#666; padding-top:30px; margin-left:15px;}
+    .bottom a:hover{color:#000;text-decoration:underline;}
+    .bottom p{ text-align:center; line-height:25px;}*/
 
-  .userInfoTable input[type="text"] {
-    border:1px solid #669b1f;
-    border-radius: 3px;
-    background-color: #fcfdfd;
-    height: 24px;
-  }
+    .userInfoTable input[type="text"] {
+      border:1px solid #669b1f;
+      border-radius: 3px;
+      background-color: #fcfdfd;
+      height: 24px;
+    }
 
-  .active{
-    margin-bottom: 10px;
-    padding-bottom: 0px;
-    padding-top: 0px;
-  }
-</style>
+    .active{
+      margin-bottom: 10px;
+      padding-bottom: 0px;
+      padding-top: 0px;
+    }
+  </style>
 
 
 
@@ -147,89 +134,93 @@ margin: 3px 4px 0 0;
       }
   </script>
   <!-- 提示框的样式引入 -->
-  <link rel="stylesheet" href="../static/libs/messenger/css/messenger.css" />
-  <link rel="stylesheet" href="../static/libs/messenger/css/messenger-theme-future.css" />
+  <!--<link rel="stylesheet" href="../static/libs/messenger/css/messenger.css" />
+  <link rel="stylesheet" href="../static/libs/messenger/css/messenger-theme-future.css" />-->
 </head>
 
 <body>
 <!--头部开始-->
-<div class="head"><img src="shopCenter.jsp">
-<div class="h_left"><p>欢迎光临${requestScope.user.nickname}&nbsp;&nbsp; <a href="">退出</a></p></div>
-<div class="h_right">
-<ul>
-<li><a href="">****</a></li>
-<li><a href="" style="font-size:18px; color:#F00;">用户管理</a></li>
-<li><a href="">购&nbsp;&nbsp;物&nbsp;&nbsp;车</a></li>
-</ul>
+<div class="head">
+  <div class="h_left"><p>欢迎光临${requestScope.user.nickname}&nbsp;&nbsp; <a href="">退出</a></p></div>
+
+  <div class="h_right">
+    <form action="" method="post">
+      <input class="search_text" type="text"/>
+      <input type="submit" value="搜索" class="search_btn"/>
+    </form>
+    <ul>
+      <li><a href="">****</a></li>
+      <li><a href="" style="font-size:18px; color:#F00;">用户管理</a></li>
+      <li><a href="">购&nbsp;&nbsp;物&nbsp;&nbsp;车</a></li>
+    </ul>
+  </div>
 </div>
-</div>
-<%--<!--搜索框开始-->
-<div id="search_box"> 
-<form id="search_form" method="post" action="#"> 
-<input type="text" id="s" value="Search" class="swap_value" /> 
-<input type="image" src="http://files.jb51.net/demoimg/200912/btn_search_box.gif" width="27" height="24" id="go" alt="Search" title="Search" /> 
-</form> 
-</div> --%>
 <!--头部结束-->
 <div class="all">
-<!--左边菜单开始-->
-<div class="all_left">
-<ul>
-<li ><h4><a onclick="window.location.href='<%=basePath%>user/toShopCenter'">用户管理</a></h4></li>
-<li><h4><a href="javascript:void(0)" id="recieverAddress">地址管理</a></h4></li>
-<li><h4><a href="javascript:void(0)" id="commentManager">评论管理</a></h4></li>
-<li><h4><a href="javascript:void(0)">订单管理</a></h4>
-  <ul style="list-style: none">
-    <li class="active">待付款</li>
-    <li class="active">待发货</li>
-    <li class="active">待收货</li>
-    <li class="active">待评价</li>
-  </ul>
-</li>
-</ul>
-</div>
-<!--左边菜单结束-->
-<!--右边信息开始-->
-<div class="all_right">
-<h2>用户信息</h2>
-<table width="900px" height="300px" class="userInfoTable">
-  <tr>
-    <td style="font-size: 17px">用户名:</td>
-    <td><input type="text" value="${requestScope.user.nickname}" name="name"></td>
-    <td style="font-size: 17px">生&nbsp;日:</td>
-    <td>
+  <!--左边菜单开始-->
+  <script type="text/javascript">
+      function showsubmenu(sid){
+          var whichEl = document.getElementById("submenu" + sid);
+          whichEl.style.display = whichEl.style.display =='none'?'':'none';
+      }
+  </script>
+  <div class="all_left">
+    <ul>
+      <li><h4><span></span><a onClick="window.location.href='<%=basePath%>user/toShopCenter'">用户管理<img class="jt" src="手机/img/jian.png"></a></h4></li><hr>
+      <li><h4><span></span><a href="javascript:void(0)" id="recieverAddress">地址管理<img class="jt" src="手机/img/jian.png"></a></h4></li><hr>
+      <li><h4><span></span><a href="javascript:void(0)" id="commentManager">评论管理<img class="jt" src="手机/img/jian.png"></a></h4></li><hr>
+      <li><h4><span></span><a href="javascript:void(0)" onClick="showsubmenu(1)">订单管理<img class="jt" src="手机/img/jian.png"></a></h4><hr>
+        <ul id="submenu1" style="list-style: none; display:none; margin-left:-20px;">
+          <li class="active"><a href="">待付款</a></li>
+          <li class="active"><a href="">待发货</a></li>
+          <li class="active"><a href="">待收货</a></li>
+          <li class="active"><a href="">待评价</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <!--左边菜单结束-->
+  <!--右边信息开始-->
+  <div class="all_right">
+    <h2>用户信息</h2>
+    <table width="900px" height="300px" class="userInfoTable">
+      <tr>
+        <td style="font-size: 17px">用户名:</td>
+        <td><input type="text" value="${requestScope.user.nickname}" name="name"></td>
+        <td style="font-size: 17px">生&nbsp;日:</td>
+        <td>
 
-        <input name="member.birth" type="text" value="${requestScope.birth}" size="14" readonly onClick="showcalendar(event,this);" onFocus="showcalendar(event, this);if(this.value=='0000-00-00')this.value=''">
+          <input name="member.birth" type="text" value="${requestScope.birth}" size="14" readonly onClick="showcalendar(event,this);" onFocus="showcalendar(event, this);if(this.value=='0000-00-00')this.value=''">
 
-    </td>
-  </tr>
-  <tr>
-    <td style="font-size: 17px">性&nbsp;别:</td>
-    <td>
-      <input name="sex" type="radio" ${requestScope.user.sex=='男'?"checked":""} value="男">男 &nbsp;&nbsp;
-      <input name="sex" type="radio" ${requestScope.user.sex=='女'?"checked":""} value="女">女
-      <%--<input name="sex" type="radio" <c:if test="${requestScope.user.sex=='男'}">checked="checked"</c:if> value="男">男 &nbsp;&nbsp;
-      <input name="sex" type="radio" <c:if test="${requestScope.user.sex=='女'}">checked="checked"</c:if> value="女">女--%>
-    </td>
-    <td style="font-size: 17px">居住地:</td>
-    <td>
-      <input id="liveInput" type="text" value="${requestScope.user.live}" disabled />
-      <span id="liveDiv" style="display: none;float: left;margin-right: 5px">
+        </td>
+      </tr>
+      <tr>
+        <td style="font-size: 17px">性&nbsp;别:</td>
+        <td>
+          <input name="sex" type="radio" ${requestScope.user.sex=='男'?"checked":""} value="男">男 &nbsp;&nbsp;
+          <input name="sex" type="radio" ${requestScope.user.sex=='女'?"checked":""} value="女">女
+          <%--<input name="sex" type="radio" <c:if test="${requestScope.user.sex=='男'}">checked="checked"</c:if> value="男">男 &nbsp;&nbsp;
+          <input name="sex" type="radio" <c:if test="${requestScope.user.sex=='女'}">checked="checked"</c:if> value="女">女--%>
+        </td>
+        <td style="font-size: 17px">居住地:</td>
+        <td>
+          <input id="liveInput" type="text" value="${requestScope.user.live}" disabled />
+          <span id="liveDiv" style="display: none;float: left;margin-right: 5px">
         <center>
           <select id="seachprov" name="seachprov" onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');"></select>&nbsp;&nbsp;
           <select id="seachcity" name="homecity" onChange="changeCity(this.value,'seachdistrict','seachdistrict');"></select>&nbsp;&nbsp;
           <span id="seachdistrict_div"><select id="seachdistrict" name="seachdistrict"></select></span>
         </center>
       </span>
-      <span class="button small gray" type="button" id="liveSpan">修改地址</span>
-    </td>
-  </tr>
-  <tr>
-    <td style="font-size: 17px">手机号码:</td>
-    <td>
-      <input type="text" value="${requestScope.user.tel}" >
-      <input class="button medium gray"  style=" text-align:left;"  type="reset" value="修改"> &nbsp;&nbsp;
-      <span>是否允许手机登录
+          <span class="button small gray" type="button" id="liveSpan">修改地址</span>
+        </td>
+      </tr>
+      <tr>
+        <td style="font-size: 17px">手机号码:</td>
+        <td>
+          <input type="text" value="${requestScope.user.tel}" >
+          <input class="button medium gray"  style=" text-align:left;"  type="reset" value="修改"> &nbsp;&nbsp;
+          <span>是否允许手机登录
         <c:choose>
 
           <c:when test="${requestScope.user.tellogin==1}">
@@ -242,31 +233,31 @@ margin: 3px 4px 0 0;
         </c:choose>
 
       </span>
-    </td>
-    <%--<td colspan="2">
-    </td>
---%>
-  </tr>
-  <tr>
-    <td style="font-size: 17px">上次登录:</td>
-    <td colspan="3" >${requestScope.loginDate}</td>
-    
-  </tr>
-  <tr>
-    <td style="font-size: 17px">积分:</td>
-    <td colspan="3" style="font-weight: bold;color: #2d6987">${requestScope.user.score}</td>
-    
-  </tr>
-</table>
-<input class="button bigrounded green" style="text-align: center;margin-left: 250px" data-btn="savePersonalInfo" type="button" value="保存">
-</div>
-<!--右边信息结束-->
+        </td>
+        <%--<td colspan="2">
+        </td>
+    --%>
+      </tr>
+      <tr>
+        <td style="font-size: 17px">上次登录:</td>
+        <td colspan="3" >${requestScope.loginDate}</td>
 
-<%--<div class="footer" style=" width:100%;">
-<P>
-<a href="#" rel="nofollow">关于我们</a> &nbsp;|<a href="#" rel="nofollow">联系我们</a>&nbsp;|<a href="#" rel="nofollow"><a href='' target='_blank'>法律声明</a></a>&nbsp;|<a href="#" rel="nofollow">网站地图</a>&nbsp;|<a target="_blank" href="#">版权声明</a>&nbsp;|<a href="#" rel="nofollow">帮助中心</a><br />
-***商城 版权所有　© 2005-2020　京ICP备********号</P>
-</div>--%>
+      </tr>
+      <tr>
+        <td style="font-size: 17px">积分:</td>
+        <td colspan="3" style="font-weight: bold;color: #2d6987">${requestScope.user.score}</td>
+
+      </tr>
+    </table>
+    <input class="button bigrounded green" style="text-align: center;margin-left: 250px" data-btn="savePersonalInfo" type="button" value="保存">
+  </div>
+  <!--右边信息结束-->
+
+  <%--<div class="footer" style=" width:100%;">
+  <P>
+  <a href="#" rel="nofollow">关于我们</a> &nbsp;|<a href="#" rel="nofollow">联系我们</a>&nbsp;|<a href="#" rel="nofollow"><a href='' target='_blank'>法律声明</a></a>&nbsp;|<a href="#" rel="nofollow">网站地图</a>&nbsp;|<a target="_blank" href="#">版权声明</a>&nbsp;|<a href="#" rel="nofollow">帮助中心</a><br />
+  ***商城 版权所有　© 2005-2020　京ICP备********号</P>
+  </div>--%>
 
 </div>
 </body>
@@ -281,3 +272,5 @@ margin: 3px 4px 0 0;
 <%--页面单独js--%>
 <script src="<%=basePath%>js/user/shopCenter.js"  type="text/javascript"></script>
 </html>
+
+
