@@ -35,4 +35,13 @@ public class AddressServiceImpl implements AddressService {
         return addressMapper.updateByPrimaryKeySelective(address);
     }
 
+    /*删除地址*/
+    public int deleteAddress(Integer id) {
+        return addressMapper.deleteByPrimaryKey(id);
+    }
+
+    public Address findById(Integer id) {
+        return addressMapper.selectByPrimaryKey(id);
+    }
+
 }

@@ -97,4 +97,32 @@ public class AddressController {
         map.put("msg","success");
         return map;
     }
+
+    /*删除收货地址*/
+    @RequestMapping(value="/deleteAddress")
+    @ResponseBody
+    public Map<String,String> deleteAddress(Integer id,HttpSession session){
+        Map<String,String> map = new HashMap<String, String>();
+        if(id==null){
+            map.put("msg","收货地址id为空");
+            return map;
+        }
+        Address address = addressService.findById(id);
+        if(address==null){
+            map.put("msg","无此地址");
+            return map;
+        }
+        if(address.getIsmain()==1){
+            map.put("msg","默认地址无法删除,请重新设定默认地址");
+            return map;
+        }
+        int num = addressService.deleteAddress(id);
+        if(num==0){
+            map.put("msg","地址删除失败");
+            return map;
+        }
+        map.put("msg","success");
+        return map;
+
+    }
 }

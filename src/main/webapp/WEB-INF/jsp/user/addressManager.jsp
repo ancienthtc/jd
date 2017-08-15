@@ -19,10 +19,23 @@
     <link rel="stylesheet" href="css/style.css"/>
     <!-- favicon -->
     <link rel="shortcut icon" href="/favicon.ico"/>
+    <%--按钮样式--%>
+    <link href="../css/button.css" rel="stylesheet" type="text/css"/>
     <!--[if lt IE 9]>
     <script src="js/html5.js"></script>
     <![endif]-->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <!-- bootstrap样式 -->
+    <link rel="stylesheet" href="../css/confirm/confirm.css" />
+    <!-- 确认框的样式引入 -->
+    <link rel="stylesheet" href="../static/libs/jquery-confirm/jquery-confirm.css" />
+    <%--模态框--%>
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../css/modal/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="../css/modal/css/component.css" />
+
+
     <style>
         .head {
             width: 100%;
@@ -168,11 +181,11 @@
             border-top: #ddd 1px solid;
         }
 
-       /* .footer {
-            background-color: #999;
-            height: 50px;
-            margin-top: 260px;
-        }*/
+        /* .footer {
+             background-color: #999;
+             height: 50px;
+             margin-top: 260px;
+         }*/
 
         .bottom a {
             margin-top: 50px;
@@ -197,9 +210,8 @@
         }
 
         .adress_right {
-            width: 660px;
-            float: right;
-            margin-left: 980px;
+            width: 1100px;
+            margin-right: -400px;
         }
 
         .adress_right ul li {
@@ -213,8 +225,18 @@
         }
 
         .table_list table td {
-            border: 1px solid #999;
+            /*border: 1px solid #999;*/
             margin-top: 20px;
+
+        }
+        .table_list table tr{
+            border: 1px solid #669b1f;
+            /*border-bottom: 1px solid #669b1f;
+            border-top: 1px solid #669b1f;*/
+        }
+
+        .table_list {
+            float: right;
         }
 
         <!--
@@ -229,11 +251,11 @@
             border-top: #ddd 1px solid;
         }
 
-       /* .footer {
-            background-color: #999;
-            height: 50px;
-            margin-top: 10px;
-        }*/
+        /* .footer {
+             background-color: #999;
+             height: 50px;
+             margin-top: 10px;
+         }*/
 
         .bottom a {
             margin-top: 50px;
@@ -251,7 +273,20 @@
             text-align: center;
             line-height: 25px;
         }
+
+        .editOrDelete a:hover{
+            color:orangered;
+        }
+
+        /*tbody tr :nth-child(2n+1){background:orange;}*/
+        tr:nth-child(odd){background-color:#ffffff;}
+        tr:nth-child(even){background-color:#F0F0F0;}
+
+
     </style>
+
+    <!-- 确认框的样式引入 -->
+
     <!-- 提示框的样式引入 -->
     <link rel="stylesheet" href="../static/libs/messenger/css/messenger.css"/>
     <link rel="stylesheet" href="../static/libs/messenger/css/messenger-theme-future.css"/>
@@ -311,7 +346,7 @@
     </script>
 </head>
 
-<body>
+<body style="float: right">
 
 
 <!--左侧导航开始-->
@@ -326,67 +361,58 @@
             <!--用户收货地址开始-->
             <div class="slides">
                 <div class="adress_right">
-                    <h2>收货地址</h2><br>
-                    <p>新增收货地址 电话号码/手机号选填一项，其余均为必填项</p><br>
-                    <ul>
-                        <li>&nbsp;所在地区&nbsp;*&nbsp;&nbsp;
-                            <center>
-                                <select id="seachprov" name="seachprov"
-                                        onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');"></select>&nbsp;&nbsp;
-                                <select id="seachcity" name="homecity"
-                                        onChange="changeCity(this.value,'seachdistrict','seachdistrict');"></select>&nbsp;&nbsp;
-                                <span id="seachdistrict_div"><select id="seachdistrict"
-                                                                     name="seachdistrict"></select></span>
-                            </center>
-                        </li>
-                        <%--<select name="66" style="width:85px;">
-                        <option value="上海">上海</option>
-                        <option value="苏州">苏州</option>
-                        <option value="南京">南京</option>
-                        <option value="兰州">兰州</option>
-                        </select>&nbsp;&nbsp;<input type="">--%>
+                    <div style="float: left">
+                        <h2>收货地址</h2>
+                        <h3 style="color: orangered">新增收货地址:</h3>
+                        <p><span style="color: red">*</span>&nbsp;<span style="color: #ef6666">为必填项(电话号码/手机号选填一项)</span>
+                        </p>
+                        <ul>
+                            <li>收货人姓名&nbsp;<span style="color: red">*</span>&nbsp;&nbsp;<input type="text" id="recipient"></li>
+                            <li>手&nbsp;机&nbsp;号&nbsp;码&nbsp;&nbsp;<span style="color: red">*</span>&nbsp;<input type="text" id="tel"/></li>
+                            <li>电&nbsp;话&nbsp;号&nbsp;码&nbsp;&nbsp;<span style="color: red">*</span>&nbsp;<input type="text" id="phone"/></li>
+                            <li>&nbsp;所在地区&nbsp;<span style="color: red">*</span>&nbsp;&nbsp;
+                                <select id="seachprov" name="seachprov" onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');"></select>&nbsp;&nbsp;
+                                <select id="seachcity" name="homecity" onChange="changeCity(this.value,'seachdistrict','seachdistrict');"></select>&nbsp;&nbsp;
+                                <span id="seachdistrict_div"><select id="seachdistrict" name="seachdistrict"></select></span>
+                            </li>
+                            <li>&nbsp;详细地址&nbsp;<span style="color: red">*</span>&nbsp;&nbsp;&nbsp;<input type="text" id="detail"></li>
+                            <li>邮&nbsp;政&nbsp;编&nbsp;码&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="zip"></li>
+                            <li><input type="checkbox" style=" margin-left:0px;" id="ismain">设为默认收货地址&nbsp;&nbsp;<input class="button  blue" type="button" value="保存" style=" margin-left:30px;"
+                                    id="addAddress"></li>
+                        </ul>
+                    </div>
 
 
-                        <li>&nbsp;详细地址&nbsp;*&nbsp;&nbsp;<input type="text" id="detail"></li>
-                        <li>邮&nbsp;政&nbsp;编&nbsp;码&nbsp;&nbsp;<input type="text" id="zip"></li>
-                        <li>收货人姓名*&nbsp;&nbsp;<input type="text" id="recipient"></li>
-                        <li>手&nbsp;机&nbsp;号&nbsp;码&nbsp;&nbsp;<%--<select name="66" style="width:85px;">
-                            <option value="中国">中国</option>
-                            <option value="苏州">美国</option>
-                        </select>&nbsp;&nbsp;--%><input type="text" id="tel"/></li>
-                        <li>电&nbsp;话&nbsp;号&nbsp;码&nbsp;&nbsp;<%--<select name="66" style="width:85px;">
-                            <option value="上海">上海</option>
-                            <option value="苏州">苏州</option>
-                        </select>&nbsp;&nbsp;--%><input type="text" id="phone"/><%---<input type="number">-<input type="number">--%>
-                        </li>
-                    </ul>
-                    <input type="checkbox" style=" margin-left:100px;" id="ismain">设为默认收货地址<br><br>
-                    <input type="button" value="保存" style=" margin-left:100px;" id="addAddress">
-                    <div class="table_list">
-                        <table width="600px" height="80px"
-                               style=" float:right; margin-top:30px; margin-right:80px; text-align:center;">
-                            <tr>
-                                <td>收货人</td>
-                                <td>所在地区</td>
-                                <td>详细地址</td>
-                                <td>邮编</td>
-                                <td>手机</td>
-                                <td>电话</td>
+                    <div class="table_list" style="margin-right: -100px;">
+                        <h3 style="color: #669b1f;margin-top:50px;">已保存地址:</h3>
+                        <table cellpadding="8" border="0"
+                               style="width: 800px; border-collapse:collapse; float:left; margin-left:0px; margin-top:0px;  text-align:center; /*border: 1px solid #d9e5ff*/">
+                            <tr style="background-color: #9e9e9e;font-size: 18px;font-weight: bold">
+                                <td class="addressTable">收货人</td>
+                                <td class="addressTable">所在地区</td>
+                                <td class="addressTable">详细地址</td>
+                                <td class="addressTable">邮编</td>
+                                <td class="addressTable">手机</td>
+                                <td class="addressTable">电话</td>
                                 <td style="display: none"></td>
-                                <td>操作</td>
+                                <td class="addressTable">操作</td>
                             </tr>
                             <c:if test="${requestScope.addr!=null && requestScope.addr!=''}">
                                 <c:forEach items="${requestScope.addr}" var="item">
                                     <tr>
-                                        <td>${item.recipient}</td>
-                                        <td>${item.area}</td>
-                                        <td>${item.detail}</td>
-                                        <td>${item.zip}</td>
-                                        <td>${item.tel}</td>
-                                        <td>${item.phone}</td>
+                                        <td class="addressTable">${item.recipient}</td>
+                                        <td class="addressTable">${item.area}</td>
+                                        <td class="addressTable">${item.detail}</td>
+                                        <td class="addressTable">${item.zip}</td>
+                                        <td class="addressTable">${item.tel}</td>
+                                        <td class="addressTable">${item.phone}</td>
                                         <td style="display: none">${item.id}</td>
-                                        <c:if test="${item.ismain==0}"><td><input type="button" data-btn="setDefault" value="设为默认"></td></c:if>
-                                        <c:if test="${item.ismain==1}"><td><input type="button" value="默认地址"></td></c:if>
+                                        <c:if test="${item.ismain==0}">
+                                            <td class="addressTable"><input class="button small green" type="button" data-btn="setDefault" value="设为默认"><br/><span class="editOrDelete"><a href="javascript:void(0)"><span class="edit md-trigger" data-modal="modal-1">编辑</span></a>|<a href="javascript:void(0)"><span class="delete">删除</span></a></span></td>
+                                        </c:if>
+                                        <c:if test="${item.ismain==1}">
+                                            <td class="addressTable"><input class="button small orange" type="button" value="默认地址"><br/><span class="editOrDelete"><a href="javascript:void(0)"><span class="edit md-trigger" data-modal="modal-1">编辑</span></a>|<a href="javascript:void(0)"><span class="delete">删除</span></a></span></td>
+                                        </c:if>
                                     </tr>
                                 </c:forEach>
                             </c:if>
@@ -401,6 +427,34 @@
 
 </div>
 
+<div class="md-modal md-effect-1" id="modal-1">
+    <div class="md-content">
+        <h3 style="background-color: #0a85ee">修改地址</h3>
+        <div style="background-color: #ffffff">
+            <div class="modal-body" style="color: black">
+                <form action="" id="messageForm">
+                    <ul style="list-style: none">
+                        <li>收货人姓名&nbsp;<span style="color: red">*</span>&nbsp;&nbsp;<input type="text" id="recipient1"></li>
+                        <li>手&nbsp;机&nbsp;号&nbsp;码&nbsp;&nbsp;<span style="color: red">*</span>&nbsp;<input type="text" id="tel1"/></li>
+                        <li>电&nbsp;话&nbsp;号&nbsp;码&nbsp;&nbsp;<span style="color: red">*</span>&nbsp;<input type="text" id="phone1"/></li>
+                        <li>&nbsp;所在地区&nbsp;<span style="color: red">*</span>&nbsp;&nbsp;
+                            <input type="text" id="area"></li>
+                        </li>
+                        <li>&nbsp;详细地址&nbsp;<span style="color: red">*</span>&nbsp;&nbsp;&nbsp;<input type="text" id="detail1"></li>
+                        <li>邮&nbsp;政&nbsp;编&nbsp;码&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="zip1"></li>
+
+                    </ul>
+                </form>
+            </div>
+
+
+            <div style="float: right"><button class="button medium gray md-close">取消</button></div>&nbsp;&nbsp;
+            <div style="float: right"><button class="button medium green">确认</button></div>
+        </div>
+    </div>
+</div>
+<div class="md-overlay"></div><!-- the overlay element -->
+
 
 <!-- jQuery -->
 <script src="../js/jquery-3.1.1.js"></script>
@@ -413,6 +467,21 @@
 <!-- 提示框的js -->
 <script src="../static/libs/messenger/js/messenger.min.js"></script>
 <script src="../static/util/imessenger.js"></script>
+<!-- 确认框的js -->
+<script src="../static/libs/jquery-confirm/jquery-confirm.js"></script>
+<%--模态框--%>
+<script src="../js/modal/js/classie.js"></script>
+<script src="../js/modal/js/modalEffects.js"></script>
+<script src="../js/modal/js/modernizr.custom.js"></script>
+
+<!-- for the blur effect -->
+<!-- by @derSchepp https://github.com/Schepp/CSS-Filters-Polyfill -->
+<script>
+    // this is important for IEs
+    var polyfilter_scriptpath = '/js/';
+</script>
+<script src="../js/confirm/js/cssParser.js"></script>
+<script src="../js/confirm/js/css-filters-polyfill.js"></script>
 
 <%--省市县三级联动插件--%>
 <script src="../js/area/Area.js" type="text/javascript"></script>

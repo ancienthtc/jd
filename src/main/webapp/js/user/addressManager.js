@@ -1,8 +1,8 @@
 var addressManager = new Object();
 
-addressManager.event = function(){
+addressManager.event = function () {
     /*添加收货地址*/
-    $("#addAddress").click(function(){
+    $("#addAddress").click(function () {
         var datas = new Object();
         datas.detail = $("#detail").val();
         datas.zip = $("#zip").val();
@@ -13,69 +13,136 @@ addressManager.event = function(){
         var areaID = getAreaID();
         //地区名
         datas.area = getAreaNamebyID(areaID);
-        if($("#ismain").is(":checked")==true){
+        if ($("#ismain").is(":checked") == true) {
             datas.ismain = 1;
-        }else{
+        } else {
             datas.ismain = 0;
         }
         /*简单的验证*/
-        if(verify(datas.detail)||verify(datas.recipient)||(verify(datas.tel)&&verify(datas.phone))||verify(datas.area)){
+        if (verify(datas.detail) || verify(datas.recipient) || (verify(datas.tel) && verify(datas.phone)) || verify(datas.area)) {
             imessenger.error("参数未填写")
             return null;
         }
         $.ajax({
-            url:"../address/saveAddress",
-            data:datas,
-            type:"post",
-            dataType:"json",
-            success:function(data){
-                if(data.msg=='success'){
+            url: "../address/saveAddress",
+            data: datas,
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                if (data.msg == 'success') {
                     imessenger.success("添加收货地址成功")
-                    setTimeout("location.reload()",500);
-                }else{
+                    $.ajax({
+                        url: "../address/toAddressManager",
+                        type: "get",
+                        dataType: "html",
+                        success: function (data) {
+                            $(".all_right").html(data);
+                        },
+                        error: function (data) {
+                            alert("请求失败");
+                        }
+                    })
+                } else {
                     imessenger.error(data.msg);
                 }
             },
-            error:function(){
+            error: function () {
                 imessenger.error("请求失败");
             }
         })
     })
 
-    $('[data-btn="setDefault"]').click(function(){
+    /*设置默认地址*/
+    $('[data-btn="setDefault"]').click(function () {
         var id = $(this).parent().prev().text();
         $.ajax({
-            url:"../address/setDefault",
-            data:{"id":id},
-            type:"get",
-            dataType:"json",
-            success:function(data){
-                if(data.msg=='success'){
-                    imessenger.success("设置默认成功")
-                    setTimeout("location.reload()",500);
-                }else{
+            url: "../address/setDefault",
+            data: {"id": id},
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                if (data.msg == 'success') {
+                    imessenger.success("设置默认成功");
+                    $.ajax({
+                        url: "../address/toAddressManager",
+                        type: "get",
+                        dataType: "html",
+                        success: function (data) {
+                            $(".all_right").html(data);
+                        },
+                        error: function (data) {
+                            alert("请求失败");
+                        }
+                    })
+                } else {
                     imessenger.error(data.msg);
                 }
             },
-            error:function(){
+            error: function () {
                 imessenger.error("请求失败");
             }
 
         })
     })
 
+    /*删除地址*/
+    $('.delete').on("click", function () {
+        var id = $(this).parent().parent().parent().prev().text();
+        $.confirm({
+         title: '提示',
+         content: '确定要删除该地址吗？',
+         confirm: function() {
+         $.ajax({
+         url:"../address/deleteAddress",
+         data:{"id":id},
+         type:"get",
+         dataType:"json",
+         success:function(data){
+         if(data.msg=='success'){
+         imessenger.success("地址删除成功")
+         $.ajax({
+         url:"../address/toAddressManager",
+         type:"get",
+         dataType:"html",
+         success:function(data){
+         $(".all_right").html(data);
+         },
+         error:function(data){
+         alert("请求失败");
+         }
+         })
+         }else{
+         imessenger.error(data.msg);
+         }
+         },
+         error:function(){
+         imessenger.error("请求失败");
+         }
 
+         })
+
+
+         },
+         });
+
+    })
+
+    $('.edit').on("click", function () {
+
+    })
 
 
 }
-function verify(obj){
-    if(obj==null||obj==""){
+
+/*验证空*/
+function verify(obj) {
+    if (obj == null || obj == "") {
         return true;
-    }else{
+    } else {
         return false;
     }
 }
 
-$(function(){
+$(function () {
     addressManager.event();
 })

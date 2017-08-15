@@ -13,4 +13,7 @@ public interface CommentService {
 
     /*f根据用户id分页查询*/
     PagedResult<Comment> queryByPage(Integer pageNo, Integer pageSize,Integer userId);
+
+
+
 }

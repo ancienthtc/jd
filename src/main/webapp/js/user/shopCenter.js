@@ -79,6 +79,7 @@ shopCenter.event = function(){
             type:"get",
             dataType:"html",
             success:function(data){
+                console.log(data);
                 $(".all_right").html(data);
             },
             error:function(data){

@@ -5,6 +5,8 @@ import java.util.Date;
 public class Order {
     private Integer id;
 
+    private String uuid;
+
     private Date ordertime;
 
     private Integer shopstatus;
@@ -27,6 +29,14 @@ public class Order {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid == null ? null : uuid.trim();
     }
 
     public Date getOrdertime() {

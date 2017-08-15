@@ -1,141 +1,67 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.jd.shop.dao.OrderMapper" >
-  <resultMap id="BaseResultMap" type="com.jd.shop.model.Order" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="ordertime" property="ordertime" jdbcType="TIMESTAMP" />
-    <result column="shopstatus" property="shopstatus" jdbcType="INTEGER" />
-    <result column="paystatus" property="paystatus" jdbcType="INTEGER" />
-    <result column="paytime" property="paytime" jdbcType="TIMESTAMP" />
-    <result column="limit" property="limit" jdbcType="INTEGER" />
-    <result column="allprice" property="allprice" jdbcType="DOUBLE" />
-    <result column="detail" property="detail" jdbcType="VARCHAR" />
-    <result column="order_user" property="orderUser" jdbcType="INTEGER" />
+<mapper namespace="com.jd.shop.dao.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.jd.shop.model.Order">
+    <id jdbcType="INTEGER" property="id" column="id"/>
+    <result jdbcType="VARCHAR" property="uuid" column="uuid"/>
+    <result jdbcType="TIMESTAMP" property="ordertime" column="ordertime"/>
+    <result jdbcType="INTEGER" property="shopstatus" column="shopstatus"/>
+    <result jdbcType="INTEGER" property="paystatus" column="paystatus"/>
+    <result jdbcType="TIMESTAMP" property="paytime" column="paytime"/>
+    <result jdbcType="INTEGER" property="limit" column="limit"/>
+    <result jdbcType="DOUBLE" property="allprice" column="allprice"/>
+    <result jdbcType="VARCHAR" property="detail" column="detail"/>
+    <result jdbcType="INTEGER" property="orderUser" column="order_user"/>
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, ordertime, shopstatus, paystatus, paytime, limit, allprice, detail, order_user
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <sql id="Base_Column_List"> id, uuid, ordertime, shopstatus, paystatus, paytime, limit, allprice, detail, order_user </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
-    from t_order
-    where id = #{id,jdbcType=INTEGER}
+    <include refid="Base_Column_List"/>
+    from t_order where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from t_order
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.jd.shop.model.Order" >
-    insert into t_order (id, ordertime, shopstatus,
-    paystatus, paytime, limit,
-    allprice, detail, order_user
-    )
-    values (#{id,jdbcType=INTEGER}, #{ordertime,jdbcType=TIMESTAMP}, #{shopstatus,jdbcType=INTEGER},
-    #{paystatus,jdbcType=INTEGER}, #{paytime,jdbcType=TIMESTAMP}, #{limit,jdbcType=INTEGER},
-    #{allprice,jdbcType=DOUBLE}, #{detail,jdbcType=VARCHAR}, #{orderUser,jdbcType=INTEGER}
-    )
-  </insert>
-  <insert id="insertSelective" parameterType="com.jd.shop.model.Order" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer"> delete from t_order where id = #{id,jdbcType=INTEGER} </delete>
+  <insert id="insert" parameterType="com.jd.shop.model.Order"> insert into t_order (id, uuid, ordertime, shopstatus, paystatus, paytime, limit, allprice, detail, order_user) values (#{id,jdbcType=INTEGER}, #{uuid,jdbcType=VARCHAR}, #{ordertime,jdbcType=TIMESTAMP}, #{shopstatus,jdbcType=INTEGER}, #{paystatus,jdbcType=INTEGER}, #{paytime,jdbcType=TIMESTAMP}, #{limit,jdbcType=INTEGER}, #{allprice,jdbcType=DOUBLE}, #{detail,jdbcType=VARCHAR}, #{orderUser,jdbcType=INTEGER}) </insert>
+  <insert id="insertSelective" parameterType="com.jd.shop.model.Order">
     insert into t_order
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="ordertime != null" >
-        ordertime,
-      </if>
-      <if test="shopstatus != null" >
-        shopstatus,
-      </if>
-      <if test="paystatus != null" >
-        paystatus,
-      </if>
-      <if test="paytime != null" >
-        paytime,
-      </if>
-      <if test="limit != null" >
-        limit,
-      </if>
-      <if test="allprice != null" >
-        allprice,
-      </if>
-      <if test="detail != null" >
-        detail,
-      </if>
-      <if test="orderUser != null" >
-        order_user,
-      </if>
+    <trim suffixOverrides="," suffix=")" prefix="(">
+      <if test="id != null"> id, </if>
+      <if test="uuid != null"> uuid, </if>
+      <if test="ordertime != null"> ordertime, </if>
+      <if test="shopstatus != null"> shopstatus, </if>
+      <if test="paystatus != null"> paystatus, </if>
+      <if test="paytime != null"> paytime, </if>
+      <if test="limit != null"> limit, </if>
+      <if test="allprice != null"> allprice, </if>
+      <if test="detail != null"> detail, </if>
+      <if test="orderUser != null"> order_user, </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="ordertime != null" >
-        #{ordertime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="shopstatus != null" >
-        #{shopstatus,jdbcType=INTEGER},
-      </if>
-      <if test="paystatus != null" >
-        #{paystatus,jdbcType=INTEGER},
-      </if>
-      <if test="paytime != null" >
-        #{paytime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="limit != null" >
-        #{limit,jdbcType=INTEGER},
-      </if>
-      <if test="allprice != null" >
-        #{allprice,jdbcType=DOUBLE},
-      </if>
-      <if test="detail != null" >
-        #{detail,jdbcType=VARCHAR},
-      </if>
-      <if test="orderUser != null" >
-        #{orderUser,jdbcType=INTEGER},
-      </if>
+    <trim suffixOverrides="," suffix=")" prefix="values (">
+      <if test="id != null"> #{id,jdbcType=INTEGER}, </if>
+      <if test="uuid != null"> #{uuid,jdbcType=VARCHAR}, </if>
+      <if test="ordertime != null"> #{ordertime,jdbcType=TIMESTAMP}, </if>
+      <if test="shopstatus != null"> #{shopstatus,jdbcType=INTEGER}, </if>
+      <if test="paystatus != null"> #{paystatus,jdbcType=INTEGER}, </if>
+      <if test="paytime != null"> #{paytime,jdbcType=TIMESTAMP}, </if>
+      <if test="limit != null"> #{limit,jdbcType=INTEGER}, </if>
+      <if test="allprice != null"> #{allprice,jdbcType=DOUBLE}, </if>
+      <if test="detail != null"> #{detail,jdbcType=VARCHAR}, </if>
+      <if test="orderUser != null"> #{orderUser,jdbcType=INTEGER}, </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.jd.shop.model.Order" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.jd.shop.model.Order">
     update t_order
-    <set >
-      <if test="ordertime != null" >
-        ordertime = #{ordertime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="shopstatus != null" >
-        shopstatus = #{shopstatus,jdbcType=INTEGER},
-      </if>
-      <if test="paystatus != null" >
-        paystatus = #{paystatus,jdbcType=INTEGER},
-      </if>
-      <if test="paytime != null" >
-        paytime = #{paytime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="limit != null" >
-        limit = #{limit,jdbcType=INTEGER},
-      </if>
-      <if test="allprice != null" >
-        allprice = #{allprice,jdbcType=DOUBLE},
-      </if>
-      <if test="detail != null" >
-        detail = #{detail,jdbcType=VARCHAR},
-      </if>
-      <if test="orderUser != null" >
-        order_user = #{orderUser,jdbcType=INTEGER},
-      </if>
+    <set>
+      <if test="uuid != null"> uuid = #{uuid,jdbcType=VARCHAR}, </if>
+      <if test="ordertime != null"> ordertime = #{ordertime,jdbcType=TIMESTAMP}, </if>
+      <if test="shopstatus != null"> shopstatus = #{shopstatus,jdbcType=INTEGER}, </if>
+      <if test="paystatus != null"> paystatus = #{paystatus,jdbcType=INTEGER}, </if>
+      <if test="paytime != null"> paytime = #{paytime,jdbcType=TIMESTAMP}, </if>
+      <if test="limit != null"> limit = #{limit,jdbcType=INTEGER}, </if>
+      <if test="allprice != null"> allprice = #{allprice,jdbcType=DOUBLE}, </if>
+      <if test="detail != null"> detail = #{detail,jdbcType=VARCHAR}, </if>
+      <if test="orderUser != null"> order_user = #{orderUser,jdbcType=INTEGER}, </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.jd.shop.model.Order" >
-    update t_order
-    set ordertime = #{ordertime,jdbcType=TIMESTAMP},
-    shopstatus = #{shopstatus,jdbcType=INTEGER},
-    paystatus = #{paystatus,jdbcType=INTEGER},
-    paytime = #{paytime,jdbcType=TIMESTAMP},
-    limit = #{limit,jdbcType=INTEGER},
-    allprice = #{allprice,jdbcType=DOUBLE},
-    detail = #{detail,jdbcType=VARCHAR},
-    order_user = #{orderUser,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jd.shop.model.Order"> update t_order set uuid = #{uuid,jdbcType=VARCHAR}, ordertime = #{ordertime,jdbcType=TIMESTAMP}, shopstatus = #{shopstatus,jdbcType=INTEGER}, paystatus = #{paystatus,jdbcType=INTEGER}, paytime = #{paytime,jdbcType=TIMESTAMP}, limit = #{limit,jdbcType=INTEGER}, allprice = #{allprice,jdbcType=DOUBLE}, detail = #{detail,jdbcType=VARCHAR}, order_user = #{orderUser,jdbcType=INTEGER} where id = #{id,jdbcType=INTEGER} </update>
 </mapper>

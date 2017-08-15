@@ -15,4 +15,9 @@ public interface AddressService {
     Address findByIsmain(Integer inmain);
 
     int updateByPrimaryKeySelective(Address address);
+
+    /*删除地址*/
+    int deleteAddress(Integer id);
+
+    Address findById(Integer id);
 }
