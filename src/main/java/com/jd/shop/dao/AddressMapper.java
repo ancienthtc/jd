@@ -22,4 +22,7 @@ public interface AddressMapper {
 
     /*通过用户id查询地址信息*/
     List<Address> findAddressByUserId(@Param("userId") Integer userId);
+
+    /*查询出默认地址*/
+    Address findByIsmain(@Param("ismain") Integer ismain);
 }

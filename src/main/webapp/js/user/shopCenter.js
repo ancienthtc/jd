@@ -70,6 +70,24 @@ shopCenter.event = function(){
         })
     })
 
+    /**
+     * 跳转至评价管理页面
+     */
+    $("#commentManager").click(function(){
+        $.ajax({
+            url:"../comment/toCommentList",
+            type:"get",
+            dataType:"html",
+            success:function(data){
+                console.log(data);
+                $(".all_right").html(data);
+            },
+            error:function(data){
+                alert("请求失败");
+            }
+        })
+    })
+
 
 }
 

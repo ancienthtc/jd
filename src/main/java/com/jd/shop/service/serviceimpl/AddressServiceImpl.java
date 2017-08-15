@@ -23,4 +23,25 @@ public class AddressServiceImpl implements AddressService {
         return addressMapper.findAddressByUserId(userId);
     }
 
+    public int saveAddress(Address address) {
+        return addressMapper.insertSelective(address);
+    }
+
+    public Address findByIsmain(Integer ismain) {
+        return addressMapper.findByIsmain(ismain);
+    }
+
+    public int updateByPrimaryKeySelective(Address address) {
+        return addressMapper.updateByPrimaryKeySelective(address);
+    }
+
+    /*删除地址*/
+    public int deleteAddress(Integer id) {
+        return addressMapper.deleteByPrimaryKey(id);
+    }
+
+    public Address findById(Integer id) {
+        return addressMapper.selectByPrimaryKey(id);
+    }
+
 }
