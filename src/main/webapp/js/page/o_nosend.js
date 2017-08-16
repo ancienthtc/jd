@@ -1,7 +1,6 @@
 /**
- * Created by ThinkPad on 2017/8/15.
+ * Created by ThinkPad on 2017/8/16.
  */
-
 var nopay =  new Object();
 nopay.event = function(){
     $("#dataGridTableJson").on("click",".icon-create",function(){
@@ -20,37 +19,6 @@ nopay.event = function(){
             }
         });
     })
-
-    // $(".show").click(function(){
-    //     var uuid=$(this).parent().attr("value");
-    //     alert(uuid);
-    // })
-
-    $("#dataGridTableJson").on("click",".show",function(){
-        //alert(1);
-        //console.log($(this));
-        var uuid=$(this).attr("value");
-        $.ajax({
-            url: "../order/getDetail",
-            data: {"json": uuid},
-            type: "post",
-            dataType: "json",
-            success: function (data) {
-                //$("#contentBoxId").html(data);
-                console.log("1:"+data);
-                $.each(data.Goods, function (i, row) {
-
-
-                });
-            },
-            error: function (date) {
-                //console.log("2:"+data);
-                alert("请求失败");
-            }
-        });
-        //alert(uuid);
-    })
-
 }
 
 $(function () {
@@ -60,7 +28,7 @@ $(function () {
         asyncType: 'GET',
         serverSidePage: false,
         render: function (data) {
-            //console.log(data);
+            console.log(data);
             var tb = $('#dataGridTableJson tbody');
             $(tb).empty();
             if (data && data.dataList && data.dataList.length > 0) {
@@ -114,7 +82,7 @@ $(function () {
                     }
 
                     var tr = $('<tr>');
-                    $(tr).append('<td class="show" name="uuid" value="'+row.uuid+'"><a  href="javascript:void(0)">' + row.uuid + '</a></td>');
+                    $(tr).append('<td name="uuid"><a>' + row.uuid + '</a></td>');
                     $(tr).append('<td>' + row.ordertime2 + '</td>');
                     $(tr).append('<td>' + row.shopstatus + '</td>')
                     $(tr).append('<td>' + row.paystatus + '</td>');

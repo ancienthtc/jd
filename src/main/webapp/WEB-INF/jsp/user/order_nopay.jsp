@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="../static/libs/messenger/css/messenger.css" />
     <link rel="stylesheet" href="../static/libs/messenger/css/messenger-theme-future.css" />
     <link rel="stylesheet" href="https://terryz.github.io/lib/bootstrap/3.3.7/css/bootstrap.min.css" />
-
+    <link rel="stylesheet" href="../static/libs/iconfont/platform/iconfont.css" />
 
 </head>
 <body>

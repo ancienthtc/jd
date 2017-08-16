@@ -17,4 +17,6 @@ public interface OrderService {
     //List<Map<String,Object>> user_orders(Integer uid);
 
     PagedResult<Order> queryByPageNoPay(Integer pageNo, Integer pageSize, Integer userId);
+
+    String getDetail(String uuid);
 }

@@ -160,6 +160,9 @@ public class OrderServiceImpl implements OrderService{
         return BeanUtil.toPagedResult(orders);
     }
 
+    public String getDetail(String uuid) {
+        return orderMapper.getDetail(uuid);
+    }
 }
 /*
     JSON:

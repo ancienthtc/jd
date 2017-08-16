@@ -37,6 +37,15 @@
     ORDER BY ordertime
   </select>
 
+  <select id="getDetail" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT
+    detail
+    from
+    t_order
+    where
+    uuid=#{uuid,jdbcType=VARCHAR}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_order
     where id = #{id,jdbcType=INTEGER}

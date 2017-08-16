@@ -23,4 +23,6 @@ public interface OrderMapper {
     //new
     List<Order> getUserOrders(@Param("uid") Integer uid);
 
+    String getDetail(@Param("uuid")String uuid );
+
 }
