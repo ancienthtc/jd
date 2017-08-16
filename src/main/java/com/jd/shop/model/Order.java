@@ -2,6 +2,7 @@ package com.jd.shop.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Transient;
 import java.util.Date;
 
 public class Order {
@@ -26,6 +27,28 @@ public class Order {
     private String detail;
 
     private Integer orderUser;
+
+    @Transient
+    private String limit2;//计算后的limit值
+
+    @Transient
+    private String ordertime2;//格式化ordertime
+
+    public String getOrdertime2() {
+        return ordertime2;
+    }
+
+    public void setOrdertime2(String ordertime2) {
+        this.ordertime2 = ordertime2;
+    }
+
+    public String getLimit2() {
+        return limit2;
+    }
+
+    public void setLimit2(String limit2) {
+        this.limit2 = limit2;
+    }
 
     public Integer getId() {
         return id;

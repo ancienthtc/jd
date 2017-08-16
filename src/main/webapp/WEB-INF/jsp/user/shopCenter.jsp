@@ -171,7 +171,7 @@
       <li><h4><span></span><a href="javascript:void(0)" id="commentManager">评论管理<img class="jt" src="手机/img/jian.png"></a></h4></li><hr>
       <li><h4><span></span><a href="javascript:void(0)" onClick="showsubmenu(1)">订单管理<img class="jt" src="手机/img/jian.png"></a></h4><hr>
         <ul id="submenu1" style="list-style: none; display:none; margin-left:-20px;">
-          <li class="active"><a href="">待付款</a></li>
+          <li class="active"><a href="javascript:void(0)" id="nopay">待付款</a></li>
           <li class="active"><a href="">待发货</a></li>
           <li class="active"><a href="">待收货</a></li>
           <li class="active"><a href="">待评价</a></li>

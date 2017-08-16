@@ -14,7 +14,10 @@
     <result column="order_user" property="orderUser" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, uuid, ordertime, shopstatus, paystatus, paytime, limit, allprice, detail, order_user
+    id, uuid, ordertime, shopstatus, paystatus, paytime, `limit`, allprice, detail, order_user
+  </sql>
+  <sql id="Simple1">
+    id, uuid, ordertime, shopstatus, paystatus, `limit`, allprice
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
@@ -22,6 +25,18 @@
     from t_order
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <!-- new -->
+  <select id="getUserOrders" parameterType="java.lang.Integer" resultType="com.jd.shop.model.Order">
+    SELECT
+    id,uuid,ordertime,shopstatus,paystatus ,`limit`,allprice
+    FROM
+    t_order
+    WHERE
+    order_user=#{uid,jdbcType=INTEGER} and paystatus=0
+    ORDER BY ordertime
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_order
     where id = #{id,jdbcType=INTEGER}

@@ -1,7 +1,10 @@
 package com.jd.shop.dao;
 
 import com.jd.shop.model.Order;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface OrderMapper {
@@ -16,4 +19,8 @@ public interface OrderMapper {
     int updateByPrimaryKeySelective(Order record);
 
     int updateByPrimaryKey(Order record);
+
+    //new
+    List<Order> getUserOrders(@Param("uid") Integer uid);
+
 }

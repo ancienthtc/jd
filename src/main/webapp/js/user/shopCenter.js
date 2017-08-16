@@ -88,6 +88,24 @@ shopCenter.event = function(){
         })
     })
 
+    /**
+     * 跳转至待付款
+     */
+    $("#nopay").click(function () {
+       $.ajax({
+           url:"../order/toNoPay",
+           type:"get",
+           dataType:"html",
+           success:function(data){
+               //console.log(data);
+               $(".all_right").html(data);
+           },
+           error:function(data){
+               alert("请求失败");
+           }
+       })
+    });
+
 
 }
 
