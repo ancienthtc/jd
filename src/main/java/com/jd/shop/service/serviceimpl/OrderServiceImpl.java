@@ -3,16 +3,20 @@ package com.jd.shop.service.serviceimpl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
 import com.jd.shop.dao.CartItemMapper;
 import com.jd.shop.dao.GoodsMapper;
 import com.jd.shop.dao.OrderMapper;
 import com.jd.shop.model.Goods;
 import com.jd.shop.model.Order;
 import com.jd.shop.service.OrderService;
+import com.jd.shop.util.BeanUtil;
+import com.jd.shop.util.PagedResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -125,6 +129,37 @@ public class OrderServiceImpl implements OrderService{
             return map;
         }
     }
+
+    public List<Order> user_orders(Integer uid) {
+        return orderMapper.getUserOrders(uid);
+    }
+
+    //分页
+    public PagedResult<Order> queryByPageNoPay(Integer pageNo, Integer pageSize, Integer userId) {
+        pageNo = pageNo == null ? 1 : pageNo;
+        pageSize = pageSize == null ? 10 : pageSize;
+        PageHelper.startPage(pageNo, pageSize);  //startPage是告诉拦截器说我要开始分页了。分页参数是这两个。
+        List<Order> orders=orderMapper.getUserOrders(userId);
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        for (int i=0;i<orders.size();i++)
+//        {
+//            //orders.get(i).getOrdertime()
+//            orders.get(i).setOrdertime( df.format(orders.get(i).getOrdertime() ) );
+//        }
+        for(int i=0;i<orders.size();i++)
+        {
+            orders.get(i).setOrdertime2(df.format(orders.get(i).getOrdertime()));
+            Date date=orders.get(i).getOrdertime();
+            //orders.get(i).setOrdertime2(df.format(date));
+            Long tim=Timestamp.valueOf(df.format(date)).getTime();
+            Long lim=(long)orders.get(i).getLimit()* 60 * 60 * 1000;
+            date=new Date(tim+lim);
+            orders.get(i).setLimit2(df.format(date));
+            //orders.get(i).setOrdertime2(df.format(date));
+        }
+        return BeanUtil.toPagedResult(orders);
+    }
+
 }
 /*
     JSON:
