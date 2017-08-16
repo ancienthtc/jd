@@ -1,5 +1,6 @@
 package com.jd.shop.model;
 
+import javax.persistence.Transient;
 import java.util.Date;
 
 public class History {
@@ -10,6 +11,39 @@ public class History {
     private Integer userHistory;
 
     private Integer goodsHistory;
+
+    @Transient
+    private Integer goodId;
+
+    @Transient
+    private String name;
+
+    @Transient
+    private Double price;
+
+    public Integer getGoodId() {
+        return goodId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setGoodId(Integer goodId) {
+        this.goodId = goodId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
     public Integer getId() {
         return id;

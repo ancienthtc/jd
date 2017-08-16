@@ -79,4 +79,19 @@
       goods_history = #{goodsHistory,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!--new -->
+  <!--根据用户id查询-->
+  <select id="findByUserId" resultType="com.jd.shop.model.History" parameterType="java.lang.Integer" >
+    select
+    t.* , g.id goodId ,g.name , g.price
+    from t_history t LEFT OUTER JOIN t_goods g ON t.goods_history = g.id
+    where user_history = #{userId,jdbcType=INTEGER}
+  </select>
+
+  <!--删除个人历史记录-->
+  <delete id="deleteByUserId" parameterType="java.lang.Integer" >
+    delete from t_history
+    where user_history = #{userId,jdbcType=INTEGER}
+  </delete>
 </mapper>

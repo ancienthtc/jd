@@ -31,9 +31,8 @@
     <!-- 确认框的样式引入 -->
     <link rel="stylesheet" href="../static/libs/jquery-confirm/jquery-confirm.css" />
     <%--模态框--%>
-    <link rel="shortcut icon" href="../favicon.ico">
-    <link rel="stylesheet" type="text/css" href="../css/modal/css/default.css" />
-    <link rel="stylesheet" type="text/css" href="../css/modal/css/component.css" />
+    <%--<link rel="stylesheet" type="text/css" href="../css/modal/modal_test.css" />--%>
+    <link rel="stylesheet" type="text/css" href="../css/button.css" />
 
 
     <style>
@@ -408,10 +407,10 @@
                                         <td class="addressTable">${item.phone}</td>
                                         <td style="display: none">${item.id}</td>
                                         <c:if test="${item.ismain==0}">
-                                            <td class="addressTable"><input class="button small green" type="button" data-btn="setDefault" value="设为默认"><br/><span class="editOrDelete"><a href="javascript:void(0)"><span class="edit md-trigger" data-modal="modal-1">编辑</span></a>|<a href="javascript:void(0)"><span class="delete">删除</span></a></span></td>
+                                            <td class="addressTable"><input class="button small green" type="button" data-btn="setDefault" value="设为默认"><br/><span class="editOrDelete"><a href="javascript:void(0)"><span class="edit" >编辑</span></a>|<a href="javascript:void(0)"><span class="delete">删除</span></a></span></td>
                                         </c:if>
                                         <c:if test="${item.ismain==1}">
-                                            <td class="addressTable"><input class="button small orange" type="button" value="默认地址"><br/><span class="editOrDelete"><a href="javascript:void(0)"><span class="edit md-trigger" data-modal="modal-1">编辑</span></a>|<a href="javascript:void(0)"><span class="delete">删除</span></a></span></td>
+                                            <td class="addressTable"><input class="button small orange" type="button" value="默认地址"><br/><span class="editOrDelete"><a href="javascript:void(0)"><span class="edit" >编辑</span></a>|<a href="javascript:void(0)"><span class="delete">删除</span></a></span></td>
                                         </c:if>
                                     </tr>
                                 </c:forEach>
@@ -427,33 +426,36 @@
 
 </div>
 
-<div class="md-modal md-effect-1" id="modal-1">
-    <div class="md-content">
-        <h3 style="background-color: #0a85ee">修改地址</h3>
-        <div style="background-color: #ffffff">
-            <div class="modal-body" style="color: black">
-                <form action="" id="messageForm">
-                    <ul style="list-style: none">
-                        <li>收货人姓名&nbsp;<span style="color: red">*</span>&nbsp;&nbsp;<input type="text" id="recipient1"></li>
-                        <li>手&nbsp;机&nbsp;号&nbsp;码&nbsp;&nbsp;<span style="color: red">*</span>&nbsp;<input type="text" id="tel1"/></li>
-                        <li>电&nbsp;话&nbsp;号&nbsp;码&nbsp;&nbsp;<span style="color: red">*</span>&nbsp;<input type="text" id="phone1"/></li>
-                        <li>&nbsp;所在地区&nbsp;<span style="color: red">*</span>&nbsp;&nbsp;
-                            <input type="text" id="area"></li>
-                        </li>
-                        <li>&nbsp;详细地址&nbsp;<span style="color: red">*</span>&nbsp;&nbsp;&nbsp;<input type="text" id="detail1"></li>
-                        <li>邮&nbsp;政&nbsp;编&nbsp;码&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="zip1"></li>
 
-                    </ul>
-                </form>
+<%--<div id="modal-overlay" class="modal-overlay">
+    <div class="modalTitleDiv"><span class="modalTitle">模态框</span></div>
+    <div class="modal-data">
+        <div class="modalContent">
+            <div class="modalDetail">
+                <div class="contentNameDiv"><span class="contentName">收货人姓名:</span></div><div class="clearContentDiv"><input type="text" class="clearContent"/></div>
             </div>
-
-
-            <div style="float: right"><button class="button medium gray md-close">取消</button></div>&nbsp;&nbsp;
-            <div style="float: right"><button class="button medium green">确认</button></div>
+            <div class="modalDetail">
+                <div class="contentNameDiv"><span  class="contentName">手机号码:</span></div><div class="clearContentDiv"><input type="text" class="clearContent"/></div>
+            </div>
+            <div class="modalDetail">
+                <div class="contentNameDiv"><span  class="contentName">电话号码:</span></div><div class="clearContentDiv"><input type="text" class="clearContent"/></div>
+            </div>
+            <div class="modalDetail">
+                <div class="contentNameDiv"><span  class="contentName">地&nbsp;&nbsp;&nbsp;&nbsp;址:</span></div><div class="clearContentDiv"><input type="text" class="clearContent"/></div>
+            </div>
+            <div class="modalDetail">
+                <div class="contentNameDiv"><span  class="contentName">邮政编码:</span></div><div class="clearContentDiv"><input type="text" class="clearContent"/></div>
+            </div>
+        </div>
+        <div class="sureOrCancle">
+            <div class="modalSure button medium blue" id="modalSure">确定</div>
+            <div class="modalCancle button medium gray" id="modalCancle">取消</div>
         </div>
     </div>
 </div>
-<div class="md-overlay"></div><!-- the overlay element -->
+<div id="modalDialog" class="modalDialog">
+
+</div>--%>
 
 
 <!-- jQuery -->
@@ -470,18 +472,18 @@
 <!-- 确认框的js -->
 <script src="../static/libs/jquery-confirm/jquery-confirm.js"></script>
 <%--模态框--%>
-<script src="../js/modal/js/classie.js"></script>
-<script src="../js/modal/js/modalEffects.js"></script>
-<script src="../js/modal/js/modernizr.custom.js"></script>
+<%--<script src="../js/modal/modal_test.js"></script>
+<script src="../js/jquery-3.1.1.js"></script>--%>
+
 
 <!-- for the blur effect -->
 <!-- by @derSchepp https://github.com/Schepp/CSS-Filters-Polyfill -->
-<script>
+<%--<script>
     // this is important for IEs
     var polyfilter_scriptpath = '/js/';
 </script>
 <script src="../js/confirm/js/cssParser.js"></script>
-<script src="../js/confirm/js/css-filters-polyfill.js"></script>
+<script src="../js/confirm/js/css-filters-polyfill.js"></script>--%>
 
 <%--省市县三级联动插件--%>
 <script src="../js/area/Area.js" type="text/javascript"></script>
