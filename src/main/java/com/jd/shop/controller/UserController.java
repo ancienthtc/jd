@@ -155,6 +155,15 @@ public class UserController extends BaseController{
         return map;
     }
 
+    /**
+     * 用户退出
+     */
+    @RequestMapping("/userExit")
+    public String userExit(HttpSession session){
+        session.invalidate();
+        return "redirect:/login/view";
+    }
+
 
 
 
