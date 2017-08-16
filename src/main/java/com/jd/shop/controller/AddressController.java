@@ -123,6 +123,49 @@ public class AddressController {
         }
         map.put("msg","success");
         return map;
+    }
 
+    /**
+     * 根据地址id查询地址信息
+     * @param id
+     * @return
+     */
+    @RequestMapping(value="/findById")
+    @ResponseBody
+    public Map<String,Object> findById(Integer id){
+        Map<String,Object> map = new HashMap<String, Object>();
+        if(id==null){
+            map.put("msg","error");
+            return map;
+        }
+        Address address = addressService.findById(id);
+        if(address==null){
+            map.put("msg","error");
+            return map;
+        }
+        map.put("msg",address);
+        return map;
+    }
+
+    /**
+     * 修改地址
+     * @param address
+     * @return
+     */
+    @RequestMapping(value="/updateAddr",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,String> updateAddr(Address address){
+        Map<String,String> map = new HashMap<String, String>();
+        if(address==null||address.getId()==null){
+            map.put("msg","地址为空");
+            return map;
+        }
+        int num = addressService.updateByPrimaryKeySelective(address);
+        if(num==0){
+            map.put("msg","地址修改失败");
+            return map;
+        }
+        map.put("msg","success");
+        return map;
     }
 }

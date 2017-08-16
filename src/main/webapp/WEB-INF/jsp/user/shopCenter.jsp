@@ -15,6 +15,7 @@
   <link href="../css/button.css" rel="stylesheet" type="text/css"/>
   <%--日期选择插件样式--%>
   <link href="../css/date/date.css" type="text/css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="../css/modal/modal_test.css" />
   <style>
     .head{width:100%; height:80px; background:#3399ff; overflow:hidden;}
     .h_left{ height:80px; margin-left:50px; float:left; width:150px;}
@@ -260,7 +261,42 @@
   </div>--%>
 
 </div>
+
+<div id="modal-overlay" class="modal-overlay">
+  <div class="modalTitleDiv"><span class="modalTitle">收货地址地址编辑</span></div>
+  <div class="modal-data">
+    <div class="modalContent">
+      <input name="id" type="hidden" class="clearContent"/>
+      <div class="modalDetail">
+        <div class="contentNameDiv"><span class="contentName">收货人姓名:</span></div><div class="clearContentDiv"><input name="recipient" type="text" class="clearContent"/></div>
+      </div>
+      <div class="modalDetail">
+        <div class="contentNameDiv"><span  class="contentName">手机号码:</span></div><div class="clearContentDiv"><input name="tel" type="text" class="clearContent"/></div>
+      </div>
+      <div class="modalDetail">
+        <div class="contentNameDiv"><span  class="contentName">电话号码:</span></div><div class="clearContentDiv"><input name="phone" type="text" class="clearContent"/></div>
+      </div>
+      <div class="modalDetail">
+        <div class="contentNameDiv"><span  class="contentName">地&nbsp;&nbsp;&nbsp;&nbsp;址:</span></div><div class="clearContentDiv"><input name="area" type="text" class="clearContent"/></div>
+      </div>
+      <div class="modalDetail">
+        <div class="contentNameDiv"><span  class="contentName">邮政编码:</span></div><div class="clearContentDiv"><input name="zip" type="text" class="clearContent"/></div>
+      </div>
+    </div>
+    <div class="sureOrCancle">
+      <div class="modalSure button medium blue" id="modalSure">确定</div>
+      <div class="modalCancle button medium gray" id="modalCancle">取消</div>
+    </div>
+  </div>
+</div>
+<div id="modalDialog" class="modalDialog">
+
+</div>
+
 </body>
+<%--模态框--%>
+<script src="../js/modal/modal_test.js"></script>
+<script src="../js/jquery-3.1.1.js"></script>
 <%--省市县三级联动插件--%>
 <script src="../js/area/Area.js" type="text/javascript"></script>
 <script src="../js/area/AreaData_min.js" type="text/javascript"></script>

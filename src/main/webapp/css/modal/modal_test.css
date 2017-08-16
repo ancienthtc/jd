@@ -1,0 +1,151 @@
+/*遮罩层隐藏*/
+.modalDialog {  
+   visibility: hidden;
+  position: fixed;
+  left: 0px;  /*如果 left和top不设置为0，边框会有白边 */
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  z-index: 1000;
+  background-color: #ccc;
+  opacity: 0.5;
+} 
+/*模态框内容层隐藏*/
+.modal-overlay {
+  visibility: hidden;
+  position: absolute;
+  left: 0px;  /*如果 left和top不设置为0，边框会有白边 */
+  top: 0px;
+  
+  text-align: center;
+  z-index: 1200;
+  background-color: #fff;
+  opacity: 0.5;
+}
+
+/*遮罩层显示*/
+.modalDialogshow {  
+  visibility: visible;
+  position: absolute;
+  left: 0px;  /*如果 left和top不设置为0，边框会有白边 */
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  z-index: 1000;
+  background-color: #ccc;
+  opacity: 0.5;
+} 
+/*模态框内容层显示*/
+.modal-overlayshow {
+  visibility: visible;
+  position: absolute;
+  left: 37%;  /*如果 left和top不设置为0，边框会有白边 */
+  top: 20%;
+  border-radius:5px;
+  text-align: center;
+  z-index: 1200;
+  background-color: #fff;
+  opacity: 1;
+}
+
+/*内容*/
+.modal-data {
+  
+  background-color: #fff;
+  border-radius:5px;
+  padding: 15px;
+  text-align: center;
+  margin:0 auto;
+}
+.modalTitleDiv{
+	line-height:50px;
+	text-align:center;
+	border-radius:5px;
+	height:50px;
+	background-color:#2ea8d7;
+}
+
+.modalContent{
+  width: auto;
+  height:auto;
+}
+
+.modalDetail {
+	clear:both;
+}
+.modalDetail div{
+	display:inline;
+}
+
+.contentNameDiv , .contentName{
+	
+}
+.contentName{
+	text-align:right;
+	
+}
+.modalContenDiv{
+	clear:both;
+}
+
+.modalContent .modalDetail{
+	margin-bottom:20px
+}
+
+.clearContentDiv{
+	margin-right:20px;
+	clear:both;
+	float:right;
+}	
+.contentNameDiv {
+		
+}
+
+.modalSure {
+	
+}
+
+.modalCalcle {
+	
+}
+
+.sureOrCancle{
+	clear:both;
+	width:300px;
+	height:auto;
+	margin-top:20px;
+	border-radius:5px;
+}
+.sureOrCancle div{
+	display:inline;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
