@@ -78,6 +78,10 @@
             <mvc:exclude-mapping path="/login/ton"/>
             <mvc:exclude-mapping path="/login/view"/>
             <mvc:exclude-mapping path="/picture/*"/>
+            <mvc:exclude-mapping path="/part/*"/>
+            <mvc:exclude-mapping path="/goods/*"/>
+            <mvc:exclude-mapping path="/admin/*"/>
+            <mvc:exclude-mapping path="/user/*"/>
             <bean class="com.jd.shop.filter.WebInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
