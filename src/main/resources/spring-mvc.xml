@@ -69,11 +69,13 @@
             <mvc:mapping path="/goods/*"/>
             <mvc:mapping path="/admin/*"/>
             <mvc:mapping path="/user/*"/>
-            <mvc:exclude-mapping path="/logon/admin"/>
+            <mvc:exclude-mapping path="/login/admin"/>
             <bean class="com.jd.shop.filter.AdminInterceptor"/>
         </mvc:interceptor>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/login/admin"/>
+            <mvc:exclude-mapping path="/login/alogin"/>
             <mvc:exclude-mapping path="/login/login"/>
             <mvc:exclude-mapping path="/login/ton"/>
             <mvc:exclude-mapping path="/login/view"/>

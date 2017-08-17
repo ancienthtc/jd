@@ -3,6 +3,7 @@ package com.jd.shop.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.jd.shop.model.Address;
 import com.jd.shop.model.Order;
 import com.jd.shop.model.User;
 import com.jd.shop.service.OrderService;
@@ -85,8 +86,19 @@ public class OrderController {
     {
         //JSONObject date=new JSONObject( JSONObject.parseObject(json)  );
         //String uuid=date.getString("uuid");
-        String s=orderService.getDetail(json).replaceAll("'", "\"");
-        return s;
+        String detail=orderService.getDetail(json).replaceAll("'", "\"");
+
+        //获取的信息做转换
+        //重组json
+        JSONObject object = JSON.parseObject(detail);
+        //JSONArray jsonArray = object.getJSONArray("Goods");
+        //System.out.print(jsonArray);
+        String aid=object.getString("aid");
+        Address address;
+
+        return detail;
     }
+
+
 
 }
