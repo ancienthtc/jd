@@ -69,7 +69,7 @@ part.event = function(){
                     }
                 })
 
-            },
+            }
         });
     });
 

@@ -1,22 +1,48 @@
 /**
- * Created by ThinkPad on 2017/8/15.
+ * Created by ThinkPad on 2017/8/23.
  */
-
-var nopay =  new Object();
-nopay.event = function(){
-    $("#dataGridTableJson").on("click",".icon-create",function(){
-        var id = $(this).parent().nextAll("span").text();
+var cancel =  new Object();
+cancel.event = function(){
+    $("#dataGridTableJson").on("click",".icon-del",function(){
+        var id = $(this).parent().nextAll("span").attr("value");
         //alert(id);
-        $.ajax({
-            url: "../order/##",
-            data: {"id": id},
-            type: "post",
-            dataType: "html",
-            success: function (data) {
-                $("#contentBoxId").html(data);
-            },
-            error: function () {
-                alert("请求失败");
+        $.confirm({
+            title: '提示',
+            content: '确定要删除吗？',
+            confirm: function() {
+                $.ajax({
+                    url:"../order/OrderDel",
+                    data:{"uuid":id},
+                    type:"get",
+                    dataType:"json",
+                    success:function(data){
+                        console.log(data)
+                        if(data=='true' || data==true){
+                            imessenger.success("删除成功");
+                        }else if(data=='false' || data==false){
+                            imessenger.error("删除失败");
+                        }
+                        else {
+                            imessenger.error("删除失败");
+                        }
+
+                        $.ajax({
+                            url:"../order/toOutTime",
+                            type:"get",
+                            dataType:"html",
+                            success:function(data){
+                                $("#contentBoxId").html(data);
+                            },
+                            error:function(){
+                                alert("页面出错");
+                            }
+                        });
+                    },
+                    error:function(){
+                        imessenger.error("请求失败");
+                    }
+                })
+
             }
         });
     })
@@ -45,15 +71,6 @@ nopay.event = function(){
                     area : ['40%','80%'],
                     content : data    //把result转为jQuery对象
                 });
-                // $("#modal-overlay").removeClass("modal-overlay").addClass("modal-overlayshow");
-                //
-                // $(".clearContent1").text("");
-                // $(".clearContent1").text(data.Address.area);
-
-                // $.each(data.Goods, function (i, row) {
-                //
-                //
-                // });
             },
             error: function (date) {
                 //console.log("2:"+data);
@@ -67,7 +84,7 @@ nopay.event = function(){
 
 $(function () {
     $('#page3').bPage({
-        url: '/JDWebShop/order/queryNoPay',
+        url: '/JDWebShop/order/getCancel',
         asyncLoad: true,
         asyncType: 'GET',
         serverSidePage: false,
@@ -128,8 +145,8 @@ $(function () {
                     $(tr).append('<td>' + row.paystatus + '</td>');
                     $(tr).append('<td>' + row.limit2 + '</td>');
                     $(tr).append('<td>' + row.allprice + '</td>');
-                    $(tr).append('<td>'+'<span class="iconfont icon-create"></span>'+'</td>');
-                    $(tr).append('<span  style="display:none">' + row.id + '</span>');
+                    $(tr).append('<td>'+'<span class="iconfont icon-del"></span>'+'</td>');
+                    $(tr).append('<span  style="display:none" value="'+row.uuid+'">' + row.id + '</span>');
                     $(tr).append('</tr>');
                     $(tb).append(tr);
                 });
@@ -140,6 +157,6 @@ $(function () {
             };
         }
     });
-    nopay.event();
+    cancel.event();
 
 });

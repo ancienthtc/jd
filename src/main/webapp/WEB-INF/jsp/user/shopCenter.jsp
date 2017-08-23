@@ -173,9 +173,11 @@
       <li><h4><span></span><a href="javascript:void(0)" onClick="showsubmenu(1)">订单管理<img class="jt" src="手机/img/jian.png"></a></h4><hr>
         <ul id="submenu1" style="list-style: none; display:none; margin-left:-20px;">
           <li class="active"><a href="javascript:void(0)" id="nopay">待付款</a></li>
-          <li class="active"><a href="">待发货</a></li>
-          <li class="active"><a href="">待收货</a></li>
-          <li class="active"><a href="">待评价</a></li>
+          <li class="active"><a href="javascript:void(0)" id="nosend">待发货</a></li>
+          <li class="active"><a href="javascript:void(0)" id="noaccept">待收货</a></li>
+          <li class="active"><a href="javascript:void(0)" id="nocomment">待评价</a></li>
+          <li class="active"><a href="">已评价</a></li>
+          <li class="active"><a href="javascript:void(0)" id="outtime">已取消</a></li>
         </ul>
       </li>
     </ul>
@@ -307,6 +309,9 @@
 <script src="../static/util/imessenger.js"></script>
 <%--页面单独js--%>
 <script src="<%=basePath%>js/user/shopCenter.js"  type="text/javascript"></script>
+
+<!-- layer -->
+<script type="text/javascript" src="<%=basePath%>js/layer.js" ></script>
 </html>
 
 

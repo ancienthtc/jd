@@ -1,78 +1,63 @@
 /**
- * Created by ThinkPad on 2017/8/15.
+ * Created by ThinkPad on 2017/8/18.
  */
-
-var nopay =  new Object();
-nopay.event = function(){
-    $("#dataGridTableJson").on("click",".icon-create",function(){
-        var id = $(this).parent().nextAll("span").text();
-        //alert(id);
+var nocomment =  new Object();
+nocomment.event = function(){
+    $("#dataGridTableJson").on("click",".show",function() {
+        var uuid = $(this).attr("value");
         $.ajax({
-            url: "../order/##",
-            data: {"id": id},
-            type: "post",
-            dataType: "html",
-            success: function (data) {
-                $("#contentBoxId").html(data);
-            },
-            error: function () {
-                alert("请求失败");
-            }
-        });
-    })
-
-    // $(".show").click(function(){
-    //     var uuid=$(this).parent().attr("value");
-    //     alert(uuid);
-    // })
-
-    $("#dataGridTableJson").on("click",".show",function(){
-        //alert(1);
-        //console.log($(this));
-        var uuid=$(this).attr("value");
-        $.ajax({
-            url: "../order/getDetail",
+            url: "../order/getComment",
             data: {"json": uuid},
             type: "post",
             dataType: "html",
             success: function (data) {
-                //$("#contentBoxId").html(data);
-                //console.log("1:"+data);
                 layer.open({
-                    type : 1,  //获取页面层信息
-                    skin : "layui-layer-molv",
-                    border : [1],
-                    area : ['40%','80%'],
-                    content : data    //把result转为jQuery对象
+                    type: 1,  //获取页面层信息
+                    skin: "layui-layer-molv",
+                    border: [1],
+                    area: ['50%', '80%'],
+                    content: data    //把result转为jQuery对象
                 });
-                // $("#modal-overlay").removeClass("modal-overlay").addClass("modal-overlayshow");
-                //
-                // $(".clearContent1").text("");
-                // $(".clearContent1").text(data.Address.area);
-
-                // $.each(data.Goods, function (i, row) {
-                //
-                //
-                // });
             },
             error: function (date) {
-                //console.log("2:"+data);
                 alert("请求失败");
             }
         });
-        //alert(uuid);
+    })
+
+    $("#dataGridTableJson").on("click",".icon-create",function(){
+        var uuid = $(this).parent().parent().find(".show").attr("value");
+        $.ajax({
+            url: "../order/getComment",
+            data: {"json": uuid},
+            type: "post",
+            dataType: "html",
+            success: function (data) {
+                layer.open({
+                    type: 1,  //获取页面层信息
+                    skin: "layui-layer-molv",
+                    border: [1],
+                    area: ['50%', '80%'],
+                    content: data    //把result转为jQuery对象
+                });
+            },
+            error: function (date) {
+                alert("请求失败");
+            }
+        });
     })
 
 }
 
+
 $(function () {
     $('#page3').bPage({
-        url: '/JDWebShop/order/queryNoPay',
+        url: '/JDWebShop/order/queryNoComment',
         asyncLoad: true,
         asyncType: 'GET',
         serverSidePage: false,
         render: function (data) {
-            //console.log(data);
+            console.log(data);
             var tb = $('#dataGridTableJson tbody');
             $(tb).empty();
             if (data && data.dataList && data.dataList.length > 0) {
@@ -126,7 +111,7 @@ $(function () {
                     $(tr).append('<td>' + row.ordertime2 + '</td>');
                     $(tr).append('<td>' + row.shopstatus + '</td>')
                     $(tr).append('<td>' + row.paystatus + '</td>');
-                    $(tr).append('<td>' + row.limit2 + '</td>');
+                    //$(tr).append('<td>' + row.limit2 + '</td>');
                     $(tr).append('<td>' + row.allprice + '</td>');
                     $(tr).append('<td>'+'<span class="iconfont icon-create"></span>'+'</td>');
                     $(tr).append('<span  style="display:none">' + row.id + '</span>');
@@ -140,6 +125,6 @@ $(function () {
             };
         }
     });
-    nopay.event();
+    nocomment.event();
 
 });

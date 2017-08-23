@@ -106,6 +106,75 @@ shopCenter.event = function(){
        })
     });
 
+    /**
+     * 跳转至待发货
+     */
+    $("#nosend").click(function () {
+        $.ajax({
+            url:"../order/toNoSend",
+            type:"get",
+            dataType:"html",
+            success:function(data){
+                //console.log(data);
+                $(".all_right").html(data);
+            },
+            error:function(data){
+                alert("请求失败");
+            }
+        })
+    });
+
+    /**
+     * 跳转至待收货
+     */
+    $("#noaccept").click(function () {
+        $.ajax({
+            url:"../order/toNoAccept",
+            type:"get",
+            dataType:"html",
+            success:function(data){
+                //console.log(data);
+                $(".all_right").html(data);
+            },
+            error:function(data){
+                alert("请求失败");
+            }
+        })
+    });
+
+    /**
+     * 跳转至待评价
+     */
+    $("#nocomment").click(function () {
+        $.ajax({
+            url:"../order/toNoComment",
+            type:"get",
+            dataType:"html",
+            success:function(data){
+                //console.log(data);
+                $(".all_right").html(data);
+            },
+            error:function(data){
+                alert("请求失败");
+            }
+        })
+    });
+
+    $("#outtime").click(function () {
+        $.ajax({
+            url:"../order/toOutTime",
+            type:"get",
+            dataType:"html",
+            success:function(data){
+                //console.log(data);
+                $(".all_right").html(data);
+            },
+            error:function(data){
+                alert("请求失败");
+            }
+        })
+    });
+
 
 }
 

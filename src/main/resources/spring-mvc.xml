@@ -3,15 +3,21 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
                         http://www.springframework.org/schema/context
                         http://www.springframework.org/schema/context/spring-context-4.0.xsd
                         http://www.springframework.org/schema/mvc
-                        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+                        http://www.springframework.org/schema/task
+                        http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
     <!-- 自动扫描  @Controller-->
     <context:component-scan base-package="com.jd.shop.controller"/>
+
+    <!-- 扫描定时器 -->
+    <context:component-scan base-package="com.jd.shop.timer" />
 
     <!--避免IE执行AJAX时，返回JSON出现下载文件 -->
     <bean id="mappingJacksonHttpMessageConverter"
@@ -62,31 +68,32 @@
     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
     <mvc:annotation-driven />
 
-    <mvc:interceptors>
-        <mvc:interceptor>
-            <mvc:mapping path="/*"/>
-            <mvc:mapping path="/part/*"/>
-            <mvc:mapping path="/goods/*"/>
-            <mvc:mapping path="/admin/*"/>
-            <mvc:mapping path="/user/*"/>
-            <mvc:exclude-mapping path="/login/admin"/>
-            <bean class="com.jd.shop.filter.AdminInterceptor"/>
-        </mvc:interceptor>
-        <mvc:interceptor>
-            <mvc:mapping path="/**"/>
-            <mvc:exclude-mapping path="/login/admin"/>
-            <mvc:exclude-mapping path="/login/alogin"/>
-            <mvc:exclude-mapping path="/login/login"/>
-            <mvc:exclude-mapping path="/login/ton"/>
-            <mvc:exclude-mapping path="/login/view"/>
-            <mvc:exclude-mapping path="/picture/*"/>
-            <mvc:exclude-mapping path="/part/*"/>
-            <mvc:exclude-mapping path="/goods/*"/>
-            <mvc:exclude-mapping path="/admin/*"/>
-            <mvc:exclude-mapping path="/user/*"/>
-            <bean class="com.jd.shop.filter.WebInterceptor"/>
-        </mvc:interceptor>
-    </mvc:interceptors>
+    <!-- 拦截器 -->
+    <!--<mvc:interceptors>-->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/*"/>-->
+            <!--<mvc:mapping path="/part/*"/>-->
+            <!--<mvc:mapping path="/goods/*"/>-->
+            <!--<mvc:mapping path="/admin/*"/>-->
+            <!--<mvc:mapping path="/user/*"/>-->
+            <!--<mvc:exclude-mapping path="/login/admin"/>-->
+            <!--<bean class="com.jd.shop.filter.AdminInterceptor"/>-->
+        <!--</mvc:interceptor>-->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/**"/>-->
+            <!--<mvc:exclude-mapping path="/login/admin"/>-->
+            <!--<mvc:exclude-mapping path="/login/alogin"/>-->
+            <!--<mvc:exclude-mapping path="/login/login"/>-->
+            <!--<mvc:exclude-mapping path="/login/ton"/>-->
+            <!--<mvc:exclude-mapping path="/login/view"/>-->
+            <!--<mvc:exclude-mapping path="/picture/*"/>-->
+            <!--<mvc:exclude-mapping path="/part/*"/>-->
+            <!--<mvc:exclude-mapping path="/goods/*"/>-->
+            <!--<mvc:exclude-mapping path="/admin/*"/>-->
+            <!--<mvc:exclude-mapping path="/user/*"/>-->
+            <!--<bean class="com.jd.shop.filter.WebInterceptor"/>-->
+        <!--</mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
 
 
 

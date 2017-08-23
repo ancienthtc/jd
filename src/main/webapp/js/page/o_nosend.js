@@ -1,20 +1,25 @@
 /**
  * Created by ThinkPad on 2017/8/16.
  */
-var nopay =  new Object();
-nopay.event = function(){
-    $("#dataGridTableJson").on("click",".icon-create",function(){
-        var id = $(this).parent().nextAll("span").text();
-        //alert(id);
+var nosend =  new Object();
+nosend.event = function(){
+    $("#dataGridTableJson").on("click",".show",function() {
+        var uuid = $(this).attr("value");
         $.ajax({
-            url: "../order/##",
-            data: {"id": id},
+            url: "../order/getDetail",
+            data: {"json": uuid},
             type: "post",
             dataType: "html",
             success: function (data) {
-                $("#contentBoxId").html(data);
+                layer.open({
+                    type: 1,  //获取页面层信息
+                    skin: "layui-layer-molv",
+                    border: [1],
+                    area: ['40%', '80%'],
+                    content: data    //把result转为jQuery对象
+                });
             },
-            error: function () {
+            error: function (date) {
                 alert("请求失败");
             }
         });
@@ -23,7 +28,7 @@ nopay.event = function(){
 
 $(function () {
     $('#page3').bPage({
-        url: '/JDWebShop/order/queryNoPay',
+        url: '/JDWebShop/order/queryNoSend',
         asyncLoad: true,
         asyncType: 'GET',
         serverSidePage: false,
@@ -66,29 +71,25 @@ $(function () {
                     }
                     else if(row.shopstatus==1)
                     {
-                        row.shopstatus="已发货";
+                        row.shopstatus="待收货";
                     }
                     else if(row.shopstatus==2)
                     {
-                        row.shopstatus="已收货";
+                        row.shopstatus="待评价";
                     }
                     else if(row.shopstatus==3)
-                    {
-                        row.shopstatus="待评论";
-                    }
-                    else if(row.shopstatus==4)
                     {
                         row.shopstatus="已评论";
                     }
 
                     var tr = $('<tr>');
-                    $(tr).append('<td name="uuid"><a>' + row.uuid + '</a></td>');
+                    $(tr).append('<td class="show" name="uuid" value="'+row.uuid+'"><a  href="javascript:void(0)">' + row.uuid.replace("-","") + '</a></td>');
                     $(tr).append('<td>' + row.ordertime2 + '</td>');
                     $(tr).append('<td>' + row.shopstatus + '</td>')
                     $(tr).append('<td>' + row.paystatus + '</td>');
-                    $(tr).append('<td>' + row.limit2 + '</td>');
+                    //$(tr).append('<td>' + row.limit2 + '</td>');
                     $(tr).append('<td>' + row.allprice + '</td>');
-                    $(tr).append('<td>'+'<span class="iconfont icon-create"></span>'+'</td>');
+                    //$(tr).append('<td>'+'<span class="iconfont icon-create"></span>'+'</td>');
                     $(tr).append('<span  style="display:none">' + row.id + '</span>');
                     $(tr).append('</tr>');
                     $(tb).append(tr);
@@ -100,6 +101,6 @@ $(function () {
             };
         }
     });
-    nopay.event();
+    nosend.event();
 
 });

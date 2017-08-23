@@ -160,8 +160,239 @@ public class OrderServiceImpl implements OrderService{
         return BeanUtil.toPagedResult(orders);
     }
 
+    @Override
+    public PagedResult<Order> queryByPageNoSend(Integer pageNo, Integer pageSize, Integer userId) {
+        pageNo = pageNo == null ? 1 : pageNo;
+        pageSize = pageSize == null ? 10 : pageSize;
+        PageHelper.startPage(pageNo, pageSize);  //startPage是告诉拦截器说我要开始分页了。分页参数是这两个。
+        List<Order> orders=orderMapper.getUserOrders2(userId);
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        for(int i=0;i<orders.size();i++)
+        {
+            orders.get(i).setOrdertime2(df.format(orders.get(i).getOrdertime()));
+        }
+
+        return BeanUtil.toPagedResult(orders);
+    }
+
+    @Override
+    public PagedResult<Order> queryByPageNoAccept(Integer pageNo, Integer pageSize, Integer userId) {
+        pageNo = pageNo == null ? 1 : pageNo;
+        pageSize = pageSize == null ? 10 : pageSize;
+        PageHelper.startPage(pageNo, pageSize);  //startPage是告诉拦截器说我要开始分页了。分页参数是这两个。
+        List<Order> orders=orderMapper.getUserOrders3(userId);
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        for(int i=0;i<orders.size();i++)
+        {
+            orders.get(i).setOrdertime2(df.format(orders.get(i).getOrdertime()));
+        }
+        return BeanUtil.toPagedResult(orders);
+    }
+
+    @Override
+    public PagedResult<Order> queryByPageNoComment(Integer pageNo, Integer pageSize, Integer userId) {
+        pageNo = pageNo == null ? 1 : pageNo;
+        pageSize = pageSize == null ? 10 : pageSize;
+        PageHelper.startPage(pageNo, pageSize);  //startPage是告诉拦截器说我要开始分页了。分页参数是这两个。
+        List<Order> orders=orderMapper.getUserOrders4(userId);
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        for(int i=0;i<orders.size();i++)
+        {
+            orders.get(i).setOrdertime2(df.format(orders.get(i).getOrdertime()));
+        }
+        return BeanUtil.toPagedResult(orders);
+    }
+
+    @Override
+    public PagedResult<Order> queryByPageOutTime(Integer pageNo, Integer pageSize, Integer userId) {
+        pageNo = pageNo == null ? 1 : pageNo;
+        pageSize = pageSize == null ? 10 : pageSize;
+        PageHelper.startPage(pageNo, pageSize);  //startPage是告诉拦截器说我要开始分页了。分页参数是这两个。
+        List<Order> orders=orderMapper.OrderCancel(userId);
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        for(int i=0;i<orders.size();i++)
+        {
+            orders.get(i).setOrdertime2(df.format(orders.get(i).getOrdertime()));
+            Date date=orders.get(i).getOrdertime();
+            Long tim=Timestamp.valueOf(df.format(date)).getTime();
+            Long lim=(long)orders.get(i).getLimit()* 60 * 60 * 1000;
+            date=new Date(tim+lim);
+            orders.get(i).setLimit2(df.format(date));
+        }
+        return BeanUtil.toPagedResult(orders);
+    }
+
     public String getDetail(String uuid) {
         return orderMapper.getDetail(uuid);
+    }
+
+
+
+    //管理员
+    @Override
+    public Order getOrder(String uuid) {
+        return orderMapper.selectByUUID(uuid);
+    }
+
+    //发货
+    @Override
+    @Transactional
+    public int Send(String uuid, String detail) {
+
+        int i=orderMapper.updateDetailByUUID(uuid,detail);
+        int j=orderMapper.UpdateShopS(1,uuid);
+        if(i+j>1)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    //修改详情
+    @Override
+    public int updateDetail(String uuid, String detail) {
+        return orderMapper.updateDetailByUUID(uuid,detail);
+    }
+
+    public PagedResult<Order> getByPageNoPay(Integer pageNo, Integer pageSize) {
+        pageNo = pageNo == null ? 1 : pageNo;
+        pageSize = pageSize == null ? 10 : pageSize;
+        PageHelper.startPage(pageNo, pageSize);  //startPage是告诉拦截器说我要开始分页了。分页参数是这两个。
+        List<Order> orders=orderMapper.getAllOrders();
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        for(int i=0;i<orders.size();i++)
+        {
+            orders.get(i).setOrdertime2(df.format(orders.get(i).getOrdertime()));
+            Date date=orders.get(i).getOrdertime();
+            //orders.get(i).setOrdertime2(df.format(date));
+            Long tim=Timestamp.valueOf(df.format(date)).getTime();
+            Long lim=(long)orders.get(i).getLimit()* 60 * 60 * 1000;
+            date=new Date(tim+lim);
+            orders.get(i).setLimit2(df.format(date));
+            //orders.get(i).setOrdertime2(df.format(date));
+        }
+        return BeanUtil.toPagedResult(orders);
+    }
+
+    @Override
+    public PagedResult<Order> getByPageNoSend(Integer pageNo, Integer pageSize) {
+        pageNo = pageNo == null ? 1 : pageNo;
+        pageSize = pageSize == null ? 10 : pageSize;
+        PageHelper.startPage(pageNo, pageSize);  //startPage是告诉拦截器说我要开始分页了。分页参数是这两个。
+        List<Order> orders=orderMapper.getAllOrders2();
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        for(int i=0;i<orders.size();i++)
+        {
+            orders.get(i).setOrdertime2(df.format(orders.get(i).getOrdertime()));
+        }
+        return BeanUtil.toPagedResult(orders);
+    }
+
+    @Override
+    public PagedResult<Order> getByPageNoAccept(Integer pageNo, Integer pageSize) {
+        pageNo = pageNo == null ? 1 : pageNo;
+        pageSize = pageSize == null ? 10 : pageSize;
+        PageHelper.startPage(pageNo, pageSize);  //startPage是告诉拦截器说我要开始分页了。分页参数是这两个。
+        List<Order> orders=orderMapper.getAllOrders3();
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        for(int i=0;i<orders.size();i++)
+        {
+            orders.get(i).setOrdertime2(df.format(orders.get(i).getOrdertime()));
+        }
+        return BeanUtil.toPagedResult(orders);
+    }
+
+    @Override
+    public PagedResult<Order> getByPageNoComment(Integer pageNo, Integer pageSize) {
+        pageNo = pageNo == null ? 1 : pageNo;
+        pageSize = pageSize == null ? 10 : pageSize;
+        PageHelper.startPage(pageNo, pageSize);  //startPage是告诉拦截器说我要开始分页了。分页参数是这两个。
+        List<Order> orders=orderMapper.getAllOrders4();
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        for(int i=0;i<orders.size();i++)
+        {
+            orders.get(i).setOrdertime2(df.format(orders.get(i).getOrdertime()));
+        }
+        return BeanUtil.toPagedResult(orders);
+    }
+
+
+    @Override
+    public PagedResult<Order> getByPageCancel(Integer pageNo, Integer pageSize) {
+        pageNo = pageNo == null ? 1 : pageNo;
+        pageSize = pageSize == null ? 10 : pageSize;
+        PageHelper.startPage(pageNo, pageSize);  //startPage是告诉拦截器说我要开始分页了。分页参数是这两个。
+        List<Order> orders=orderMapper.getAllOrdersCancel();
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        for(int i=0;i<orders.size();i++)
+        {
+            orders.get(i).setOrdertime2(df.format(orders.get(i).getOrdertime()));
+            Date date=orders.get(i).getOrdertime();
+            Long tim=Timestamp.valueOf(df.format(date)).getTime();
+            Long lim=(long)orders.get(i).getLimit()* 60 * 60 * 1000;
+            date=new Date(tim+lim);
+            orders.get(i).setLimit2(df.format(date));
+        }
+        return BeanUtil.toPagedResult(orders);
+    }
+
+    @Override
+    public int updatePayS(String uuid, Integer i) {
+        return orderMapper.UpdatePayS(i,uuid);
+    }
+
+    @Override
+    public int updateShopS(String uuid, Integer i) {
+        return orderMapper.UpdateShopS(i,uuid);
+    }
+
+    //检查订单失效情况
+    @Override
+    public List<Order> checkOrder(Integer userid) {
+        return orderMapper.checkOrderWithUser(userid);
+    }
+
+    //定时器检查
+    @Override
+    public List<Order> checkAllOrders() {
+        return orderMapper.checkOrders();
+    }
+
+    @Override
+    @Transactional
+    public int cancelOrder(String uuid) {
+        //1.取出detail
+        Order order=orderMapper.selectByUUID(uuid);
+        JSONObject jsonObject=JSON.parseObject(order.getDetail());
+        JSONArray jsonArray = jsonObject.getJSONArray("Goods");
+        List<HashMap> goodslist = JSON.parseArray(jsonArray.toJSONString(), HashMap.class);
+        //2.判断商品是否存在，存在就恢复库存
+        for(int i=0;i<goodslist.size();i++)
+        {
+            Integer goodsid= Integer.parseInt( goodslist.get(i).get("goodsid").toString() ) ;//取出id
+            //查找商品
+            Goods goods=goodsMapper.selectByPrimaryKey(goodsid);
+            if(goods != null)
+            {
+                Double amount=Double.parseDouble( goodslist.get(i).get("amount").toString() ) ;//取出数量
+                //goods.setStock( goods.getStock()+amount );
+                goodsMapper.updateStock(goods.getStock()+amount,goodsid);
+            }
+        }
+        //3.更新状态
+        int i=updatePayS(uuid,2);//取消为2
+        return i;
+    }
+
+    @Override
+    public int orderDel(String uuid) {
+        return orderMapper.delOrderByUUID(uuid);
     }
 }
 /*

@@ -27,13 +27,61 @@
   </select>
 
   <!-- new -->
+  <select id="selectByUUID" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_order
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <!-- 用户 -->
+  <!-- 待付款 -->
   <select id="getUserOrders" parameterType="java.lang.Integer" resultType="com.jd.shop.model.Order">
     SELECT
     id,uuid,ordertime,shopstatus,paystatus ,`limit`,allprice
     FROM
     t_order
     WHERE
-    order_user=#{uid,jdbcType=INTEGER} and paystatus=0
+    order_user=#{uid,jdbcType=INTEGER} and paystatus=0 and shopstatus=0
+    ORDER BY ordertime
+  </select>
+  <!-- 待发货 -->
+  <select id="getUserOrders2" parameterType="java.lang.Integer" resultType="com.jd.shop.model.Order">
+    SELECT
+    id,uuid,ordertime,shopstatus,paystatus ,allprice
+    FROM
+    t_order
+    WHERE
+    order_user=#{uid,jdbcType=INTEGER} and paystatus=1 and shopstatus=0
+    ORDER BY ordertime
+  </select>
+  <!-- 待收货 -->
+  <select id="getUserOrders3" parameterType="java.lang.Integer" resultType="com.jd.shop.model.Order">
+    SELECT
+    id,uuid,ordertime,shopstatus,paystatus ,allprice
+    FROM
+    t_order
+    WHERE
+    order_user=#{uid,jdbcType=INTEGER} and paystatus=1 and shopstatus=1
+    ORDER BY ordertime
+  </select>
+  <!-- 待评价 -->
+  <select id="getUserOrders4" parameterType="java.lang.Integer" resultType="com.jd.shop.model.Order">
+    SELECT
+    id,uuid,ordertime,shopstatus,paystatus ,allprice
+    FROM
+    t_order
+    WHERE
+    order_user=#{uid,jdbcType=INTEGER} and paystatus=1 and shopstatus=2
+    ORDER BY ordertime
+  </select>
+  <!-- 超时/取消 -->
+  <select id="OrderCancel" parameterType="java.lang.Integer" resultType="com.jd.shop.model.Order">
+    SELECT
+    id,uuid,ordertime,shopstatus,paystatus ,`limit` ,allprice
+    FROM
+    t_order
+    WHERE
+    order_user=#{uid,jdbcType=INTEGER} and paystatus=2 and shopstatus=0
     ORDER BY ordertime
   </select>
 
@@ -46,10 +94,94 @@
     uuid=#{uuid,jdbcType=VARCHAR}
   </select>
 
+  <!-- 管理员 -->
+  <!-- 所有未付款订单 -->
+  <select id="getAllOrders" resultType="com.jd.shop.model.Order">
+    SELECT
+     id,uuid,ordertime,shopstatus,paystatus ,`limit`,allprice
+    FROM
+     t_order
+    WHERE
+     paystatus=0 and shopstatus=0
+    ORDER BY ordertime
+  </select>
+  <!-- 待发货 -->
+  <select id="getAllOrders2" resultType="com.jd.shop.model.Order">
+    SELECT
+     id,uuid,ordertime,shopstatus,paystatus ,allprice
+    FROM
+     t_order
+    WHERE
+     paystatus=1 and shopstatus=0
+    ORDER BY ordertime
+  </select>
+  <!-- 待收货 -->
+  <select id="getAllOrders3" resultType="com.jd.shop.model.Order">
+    SELECT
+    id,uuid,ordertime,shopstatus,paystatus ,allprice
+    FROM
+    t_order
+    WHERE
+    paystatus=1 and shopstatus=1
+    ORDER BY ordertime
+  </select>
+  <!-- 待评价 -->
+  <select id="getAllOrders4" resultType="com.jd.shop.model.Order">
+    SELECT
+    id,uuid,ordertime,shopstatus,paystatus ,allprice
+    FROM
+    t_order
+    WHERE
+    paystatus=1 and shopstatus=2
+    ORDER BY ordertime
+  </select>
+
+
+
+  <!-- 已超时 -->
+  <select id="getAllOrdersCancel" parameterType="java.lang.Integer" resultType="com.jd.shop.model.Order">
+    SELECT
+    id,uuid,ordertime,shopstatus,paystatus ,`limit` ,allprice
+    FROM
+    t_order
+    WHERE
+    paystatus=2 and shopstatus=0
+    ORDER BY ordertime
+  </select>
+
+  <!-- 查询订单失效(含用户) -->
+  <select id="checkOrderWithUser" resultType="com.jd.shop.model.Order" parameterType="java.lang.Integer">
+    SELECT
+      uuid,ordertime,date_add(ordertime, interval `limit` HOUR) as `limit`,NOW() as `now`,
+      DATEDIFF(date_add(ordertime, interval `limit` HOUR) , now()) as diff
+    FROM
+      t_order
+    WHERE
+      DATEDIFF(  now() , date_add(ordertime, interval `limit` HOUR) ) >0 and order_user= #{ uid,jdbcType=INTEGER } and paystatus=0
+  </select>
+
+  <!-- 查找所有失效订单 -->
+  <select id="checkOrders" resultType="com.jd.shop.model.Order">
+    SELECT
+      uuid,ordertime, date_add(ordertime, interval `limit` HOUR) as `limit`, NOW() as `now`
+      ,DATEDIFF(date_add(ordertime, interval `limit` HOUR) , now()) as diff
+    from
+      t_order
+    WHERE
+      DATEDIFF(  now() , date_add(ordertime, interval `limit` HOUR) ) > 0 and paystatus=0
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_order
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+  <!-- new -->
+  <delete id="delOrderByUUID" parameterType="java.lang.String" >
+    delete from t_order
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+
   <insert id="insert" parameterType="com.jd.shop.model.Order" >
     insert into t_order (id, uuid, ordertime,
     shopstatus, paystatus, paytime,
@@ -173,4 +305,27 @@
       order_user = #{orderUser,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!-- new -->
+  <update id="UpdateShopS" parameterType="java.lang.Object">
+    UPDATE
+    t_order
+    set shopstatus=#{status,jdbcType=INTEGER}
+    where uuid=#{uuid,jdbcType=VARCHAR}
+  </update>
+
+  <update id="UpdatePayS" parameterType="java.lang.Object">
+    UPDATE
+    t_order
+    set paystatus=#{status,jdbcType=INTEGER}
+    where uuid=#{uuid,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateDetailByUUID" parameterType="java.lang.String">
+    UPDATE
+    t_order
+    set detail=#{detail,jdbcType=VARCHAR}
+    where uuid=#{uuid,jdbcType=VARCHAR}
+  </update>
+
 </mapper>

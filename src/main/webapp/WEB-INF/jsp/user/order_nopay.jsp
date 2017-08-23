@@ -50,10 +50,12 @@
     </div>
     <div id="page3"></div>
 </div>
+
 </body>
 
 <%--分页插件--%>
 <script type="text/javascript" src="<%=basePath%>js/page/b.page.js" ></script>
+<!-- 数据源js -->
 <script type="text/javascript" src="<%=basePath%>js/page/o_nopay.js" ></script>
 
 <!-- 提示框的js -->
@@ -61,6 +63,7 @@
 <script src="../static/util/imessenger.js"></script>
 <!-- 确认框的js -->
 <script src="../static/libs/jquery-confirm/jquery-confirm.js"></script>
-
+<!-- layer -->
+<script type="text/javascript" src="<%=basePath%>js/layer.js" ></script>
 
 </html>

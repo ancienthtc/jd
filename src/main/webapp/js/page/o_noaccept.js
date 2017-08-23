@@ -1,78 +1,73 @@
 /**
- * Created by ThinkPad on 2017/8/15.
+ * Created by ThinkPad on 2017/8/18.
  */
+var noaccept =  new Object();
+noaccept.event = function(){
 
-var nopay =  new Object();
-nopay.event = function(){
+    //收货
     $("#dataGridTableJson").on("click",".icon-create",function(){
-        var id = $(this).parent().nextAll("span").text();
-        //alert(id);
-        $.ajax({
-            url: "../order/##",
-            data: {"id": id},
-            type: "post",
-            dataType: "html",
-            success: function (data) {
-                $("#contentBoxId").html(data);
+        var uuid = $(this).parent().parent().find(".show").attr("value");
+        console.log(uuid);
+        $.confirm({
+            title: '确认收货?',
+            content: '确认收货?',
+            confirm: function(){
+                //$.alert('Confirmed!');
+                $.ajax({
+                    url: "../order/accept",
+                    data: {"json": uuid},
+                    type: "post",
+                    dataType: "html",
+                    success: function (data) {
+                        $("#contentBoxId").html(data);
+                    },
+                    error: function (date) {
+                        alert("请求失败");
+                    }
+                });
             },
-            error: function () {
-                alert("请求失败");
+            cancel: function(){
+                //$.alert('Canceled!')
             }
         });
+
+
     })
 
-    // $(".show").click(function(){
-    //     var uuid=$(this).parent().attr("value");
-    //     alert(uuid);
-    // })
 
-    $("#dataGridTableJson").on("click",".show",function(){
-        //alert(1);
-        //console.log($(this));
-        var uuid=$(this).attr("value");
+
+
+    $("#dataGridTableJson").on("click",".show",function() {
+        var uuid = $(this).attr("value");
         $.ajax({
-            url: "../order/getDetail",
+            url: "../order/getLogistics",
             data: {"json": uuid},
             type: "post",
             dataType: "html",
             success: function (data) {
-                //$("#contentBoxId").html(data);
-                //console.log("1:"+data);
                 layer.open({
-                    type : 1,  //获取页面层信息
-                    skin : "layui-layer-molv",
-                    border : [1],
-                    area : ['40%','80%'],
-                    content : data    //把result转为jQuery对象
+                    type: 1,  //获取页面层信息
+                    skin: "layui-layer-molv",
+                    border: [1],
+                    area: ['40%', '80%'],
+                    content: data    //把result转为jQuery对象
                 });
-                // $("#modal-overlay").removeClass("modal-overlay").addClass("modal-overlayshow");
-                //
-                // $(".clearContent1").text("");
-                // $(".clearContent1").text(data.Address.area);
-
-                // $.each(data.Goods, function (i, row) {
-                //
-                //
-                // });
             },
             error: function (date) {
-                //console.log("2:"+data);
                 alert("请求失败");
             }
         });
-        //alert(uuid);
     })
-
 }
 
 $(function () {
     $('#page3').bPage({
-        url: '/JDWebShop/order/queryNoPay',
+        url: '/JDWebShop/order/queryNoAccept',
         asyncLoad: true,
         asyncType: 'GET',
         serverSidePage: false,
         render: function (data) {
-            //console.log(data);
+            console.log(data);
             var tb = $('#dataGridTableJson tbody');
             $(tb).empty();
             if (data && data.dataList && data.dataList.length > 0) {
@@ -124,9 +119,9 @@ $(function () {
                     var tr = $('<tr>');
                     $(tr).append('<td class="show" name="uuid" value="'+row.uuid+'"><a  href="javascript:void(0)">' + row.uuid.replace("-","") + '</a></td>');
                     $(tr).append('<td>' + row.ordertime2 + '</td>');
-                    $(tr).append('<td>' + row.shopstatus + '</td>')
+                    $(tr).append('<td>' + row.shopstatus + '</td>');
                     $(tr).append('<td>' + row.paystatus + '</td>');
-                    $(tr).append('<td>' + row.limit2 + '</td>');
+                    //$(tr).append('<td>' + row.limit2 + '</td>');
                     $(tr).append('<td>' + row.allprice + '</td>');
                     $(tr).append('<td>'+'<span class="iconfont icon-create"></span>'+'</td>');
                     $(tr).append('<span  style="display:none">' + row.id + '</span>');
@@ -140,6 +135,6 @@ $(function () {
             };
         }
     });
-    nopay.event();
+    noaccept.event();
 
 });

@@ -75,8 +75,12 @@
                     <li class="default" >
                         <p><span class="iconfont icon-hidecase"></span>订单管理<i class="iconfont icon-right arrow"></i></p>
                         <ul class="secondNav">
-                            <li id="order"><a href="javascript:void(0);">订单列表</a></li>
-                            <li ><a href="javascript:void(0);">xxx</a></li>
+                            <li id="order1"><a href="javascript:void(0);">待支付列表</a></li>
+                            <li id="order2"><a href="javascript:void(0);">待发货列表</a></li>
+                            <li id="order3"><a href="javascript:void(0);">待收货列表</a></li>
+                            <li id="order4"><a href="javascript:void(0);">待评价列表</a></li>
+                            <li id="order5"><a href="javascript:void(0);">已评价列表</a></li>
+                            <li id="order6"><a href="javascript:void(0);">已取消列表</a></li>
                         </ul>
                     </li>
                     <!-- 评价管理 -->
@@ -137,17 +141,13 @@
     <script src="../static/util/iverify.js"></script>
     <script src="../static/util/icheck.js"></script>
 
-
-
     <script src="../static/js/merchant/public/index.js"></script>
-
-
-
 
     <!-- 引用ajax(js文件下的) -->
     <script src="../js/goodslist.js"></script>
     <script src="../js/partlist.js"></script>
     <script src="../js/userlist.js"></script>
+    <script src="../js/orderlist.js"></script>
     
 </body>
 <!--<script th:inline="javascript">

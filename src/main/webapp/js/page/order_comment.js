@@ -1,37 +1,15 @@
 /**
- * Created by ThinkPad on 2017/8/15.
+ * Created by ThinkPad on 2017/8/22.
  */
-
-var nopay =  new Object();
-nopay.event = function(){
-    $("#dataGridTableJson").on("click",".icon-create",function(){
-        var id = $(this).parent().nextAll("span").text();
-        //alert(id);
-        $.ajax({
-            url: "../order/##",
-            data: {"id": id},
-            type: "post",
-            dataType: "html",
-            success: function (data) {
-                $("#contentBoxId").html(data);
-            },
-            error: function () {
-                alert("请求失败");
-            }
-        });
-    })
-
-    // $(".show").click(function(){
-    //     var uuid=$(this).parent().attr("value");
-    //     alert(uuid);
-    // })
+var comment =  new Object();
+comment.event = function(){
 
     $("#dataGridTableJson").on("click",".show",function(){
         //alert(1);
         //console.log($(this));
         var uuid=$(this).attr("value");
         $.ajax({
-            url: "../order/getDetail",
+            url: "../order/getLogistics",  //用户的detail
             data: {"json": uuid},
             type: "post",
             dataType: "html",
@@ -45,15 +23,6 @@ nopay.event = function(){
                     area : ['40%','80%'],
                     content : data    //把result转为jQuery对象
                 });
-                // $("#modal-overlay").removeClass("modal-overlay").addClass("modal-overlayshow");
-                //
-                // $(".clearContent1").text("");
-                // $(".clearContent1").text(data.Address.area);
-
-                // $.each(data.Goods, function (i, row) {
-                //
-                //
-                // });
             },
             error: function (date) {
                 //console.log("2:"+data);
@@ -67,7 +36,7 @@ nopay.event = function(){
 
 $(function () {
     $('#page3').bPage({
-        url: '/JDWebShop/order/queryNoPay',
+        url: '/JDWebShop/order/getNoComment',
         asyncLoad: true,
         asyncType: 'GET',
         serverSidePage: false,
@@ -124,11 +93,12 @@ $(function () {
                     var tr = $('<tr>');
                     $(tr).append('<td class="show" name="uuid" value="'+row.uuid+'"><a  href="javascript:void(0)">' + row.uuid.replace("-","") + '</a></td>');
                     $(tr).append('<td>' + row.ordertime2 + '</td>');
-                    $(tr).append('<td>' + row.shopstatus + '</td>')
+                    $(tr).append('<td>' + row.shopstatus + '</td>');
                     $(tr).append('<td>' + row.paystatus + '</td>');
-                    $(tr).append('<td>' + row.limit2 + '</td>');
+                    //$(tr).append('<td>' + row.limit2 + '</td>');
                     $(tr).append('<td>' + row.allprice + '</td>');
-                    $(tr).append('<td>'+'<span class="iconfont icon-create"></span>'+'</td>');
+                    //$(tr).append('<td value="'+row.uuid+'">'+'<span class="iconfont icon-view"></span>'+'</td>');
+                    //$(tr).append('<td> -- </td>');
                     $(tr).append('<span  style="display:none">' + row.id + '</span>');
                     $(tr).append('</tr>');
                     $(tb).append(tr);
@@ -140,6 +110,6 @@ $(function () {
             };
         }
     });
-    nopay.event();
+    comment.event();
 
 });
