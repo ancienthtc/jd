@@ -19,4 +19,7 @@ public interface HistoryService {
     int deleteByUserId(Integer userId);
     /*f根据用户id分页查询*/
     PagedResult<History> queryByPage(Integer pageNo, Integer pageSize, Integer userId);
+
+    //添加到历史纪录
+    int HistoryAdd(Integer uid,Integer gid);
 }

@@ -60,8 +60,40 @@
     FROM t_goods as g
     LEFT JOIN (SELECT * FROM t_image) as i
     ON i.image_list=g.piclist_goods
-    WHERE g.part_goods=#{pid,jdbcType=INTEGER}
+    WHERE g.part_goods=#{pid,jdbcType=INTEGER} and g.shelf is not NULL
     GROUP BY g.id
+  </select>
+
+  <select id="getAllGoods" resultType="com.jd.shop.model.Goods">
+    SELECT
+    t_goods.id,
+    t_goods.`name`,
+    t_goods.price,
+    t_goods.piclist_goods,
+    t_goods.shelf,
+    t_image.title
+    FROM
+    t_goods
+    JOIN t_image ON t_goods.piclist_goods = t_image.image_list
+    WHERE t_goods.shelf is not null
+    GROUP BY t_goods.`name`
+  </select>
+
+  <select id="search_all" parameterType="java.lang.String" resultType="com.jd.shop.model.Goods">
+    SELECT
+      t_goods.id,t_goods.`name`,t_goods.price,t_goods.gclass,t_goods.parameter1,t_goods.parameter2,t_goods.parameter3,t_goods.freight,
+      t_goods.detail,t_goods.sales,t_goods.stock,t_goods.shelf,t_goods.part_goods,t_goods.piclist_goods,t_image.title
+    FROM t_goods
+    INNER JOIN t_image ON t_goods.piclist_goods = t_image.image_list
+    WHERE
+      t_goods.`name` LIKE concat(concat('%',#{key,jdbcType=VARCHAR}),'%')
+      or t_goods.parameter1 LIKE concat(concat('%',#{key,jdbcType=VARCHAR}),'%')
+      or t_goods.parameter2 LIKE concat(concat('%',#{key,jdbcType=VARCHAR}),'%')
+      or t_goods.parameter3 LIKE concat(concat('%',#{key,jdbcType=VARCHAR}),'%')
+      or t_goods.detail like concat(concat('%',#{key,jdbcType=VARCHAR}),'%')
+    GROUP BY t_goods.id
+    ORDER BY
+    t_goods.`name`,t_goods.parameter1,t_goods.parameter2,t_goods.parameter3,t_goods.detail
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

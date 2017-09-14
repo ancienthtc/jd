@@ -95,4 +95,21 @@ public class GoodsServiceImpl implements GoodsService {
     public List<Image> getGoodsImgs(Integer piclist) {
         return picListMapper.getImagesList(piclist);
     }
+
+    @Override
+    public List<Goods> getAllGoods() {
+        return goodsMapper.getAllGoods();
+    }
+
+    @Override
+    public List<Goods> search(String key) {
+        //搜索优先
+        //1.名称
+
+        //2.参数
+
+        //3.详情
+
+        return goodsMapper.search_all(key);
+    }
 }

@@ -74,6 +74,17 @@
     order_user=#{uid,jdbcType=INTEGER} and paystatus=1 and shopstatus=2
     ORDER BY ordertime
   </select>
+  <!-- 已完成 -->
+  <select id="getUserOrders5" parameterType="java.lang.Integer" resultType="com.jd.shop.model.Order">
+    SELECT
+    id,uuid,ordertime,shopstatus,paystatus ,allprice
+    FROM
+    t_order
+    WHERE
+    order_user=#{uid,jdbcType=INTEGER} and paystatus=1 and shopstatus=3
+    ORDER BY ordertime
+  </select>
+
   <!-- 超时/取消 -->
   <select id="OrderCancel" parameterType="java.lang.Integer" resultType="com.jd.shop.model.Order">
     SELECT
@@ -105,6 +116,19 @@
      paystatus=0 and shopstatus=0
     ORDER BY ordertime
   </select>
+  <!-- 未付款订单帅选 -->
+  <select id="getPartOrders" resultType="com.jd.shop.model.Order" parameterType="java.lang.String">
+    SELECT
+    id,uuid,ordertime,shopstatus,paystatus ,allprice
+    FROM
+    t_order
+    WHERE
+    paystatus=0 and shopstatus=0 and
+    ordertime BETWEEN #{begin,jdbcType=VARCHAR} AND #{end,jdbcType=VARCHAR}
+    AND uuid LIKE concat(concat('%',#{uuid,jdbcType=VARCHAR}),'%')
+    ORDER BY ordertime
+  </select>
+
   <!-- 待发货 -->
   <select id="getAllOrders2" resultType="com.jd.shop.model.Order">
     SELECT
@@ -115,6 +139,19 @@
      paystatus=1 and shopstatus=0
     ORDER BY ordertime
   </select>
+  <!-- 待发货订单帅选 -->
+  <select id="getPartOrders2" resultType="com.jd.shop.model.Order" parameterType="java.lang.String">
+    SELECT
+    id,uuid,ordertime,shopstatus,paystatus ,allprice
+    FROM
+    t_order
+    WHERE
+    paystatus=1 and shopstatus=0 and
+    ordertime BETWEEN #{begin,jdbcType=VARCHAR} AND #{end,jdbcType=VARCHAR}
+    AND uuid LIKE concat(concat('%',#{uuid,jdbcType=VARCHAR}),'%')
+    ORDER BY ordertime
+  </select>
+
   <!-- 待收货 -->
   <select id="getAllOrders3" resultType="com.jd.shop.model.Order">
     SELECT
@@ -136,7 +173,16 @@
     ORDER BY ordertime
   </select>
 
-
+  <!-- 已完成 -->
+  <select id="getAllOrders5" resultType="com.jd.shop.model.Order">
+    SELECT
+    id,uuid,ordertime,shopstatus,paystatus ,allprice
+    FROM
+    t_order
+    WHERE
+    paystatus=1 and shopstatus=3
+    ORDER BY ordertime
+  </select>
 
   <!-- 已超时 -->
   <select id="getAllOrdersCancel" parameterType="java.lang.Integer" resultType="com.jd.shop.model.Order">
@@ -147,6 +193,43 @@
     WHERE
     paystatus=2 and shopstatus=0
     ORDER BY ordertime
+  </select>
+
+  <!-- 统计上月 -->
+  <select id="getLastCount" resultType="map">
+    SELECT
+      COALESCE(SUM(allprice),0) as `all` ,
+      COUNT( if(paystatus=0 or paystatus=2,true,null ) ) as nopay ,
+      COUNT( if(paystatus=1,true,null ) ) as pay ,
+      COUNT( if(shopstatus=3,true,null ) ) as `finish`
+    FROM
+      t_order
+    WHERE
+      date_format(ordertime,'%Y-%m')=date_format(DATE_SUB(curdate(), INTERVAL 1 MONTH),'%Y-%m')
+  </select>
+
+  <!-- 统计本月 -->
+  <select id="getThisCount" resultType="map">
+    SELECT
+      COALESCE(SUM(allprice),0) as `all` ,
+      COUNT( if(paystatus=0 or paystatus=2,true,null ) ) as nopay ,
+      COUNT( if(paystatus=1,true,null ) ) as pay ,
+      COUNT( if(shopstatus=3,true,null ) ) as `finish`
+    FROM
+      t_order
+    WHERE
+      date_format(ordertime,'%Y-%m')=date_format(now(),'%Y-%m')
+  </select>
+
+  <!-- 历史统计 -->
+  <select id="getHistoryCount" resultType="map">
+    SELECT
+    COALESCE(SUM(allprice),0) as `all` ,
+    COUNT( if(paystatus=0 or paystatus=2,true,null ) ) as nopay ,
+    COUNT( if(paystatus=1,true,null ) ) as pay ,
+    COUNT( if(shopstatus=3,true,null ) ) as `finish`
+    FROM
+    t_order
   </select>
 
   <!-- 查询订单失效(含用户) -->
@@ -160,15 +243,35 @@
       DATEDIFF(  now() , date_add(ordertime, interval `limit` HOUR) ) >0 and order_user= #{ uid,jdbcType=INTEGER } and paystatus=0
   </select>
 
-  <!-- 查找所有失效订单 -->
-  <select id="checkOrders" resultType="com.jd.shop.model.Order">
+  <!-- 检查所有失效订单(系统检查) -->
+  <select id="checkOrders" resultType="com.jd.shop.model.Order" parameterType="java.lang.Integer">
     SELECT
-      uuid,ordertime, date_add(ordertime, interval `limit` HOUR) as `limit`, NOW() as `now`
-      ,DATEDIFF(date_add(ordertime, interval `limit` HOUR) , now()) as diff
-    from
-      t_order
+    uuid,ordertime,date_add(ordertime, interval `limit` HOUR) as `limit`,NOW() as `now`,
+    DATEDIFF(date_add(ordertime, interval `limit` HOUR) , now()) as diff
+    FROM
+    t_order
     WHERE
-      DATEDIFF(  now() , date_add(ordertime, interval `limit` HOUR) ) > 0 and paystatus=0
+    DATEDIFF(  now() , date_add(ordertime, interval `limit` HOUR) ) >0 and paystatus=0
+  </select>
+
+  <!-- 高级订单查询,日期,订单号,状态 -->
+  <select id="QueryOrder" parameterType="java.lang.String" resultType="com.jd.shop.model.Order">
+    SELECT
+    uuid , ordertime , paystatus , shopstatus , allprice
+    FROM
+    t_order
+    WHERE
+    uuid LIKE concat(concat('%',#{uuid,jdbcType=VARCHAR}),'%')
+    <choose>
+      <when test="begin != null and begin != '' ">
+        and ordertime &gt;= #{begin,jdbcType=VARCHAR}
+      </when>
+      <when test="end != null and end != '' ">
+        and ordertime &lt;= #{end,jdbcType=VARCHAR}
+      </when>
+    </choose>
+    and paystatus = #{pay,jdbcType=INTEGER}
+    and shopstatus = #{shop,jdbcType=INTEGER}
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

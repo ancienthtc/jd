@@ -299,7 +299,7 @@
     <div class="h_left"><p>欢迎光临 ${sessionScope.user.nickname}&nbsp;&nbsp; <a href="">退出</a></p></div>
     <div class="h_right">
         <ul>
-            <li><a href="">****</a></li>
+            <li><a herf="javascript:void(0)"  onclick="window.location.href='<%=basePath%>user/toShopHome'">首页</a></li>
             <li><a href="<%=basePath%>user/toShopCenter">用户管理</a></li>
             <li><a href="" style="font-size:18px; color:#F00;">购&nbsp;&nbsp;物&nbsp;&nbsp;车</a></li>
         </ul>
@@ -307,8 +307,8 @@
 </div>
 <!--搜索框开始-->
 <div id="search_box">
-    <form id="search_form" method="post" action="#">
-        <input type="text" id="s" value="Search" class="swap_value" />
+    <form id="search_form" method="post" action="<%=basePath%>goods/search">
+        <input type="text" id="key" name="key" value="Search" class="swap_value" />
         <input type="image" src="http://files.jb51.net/demoimg/200912/btn_search_box.gif" width="27" height="24" id="go" alt="Search" title="Search" />
     </form>
 </div>

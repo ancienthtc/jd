@@ -9,7 +9,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>无标题文档</title>
+	<title>商城首页</title>
 	<!--轮播图开始-->
 	<script type="text/javascript" src="<%=basePath%>js/jquery -1.7.js"></script>
 	<script type="text/javascript" src="<%=basePath%>js/superslide.2.1.js"></script>
@@ -124,8 +124,8 @@
 <div class="daohang">
 	<ul>
 		<li><a href="index.html"><img src="<%=basePath%>image/biao1.png"/><br />首&nbsp;&nbsp;&nbsp;页</a></li>
-		<li><a herf="#"><img src="<%=basePath%>image/biao2.png" /><br />所有商品</a></li>
-		<li><a herf="<%=basePath%>cart/toCart/${sessionScope.user.id}"><img src="<%=basePath%>image/biao3.png" /><br />购&nbsp;物&nbsp;车</a></li>
+		<li><a herf="javascript:void(0)" onclick="window.location.href='<%=basePath%>goods/allGoods'"><img src="<%=basePath%>image/biao2.png" /><br />所有商品</a></li>
+		<li><a herf="javascript:void(0)"  onclick="window.location.href='<%=basePath%>cart/toCart/${sessionScope.user.id}'"><img src="<%=basePath%>image/biao3.png" /><br />购&nbsp;物&nbsp;车</a></li>
 		<li><a herf="javascript:void(0)" onclick="window.location.href='<%=basePath%>user/toShopCenter'"><img src="<%=basePath%>image/biao4.png" /><br />个人中心</a></li>
 	</ul>
 </div>
@@ -134,9 +134,10 @@
 <!--搜索框开始-->
 <div class="container">
 	<div class="search">
-
-		<input type="text" name="q">
-		<input class="button" type="submit" value="Search">
+		<form id="search_form" method="post" action="<%=basePath%>goods/search">
+			<input type="text" id="key" name="key" value="Search" class="swap_value" />
+			<input class="button" type="submit" value="Search">
+		</form>
 	</div>
 </div>
 <!--搜索框结束-->

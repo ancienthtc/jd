@@ -16,10 +16,22 @@ public class History {
     private Integer goodId;
 
     @Transient
-    private String name;
+    private String name;//goods name
 
     @Transient
-    private Double price;
+    private String title;//image title
+
+    @Transient
+    private Double price;//goods price
+
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public Integer getGoodId() {
         return goodId;

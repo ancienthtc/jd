@@ -11,4 +11,5 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UserLogin {
+    String value() default ""; // 未登录时需要跳转的路径
 }

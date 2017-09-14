@@ -14,6 +14,9 @@ public interface CommentService {
     /*f根据用户id分页查询*/
     PagedResult<Comment> queryByPage(Integer pageNo, Integer pageSize,Integer userId);
 
+    PagedResult<Comment> getAll(Integer pageNo, Integer pageSize);
 
+    int CommentDel(Integer id);
 
+    List<Comment> getGoodsComment(Integer gid);
 }

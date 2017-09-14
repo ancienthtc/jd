@@ -26,6 +26,13 @@
 </head>
 <body>
 <h2>等待支付</h2>
+<div>
+    填写订单号<input type="text" name="uuid" value="">
+    &nbsp;&nbsp;&nbsp;
+    选取时间范围:<input type="text" name="begin"> 到 <input type="text" name="end">
+    &nbsp;&nbsp;&nbsp;
+    <input type="button" name="sub" value="查询">
+</div>
 <div class="row-fluid">
     <div id="pageJsonContent">
         <table id="dataGridTableJson" class="table table-striped table-bordered table-hover table-condensed">

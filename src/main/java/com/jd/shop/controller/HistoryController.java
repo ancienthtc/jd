@@ -1,6 +1,7 @@
 package com.jd.shop.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.jd.shop.annotation.UserLogin;
 import com.jd.shop.model.History;
 import com.jd.shop.model.History;
 import com.jd.shop.model.User;
@@ -8,6 +9,8 @@ import com.jd.shop.service.HistoryService;
 import com.jd.shop.util.PagedResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -20,8 +23,9 @@ import java.util.Map;
 /**
  * Created by 10593 on 2017/8/16.
  */
+@UserLogin
 @Controller
-@RequestMapping("/hitory")
+@RequestMapping("/history")
 public class HistoryController {
 
     @Autowired
@@ -33,12 +37,14 @@ public class HistoryController {
      * @return
      */
     @RequestMapping("/toHistoryPage")
-    public String toHistoryPage(HttpSession session){
+    public String toHistoryPage(HttpSession session, Model model){
         User user = (User)session.getAttribute("user");
         if(user==null){
-            return "redirect:/user/view";
+            return "redirect:/login/view";
         }
-        return "此处放历史页面的jsp";
+        List<History> histories=historyService.findByUserId(user.getId());
+        model.addAttribute("history",histories);
+        return "user/historyManager";
     }
 
 
@@ -80,6 +86,13 @@ public class HistoryController {
         }
         map.put("msg","success");//页面判断msg是否为"success"
         return map;
+    }
+
+    @RequestMapping("/del/{hid}")
+    public String deleteToPage(@PathVariable Integer hid)
+    {
+        historyService.deleteByPrimaryKey(hid);
+        return "redirect:/history/toHistoryPage";
     }
 
     /**

@@ -89,6 +89,23 @@ shopCenter.event = function(){
     })
 
     /**
+     * 跳转至历史记录管理
+     */
+    $("#history").click(function () {
+        $.ajax({
+            url:"../history/toHistoryPage",
+            type:"get",
+            dataType:"html",
+            success:function(data){
+                $(".all_right").html(data);
+            },
+            error:function(data){
+                alert("请求失败");
+            }
+        })
+    })
+
+    /**
      * 跳转至待付款
      */
     $("#nopay").click(function () {

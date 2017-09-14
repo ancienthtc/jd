@@ -94,7 +94,7 @@
             $(document).ready(function(){
                 <!-- 加入购物车 -->
                 $("#addcart").click(function() {
-					var count=$("#buycount").attr("value");
+					var count=$("#amount").val();
 					var userid=$("#user_id").attr("value");
                     var goodsid=$("#goods_id").attr("value");
                     if(userid.length<=0)
@@ -130,6 +130,70 @@
                     });
                 });
 
+                <!-- 购买 -->
+                $("#buy").click(function () {
+					//userid , total=1
+					//title=first title , gid , name , price=单价 , amount=选取个数 , gclass , all=amount*price , ciid*
+					var userid=${sessionScope.user.id};
+					var total=1;
+
+					var title='${first.title}';
+					var gid='${goods.id}';
+					var name='${goods.name}';
+					var price=${goods.price};
+					var amount=$("#amount").val();
+					var gclass='${goods.gclass}';
+					var all=amount*price;
+					var json="";
+                    json=json+'{"goods":[';
+                    json=json+'{"title":"'+title+'","gid":"'+gid+'","name":"'+name+'","price":"'+price+'","amount":"'+amount+'","gclass":"'+gclass+'","all":"'+all+'","ciid":null}';
+                    json=json+'],';
+                    json=json+'"userid":"'+userid+'","total":"'+total+'"';
+                    json=json+'}';
+
+                    console.log(json);
+                    var form = $("<form></form>");
+                    form.attr('action', "<%=basePath%>cart/tocommit");
+                    form.attr('method', 'post');
+                    form.attr('target', '_self');
+
+                    var input1 = $("<input type='hidden' name='json' />");
+                    input1.attr('value', json);
+                    form.append(input1);
+
+                    form.appendTo("body");
+                    form.css('display', 'none');
+                    form.submit();
+                });
+
+                <!-- 加和减 -->
+				$("#imgadd").click(function () {
+					var a=$("#amount").val();
+					//alert(a);
+					a=parseInt(a)+1;
+					if(a>10)
+					{
+					    return;
+					}
+					else
+					{
+                        $("#amount").val(a);
+					}
+
+                });
+                $("#imgminus").click(function () {
+                    var a = $("#amount").val();
+                    a=parseInt(a)-1;
+                    if (a <= 0) {
+                        a=parseInt(a)+1;
+                        return;
+                    }
+                    else
+					{
+					    $("#amount").val(a);
+					}
+                });
+
 			})
 	</script>
 
@@ -141,16 +205,16 @@
 <div class="h_left"><p>欢迎光临***&nbsp;&nbsp; <a href="">退出</a></p></div>
 <div class="h_right">
 <ul>
-<li><a href="">****</a></li>
-<li><a href="">用户管理</a></li>
-<li><a href="<%=basePath%>cart/toCart/${sessionScope.user.id}">购&nbsp;&nbsp;物&nbsp;&nbsp;车</a></li>
+	<li><a herf="javascript:void(0)"  onclick="window.location.href='<%=basePath%>user/toShopHome'">首页</a></li>
+	<li><a href="">用户管理</a></li>
+	<li><a href="<%=basePath%>cart/toCart/${sessionScope.user.id}">购&nbsp;&nbsp;物&nbsp;&nbsp;车</a></li>
 </ul>
 </div>
 </div>
 <!--搜索框开始-->
 <div id="search_box"> 
-<form id="search_form" method="post" action="#"> 
-<input type="text" id="s" value="Search" class="swap_value" /> 
+<form id="search_form" method="post" action="<%=basePath%>goods/search">
+	<input type="text" id="key" name="key" value="Search" class="swap_value" />
 <input type="image" src="http://files.jb51.net/demoimg/200912/btn_search_box.gif" width="27" height="24" id="go" alt="Search" title="Search" /> 
 </form> 
 </div> 
@@ -195,21 +259,33 @@
 <div class="introduce">
 <table border="1" style="float:right; width:600px; height:300px; margin-top:-450px; margin-right:350px; text-align:center;">
   <tr>
-    <td colspan="2"><h2 style=" margin-left:-185px;font-size: 32px">${goods.name}</h2></td>
+    <td colspan="2">
+		<h2 style=" margin-left:-185px;font-size: 32px">
+			<c:if test="${not empty goods}">${goods.name}</c:if>
+			<c:if test="${empty goods}">商品不存在</c:if>
+		</h2>
+	</td>
 
   </tr>
   <tr>
     <td><h4 style="font-size: 25px">单&nbsp;&nbsp;价</h4></td>
-    <td><h4 style="margin-left:-280px;font-size: 25px">${goods.price}</h4></td>
+    <td><h4 style="margin-left:-280px;font-size: 25px">${goods.price} / ${goods.gclass}</h4></td>
   </tr>
   <tr>
     <td><h4 style="font-size: 25px">购物数量</h4></td>
 	<!-- 改! -->
-    <td><input id="buycount" data_step="1" data_min="1" data_max="100" data_digit="0" value="1" style="width:80px;height: 25px; padding-left:130px;"/></td>
+    <td>
+		<input id="imgadd" type="image" src="<%=basePath%>image/add.png" width="50" height="35" border="0">
+		<input id="amount" type="text" value="1" readonly="readonly" style="width:80px;height: 25px; padding-left:90px;"/>
+		<input id="imgminus" type="image" src="<%=basePath%>image/minus.png" width="50" height="35" border="0">
+	</td>
   </tr>
   <tr>
-    <td><input type="button" name="buy" value="购买"></td>
-    <td><input type="button" name="add" id="addcart" value="加入购物车" style="margin-left:-280px;"></td>
+	  <c:if test="${not empty goods}">
+		<td><input type="button" name="buy" id="buy" value="购买"></td>
+		<td><input type="button" name="add" id="addcart" value="加入购物车" style="margin-left:-280px;"></td>
+	  </c:if>
+
   </tr>
 
 	<%--<input type="hidden" name="user_id" value="${sessionScope.User.id}" />--%>
@@ -224,6 +300,7 @@
 <hr>
 <!--产品结束-->
 <!--分栏开始-->
+<c:if test="${not empty goods}">
 <div class='TTSlider' id='TTSlider'>
 		<div  class='TTSliderTitle'>
 			 <ul>
@@ -256,7 +333,8 @@
 			 	</ul>
 			 </div>
 		 </div>
-	</div>
+</div>
+</c:if>
 
 <script>
 window.onload=function()
@@ -369,26 +447,57 @@ function getByClass(s,p,e)
 </script>
 <hr>
 <!--评论开始-->
+<c:if test="${not empty goods}">
 <div class="comment">
-<h2>评论</h2>
-<table width="100%">
-<tr>
-<td>*****</td>
-<td>#$%%%%%%%%%%%%</td>
-<td>2017-9-28</td>
-</tr>
-<tr>
-<td>***</td>
-<td>$$$$$$$$$$$$$</td>
-<td>2017-6-14</td>
-</tr>
-<tr>
-<td>*</td>
-<td>#############</td>
-<td>2017-5-3</td>
-</tr>
-</table>
+	<h2>评论</h2>
+	<table width="100%">
+		<tr>
+			<td>评分</td>
+			<td>时间</td>
+			<td>内容</td>
+			<td>用户</td>
+		</tr>
+		<c:if test="${not empty comments}">
+			<c:forEach var="item" items="${comments}" varStatus="s">
+				<td>
+					<c:forEach var="x" begin="0" end="${item.grade}">
+						<img src="../lib/img/star-on.png">
+					</c:forEach>
+				</td>
+				<td>
+					${item.time.toLocaleString()}
+				</td>
+				<td>
+					${item.comment}
+				</td>
+				<td>
+					${item.name}
+				</td>
+			</c:forEach>
+		</c:if>
+		<c:if test="${empty comments}">
+			<tr>
+				<td rowspan="4">暂无评论</td>
+			</tr>
+		</c:if>
+	<%--<tr>--%>
+	<%--<td>*****</td>--%>
+	<%--<td>#$%%%%%%%%%%%%</td>--%>
+	<%--<td>2017-9-28</td>--%>
+	<%--</tr>--%>
+	<%--<tr>--%>
+	<%--<td>***</td>--%>
+	<%--<td>$$$$$$$$$$$$$</td>--%>
+	<%--<td>2017-6-14</td>--%>
+	<%--</tr>--%>
+	<%--<tr>--%>
+	<%--<td>*</td>--%>
+	<%--<td>#############</td>--%>
+	<%--<td>2017-5-3</td>--%>
+	<%--</tr>--%>
+	</table>
 </div>
+</c:if>
 <!--版权开始-->
 <div class="bottom">
 <div class="footer">

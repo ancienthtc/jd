@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>无标题文档</title>
+    <title>商品浏览</title>
     <style>
         .head{width:100%; height:100px; background:#996;}
         .h_left{ height:100px; margin-left:50px; float:left;}
@@ -68,8 +68,8 @@
     <div class="h_left"><p>欢迎光临***&nbsp;&nbsp; <a href="">退出</a></p></div>
     <div class="h_right">
         <ul>
-            <li><a href="">****</a></li>
-            <li><a href="">用户管理</a></li>
+            <li><a herf="javascript:void(0)"  onclick="window.location.href='<%=basePath%>user/toShopHome'">首页</a></li>
+            <li><a href="<%=basePath%>user/toShopCenter">用户管理</a></li>
             <li><a href="<%=basePath%>cart/toCart/${sessionScope.user.id}">购&nbsp;&nbsp;物&nbsp;&nbsp;车</a></li>
         </ul>
     </div>
@@ -119,7 +119,8 @@
                         <label>${goods.get("gname")}</label>
                         <br>
                         <label>${goods.get("price")}</label>
-                    </a></li>
+                    </a>
+                </li>
             </c:forEach>
         </ul>
     </div>

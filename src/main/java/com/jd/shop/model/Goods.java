@@ -1,5 +1,6 @@
 package com.jd.shop.model;
 
+import javax.persistence.Transient;
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +34,17 @@ public class Goods {
     private Integer piclistGoods;
 
     private Image image;
+
+    @Transient
+    private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public Image getImage() {
         return image;

@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -34,6 +35,12 @@ public class OrderServiceImpl implements OrderService{
 
     @Resource
     private CartItemMapper cartItemMapper;
+
+    //订单统计 全局变量
+    public final static int LAST_TYPE=-1;
+    public final static int THIS_TYPE=0;
+    public final static int HISTORY_TYPE=1;
+    public final static int GROW_TYPE=2;
 
     @Transactional
     public Map<String,Object> createOrder(String json) {
@@ -67,10 +74,10 @@ public class OrderServiceImpl implements OrderService{
 
             //2.取得库存，判断库存量,库存小于数量，返回失败
             Double amount= Double.parseDouble(goodslist.get(i).get("amount").toString() );
-            if(amount>goods.getStock())
+            if(amount-goods.getStock() >= 0 || goods.getStock()<=0 )
             {
                 map.put("Order",null);
-                map.put("Msg","超过库存!");
+                map.put("Msg",goods.getName()+"超过库存!");
                 return map;
             }
 
@@ -82,13 +89,15 @@ public class OrderServiceImpl implements OrderService{
                 return map;
             }
 
-            //4.移除购物车
-            Integer ciid= Integer.parseInt(goodslist.get(i).get("ciid").toString() );
-            if(cartItemMapper.deleteByPrimaryKey(ciid) <= 0)
+            //4.移除购物车(如果有ciid)
+            if( goodslist.get(i).get("ciid")!=null)
             {
-                map.put("Order",null);
-                map.put("Msg","购物车移除失败");
-                return map;
+                Integer ciid = Integer.parseInt(goodslist.get(i).get("ciid").toString());
+                if (cartItemMapper.deleteByPrimaryKey(ciid) <= 0) {
+                    map.put("Order", null);
+                    map.put("Msg", "购物车不存在"+goods.getName()+"!");
+                    return map;
+                }
             }
 
             //5.生成新的JSON
@@ -394,6 +403,85 @@ public class OrderServiceImpl implements OrderService{
     public int orderDel(String uuid) {
         return orderMapper.delOrderByUUID(uuid);
     }
+
+    //统计
+    @Override
+    public List<Map<String, Object>> getCount() {
+        List<Map<String, Object>> mapList=new ArrayList<Map<String, Object>>();
+        //上月
+        Map<String,Object> last=orderMapper.getLastCount();
+        last.put("type",LAST_TYPE);
+        mapList.add(0,last);//0
+        //本月
+        Map<String,Object> th=orderMapper.getThisCount();
+        th.put("type",THIS_TYPE);
+        mapList.add(1,th);//1
+        //增长率
+        Map<String,Object> grow=new HashMap<String, Object>();
+        //(本月-上月)/上月
+        grow.put("all", getRate(Double.parseDouble(th.get("all").toString()) ,Double.parseDouble(last.get("all").toString())));
+
+        grow.put("nopay",getRate(Double.parseDouble(th.get("nopay").toString()) ,Double.parseDouble(last.get("nopay").toString())) );
+        grow.put("pay",getRate(Double.parseDouble(th.get("pay").toString()) ,Double.parseDouble(last.get("pay").toString())) );
+        grow.put("finish",getRate(Double.parseDouble(th.get("finish").toString()) ,Double.parseDouble(last.get("finish").toString())) );
+        grow.put("type",GROW_TYPE);
+        mapList.add(2,grow);
+        //历史
+        Map<String,Object> history=orderMapper.getHistoryCount();
+        history.put("type",HISTORY_TYPE);
+        mapList.add(3,history);//3
+
+
+        return mapList;
+    }
+
+    public String getRate(Double now,Double last)
+    {
+        Double result=0.0;
+        try {
+            if(last==0)
+            {
+                throw new NumberFormatException();
+            }
+            result=(now-last)/last;
+
+        }catch (NumberFormatException ex)
+        {
+            return "";
+        }
+        catch (StringIndexOutOfBoundsException e)
+        {
+            return "";
+        }
+        //return result.toString().substring(0,4);
+        DecimalFormat df   = new DecimalFormat("######0.00");
+        return df.format(result*100)+"%";
+    }
+
+    @Override
+    public List<Order> HighQuery(String uuid, String begin, String end, Integer paystatus, Integer shopstatus) {
+        List<Order> orderList=orderMapper.QueryOrder(uuid,begin,end,paystatus,shopstatus);
+        //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        for (Order o:orderList)
+        {
+            o.setOrdertime2(o.getOrdertime().toLocaleString());
+        }
+
+        return orderList;
+    }
+
+    @Override
+    public void CheckOrderToCancel() {
+        List<Order> orders=orderMapper.checkOrders();//超时订单
+        if(orders!=null)
+        {
+            for(Order o:orders)
+            {
+                cancelOrder(o.getUuid());
+            }
+        }
+    }
+
 }
 /*
     JSON:

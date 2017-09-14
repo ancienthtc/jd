@@ -81,15 +81,16 @@
                             <li id="order4"><a href="javascript:void(0);">待评价列表</a></li>
                             <li id="order5"><a href="javascript:void(0);">已评价列表</a></li>
                             <li id="order6"><a href="javascript:void(0);">已取消列表</a></li>
+                            <li id="order7"><a href="javascript:void(0);">订单统计</a></li>
                         </ul>
                     </li>
                     <!-- 评价管理 -->
-                    <li class="default" >
+                    <li class="default" id="comment">
                         <p><span class="iconfont icon-edit"></span>评价管理<i class="iconfont icon-right arrow"></i></p>
-                        <ul class="secondNav">
-                            <li id="evaluate"><a href="javascript:void(0);">评价列表</a></li>
-                            <li ><a href="javascript:void(0);">xxx</a></li>
-                        </ul>
+                        <%--<ul class="secondNav">--%>
+                            <%--<li id="evaluate"><a href="javascript:void(0);">评价列表</a></li>--%>
+                            <%--<li ><a href="javascript:void(0);">xxx</a></li>--%>
+                        <%--</ul>--%>
                     </li>
                     <!-- 公告管理 -->
                     <li class="default" >
@@ -148,6 +149,7 @@
     <script src="../js/partlist.js"></script>
     <script src="../js/userlist.js"></script>
     <script src="../js/orderlist.js"></script>
+    <script src="../js/commentlist.js"></script>
     
 </body>
 <!--<script th:inline="javascript">

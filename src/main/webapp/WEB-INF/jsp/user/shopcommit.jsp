@@ -89,7 +89,7 @@ margin: 3px 4px 0 0;
           //生成订单
           $("#add").click(function () {
               var json=$("#info").attr("value");//待提交  -->商品信息
-              //console.log(json);//testOK
+              console.log(json);//testOK
               json=json.toString();
               var list= $('input:radio[name="choice"]:checked').val();
               if(list==null){
@@ -112,20 +112,22 @@ margin: 3px 4px 0 0;
               console.log(date);
               $.ajax( {
                   type : 'POST',
-                  contentType : 'application/json',
+                  contentType : 'application/json; charset=UTF-8',
                   url : '<%=basePath%>order/create',
                   data : date,
-                  dataType : 'json',
+                  dataType : 'text',
                   success : function(data) {
                       console.log(data);
-                      if(data==true)
+                      if(data==true || data=="true")
                       {
                           alert("购买成功");
                           window.location.href="<%=basePath%>user/toShopCenter";
                       }
                   },
                   error : function(data) {
+                      console.log(data);
                       alert("错误");
+                      //alert(data.responseText);
                   }
               });
               //最终提交
@@ -153,9 +155,9 @@ margin: 3px 4px 0 0;
   <div class="h_left"><p>欢迎光临***&nbsp;&nbsp; <a href="">退出</a></p></div>
   <div class="h_right">
   <ul>
-  <li><a href="">****</a></li>
-  <li><a href="">用户管理</a></li>
-  <li><a href="">购&nbsp;&nbsp;物&nbsp;&nbsp;车</a></li>
+  <li><a herf="javascript:void(0)"  onclick="window.location.href='<%=basePath%>user/toShopHome'">首页</a></li>
+  <li><a href="<%=basePath%>user/toShopCenter">用户管理</a></li>
+  <li><a herf="javascript:void(0)"  onclick="window.location.href='<%=basePath%>cart/toCart/${sessionScope.user.id}'">购&nbsp;&nbsp;物&nbsp;&nbsp;车</a></li>
   </ul>
   </div>
   </div>
@@ -190,7 +192,7 @@ margin: 3px 4px 0 0;
       </tr>
     </c:forEach>
   </table><br>
-  <input type="button" value="添加" id="add" name="add" class="plus">
+  <input type="button" value="确认购买" id="add" name="add" class="plus">
   <br><br>
   <table class="table2" border="0">
     <input type="hidden" id="cart" value="${cart}">

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -38,14 +39,16 @@ public class OrderController {
     private AddressService addressService;
 
     //订单创建
-    @RequestMapping("/create")
+    @RequestMapping(value = "/create" , produces="text/html;charset=UTF-8;")
     @ResponseBody
-    public String createOrder(@RequestBody String dates)
+    public String createOrder(@RequestBody String date) throws Exception
     {
-        Map<String,Object> map=orderService.createOrder(dates);
+        Map<String,Object> map=orderService.createOrder(date);
 
         if(map.get("Order")==null)
         {
+            //System.out.print(JSON.toJSON(map));
+            //return URLDecoder.decode(map.get("Msg").toString(),"UTF-8");
             return map.get("Msg").toString();
         }
 
@@ -175,7 +178,7 @@ public class OrderController {
         return "user/order_nocomment_comment";
     }
 
-    //跳转到完成的订单
+    //跳转到完成的订单(未做)
     @RequestMapping("/toFinish")
     public String toFinish()
     {
@@ -276,7 +279,7 @@ public class OrderController {
     }
 
 
-    //待评价中获取详情页面(有评论)
+    //待评价中获取详情页面(有评论)   改!
     @RequestMapping("/getComment")
     public String getComment(String json,Model model)//json=uuid
     {
@@ -285,7 +288,7 @@ public class OrderController {
         JSONArray jsonArray = object.getJSONArray("Goods");
         List<HashMap> goodslist = JSON.parseArray(jsonArray.toJSONString(), HashMap.class);
 
-        //改造goodlist，有评价的商品添加标识
+        //改造goodlist，有评价的商品添加标识 改!
         for(int i=0;i<goodslist.size();i++)
         {
             goodslist.get(i).put("isComment","false");
@@ -295,6 +298,10 @@ public class OrderController {
 
         return "user/order_nocomment_detail";
     }
+
+
+    //评论商品(未做)
+
 
     //取消的订单删除
     @RequestMapping("/OrderDel")
@@ -316,15 +323,16 @@ public class OrderController {
 
     //跳转
     //order1:等待支付
-    //@AdminLogin
+    @AdminLogin
     @RequestMapping("/toListPay")
     public String toListPay()
     {
+        orderService.CheckOrderToCancel();//检查失效订单
         return "admin/orderlist_pay";
     }
 
     //order2:待发货/填写发货物流
-    //@AdminLogin
+    @AdminLogin
     @RequestMapping("/toListLog")
     public String toListLog()
     {
@@ -332,6 +340,7 @@ public class OrderController {
     }
 
     //填写物流
+    @AdminLogin
     @RequestMapping("/toFillLog")
     public String toFillLog(String id,Model model)
     {
@@ -345,14 +354,15 @@ public class OrderController {
     }
 
     //order3:待收货/修改发货物流
-    //@AdminLogin
+    @AdminLogin
     @RequestMapping("/toListSend")
     public String toListSend()
     {
         return "admin/orderlist_send";
     }
 
-    //修改物流
+    //进入修改物流
+    @AdminLogin
     @RequestMapping("/toAlterLog")
     public String toAlterLog(String id,Model model)
     {
@@ -370,7 +380,7 @@ public class OrderController {
     }
 
     //order4:待评价
-    //@AdminLogin
+    @AdminLogin
     @RequestMapping("/toListComment")
     public String toListComment()
     {
@@ -378,6 +388,7 @@ public class OrderController {
     }
 
     //填写log并保存，更新订单
+    @AdminLogin
     @RequestMapping("/FillLog")
     //@ResponseBody
     public String FillLog(@RequestBody String json)
@@ -400,6 +411,7 @@ public class OrderController {
     }
 
     //修改log并保存，不更新订单
+    @AdminLogin
     @RequestMapping("/AlterLog")
     //@ResponseBody
     public String AlterLog(@RequestBody String json)
@@ -422,18 +434,79 @@ public class OrderController {
         return "admin/orderlist_send";
     }
 
-    //order5:已完成
-
+    //order5:已完成(未做)
+    //@AdminLogin
 
     //order6:已取消
+    @AdminLogin
     @RequestMapping("/toOrderCancel")
     public String toOrderCancel()
     {
+        orderService.CheckOrderToCancel();//检查失效订单
         return "admin/orderlist_cancel";
     }
 
+    //order7:统计
+    @AdminLogin
+    @RequestMapping("/toOrderAll")
+    public String toOrderAll(Model model)
+    {
+        orderService.CheckOrderToCancel();//检查失效订单
+        //统计结果
+        model.addAttribute("info",orderService.getCount());
+
+        return "admin/orderlist_all";
+    }
+
+    //获取高级查询
+    @AdminLogin
+    @RequestMapping("/getQuery")
+    @ResponseBody
+    public String getQuery(@RequestBody String date)
+    {
+        //System.out.print(date);
+        JSONObject object = JSON.parseObject(date);
+        String uuid=object.getString("uuid");
+        String strtus=object.getString("strtus");
+        String begin=object.getString("begin");
+        String end=object.getString("end");
+        Integer paystatus=0;
+        Integer shopstatus=0;
+        List<Order> orderList=new ArrayList<Order>();
+        switch (Integer.parseInt(strtus))
+        {
+            case 1://待付款
+                paystatus=0;
+                shopstatus=0;
+                break;
+            case 2://待发货
+                paystatus=1;
+                shopstatus=0;
+                break;
+            case 3://待收货
+                paystatus=1;
+                shopstatus=1;
+                break;
+            case 4://待评价
+                paystatus=1;
+                shopstatus=2;
+                break;
+            case 5://已完成
+                paystatus=1;
+                shopstatus=3;
+                break;
+            case 6://已取消
+                paystatus=2;
+                shopstatus=0;
+                break;
+        }
+        orderService.CheckOrderToCancel();//检查失效订单
+        String json=JSON.toJSONString (orderList=orderService.HighQuery(uuid,begin,end,paystatus,shopstatus) );
+        return json;
+    }
 
     //获取所有未支付订单
+    @AdminLogin
     @RequestMapping("/getNoPay")
     @ResponseBody
     public String getNoPay(Integer pageNumber, Integer pagesize, HttpSession session)
@@ -443,12 +516,15 @@ public class OrderController {
             return "";
         }
 
+        orderService.CheckOrderToCancel();//检查失效订单
+
         PagedResult<Order> commentList=orderService.getByPageNoPay(pageNumber,pagesize);
         String json = JSON.toJSONString(commentList);
         return json;
     }
 
     //获取所有待发货商品
+    @AdminLogin
     @RequestMapping("/getNoSend")
     @ResponseBody
     public String getNoSend(Integer pageNumber, Integer pagesize, HttpSession session)
@@ -464,6 +540,7 @@ public class OrderController {
     }
 
     //获取所有已发货/待收货订单
+    @AdminLogin
     @RequestMapping("/getNoAccept")
     @ResponseBody
     public String getNoAccept(Integer pageNumber, Integer pagesize, HttpSession session)
@@ -479,6 +556,7 @@ public class OrderController {
     }
 
     //获取所有未评价订单
+    @AdminLogin
     @RequestMapping("/getNoComment")
     @ResponseBody
     public String getNoComment(Integer pageNumber, Integer pagesize, HttpSession session)
@@ -494,10 +572,10 @@ public class OrderController {
     }
 
     //获取所有已完成订单
-
+    //@AdminLogin
 
     //获取所有取消的订单
-    //@AdminLogin
+    @AdminLogin
     @RequestMapping("/getCancel")
     @ResponseBody
     public String getCancel(Integer pageNumber, Integer pagesize, HttpSession session)
@@ -506,6 +584,8 @@ public class OrderController {
         if(a==null){
             return "";
         }
+
+        orderService.CheckOrderToCancel();//检查失效订单
 
         PagedResult<Order> commentList=orderService.getByPageCancel(pageNumber,pagesize);
         String json = JSON.toJSONString(commentList);

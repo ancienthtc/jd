@@ -22,4 +22,12 @@ public interface CommentMapper {
 
     /*根据用户id查询*/
     List<Comment> findByUserId(@Param("userId") Integer userId);
+
+    //new
+    //全部评论
+    List<Comment> getAll();
+
+    //获取商品评论
+    List<Comment> getGoodsComment(@Param("gid") Integer gid);
+
 }

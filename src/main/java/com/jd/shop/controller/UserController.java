@@ -2,7 +2,9 @@ package com.jd.shop.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.jd.shop.annotation.AdminLogin;
+import com.jd.shop.annotation.UserLogin;
 import com.jd.shop.model.User;
+import com.jd.shop.service.PartService;
 import com.jd.shop.service.UserService;
 import com.jd.shop.util.DateUtil;
 import com.jd.shop.util.PagedResult;
@@ -13,12 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,6 +35,9 @@ public class UserController extends BaseController{
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PartService partService;
 
     //用户注册
     @RequestMapping(value = "register" , method = RequestMethod.POST)
@@ -101,6 +108,7 @@ public class UserController extends BaseController{
      * 跳转至用户个人中心页面
      * @return
      */
+    @UserLogin
     @RequestMapping("/toShopCenter")
     public String toShopCenter(HttpSession session,HttpServletRequest req){
         User user = (User)session.getAttribute("user");
@@ -113,12 +121,35 @@ public class UserController extends BaseController{
     }
 
     /**
+     * 跳转到主页
+     * @return
+     */
+    @UserLogin
+    @RequestMapping("/toShopHome")
+    public String toShopHome(HttpSession session,HttpServletRequest req,Model model)
+    {
+        User user = (User)session.getAttribute("user");
+        if(user==null){
+            return "user/login";
+        }
+        else
+        {
+            model.addAttribute("user",user);
+            List<Map<String, String>> allinfo=partService.getAllInfo();
+            model.addAttribute("parts",allinfo);
+            session.setAttribute("user",user);
+            return "user/shophome";//改跳转到Controller 获取商品，用户信息
+        }
+    }
+
+    /**
      * 用户修改个人信息
      * @param user
      * @param birth
      * @param session
      * @return
      */
+    @UserLogin
     @RequestMapping(value="/updatePersonalInfo",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,String> updatePersonalInfo(User user,String birth,HttpSession session){

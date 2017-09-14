@@ -18,6 +18,38 @@
     from t_comment
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
+  <!-- new -->
+  <select id="getAll" resultType="com.jd.shop.model.Comment" >
+    SELECT
+    t_comment.id,
+    t_comment.grade,
+    t_comment.time,
+    t_comment.`comment`,
+    t_user.nickname,
+    t_goods.`name`
+    FROM
+    t_comment
+    INNER JOIN t_goods ON t_comment.comment_goods = t_goods.id
+    INNER JOIN t_user ON t_comment.comment_user = t_user.id
+    ORDER BY `name` ,time DESC,grade ASC
+  </select>
+
+  <select id="getGoodsComment" resultType="com.jd.shop.model.Comment" parameterType="java.lang.Integer">
+    SELECT
+    t_comment.id,
+    t_comment.grade,
+    t_comment.time,
+    t_comment.`comment`,
+    t_comment.comment_user,
+    t_comment.comment_goods,
+    t_user.nickname as `name`
+    FROM
+    t_comment
+    INNER JOIN t_user ON t_comment.comment_user = t_user.id
+    WHERE comment_goods=#{gid,jdbcType=INTEGER}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_comment
     where id = #{id,jdbcType=INTEGER}

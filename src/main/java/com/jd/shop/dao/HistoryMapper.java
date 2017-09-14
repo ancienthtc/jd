@@ -22,6 +22,12 @@ public interface HistoryMapper {
 
     List<History> findByUserId(@Param("userId") Integer userId);
 
+    List<History> findByUidLast(@Param("userId") Integer userId);
+
+    List<History> findByUidThis(@Param("userId") Integer userId);
+
     int deleteByUserId(@Param("userId")Integer userId);
+
+    String isExist(@Param("uid") Integer uid,@Param("gid") Integer gid);
 
 }

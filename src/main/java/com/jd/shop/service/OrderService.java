@@ -31,6 +31,8 @@ public interface OrderService {
 
     PagedResult<Order> queryByPageNoComment(Integer pageNo, Integer pageSize, Integer userId);
 
+
+
     PagedResult<Order> queryByPageOutTime(Integer pageNo, Integer pageSize, Integer userId);
 
     //管理员
@@ -41,6 +43,7 @@ public interface OrderService {
     PagedResult<Order> getByPageNoAccept(Integer pageNo, Integer pageSize);
 
     PagedResult<Order> getByPageNoComment(Integer pageNo, Integer pageSize);
+
 
 
     PagedResult<Order> getByPageCancel(Integer pageNo, Integer pageSize);
@@ -58,4 +61,13 @@ public interface OrderService {
     int updatePayS(String uuid,Integer i);
 
     int orderDel(String uuid);
+
+    //订单统计
+    List<Map<String,Object>> getCount();
+
+    //订单总查询
+    List<Order> HighQuery(String uuid,String begin,String end,Integer paystatus,Integer shopstatus);
+
+    //系统检查订单失效(调用该方法后更新)
+    void CheckOrderToCancel();
 }

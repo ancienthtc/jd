@@ -1,5 +1,6 @@
 package com.jd.shop.controller;
 
+import com.jd.shop.annotation.UserLogin;
 import com.jd.shop.model.Address;
 import com.jd.shop.model.User;
 import com.jd.shop.service.AddressService;
@@ -19,6 +20,7 @@ import java.util.Map;
 /**
  * Created by 10593 on 2017/8/8.
  */
+@UserLogin
 @Controller
 @RequestMapping("/address")
 public class AddressController {

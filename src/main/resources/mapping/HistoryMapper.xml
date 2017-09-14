@@ -16,6 +16,79 @@
     from t_history
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <!--new -->
+  <!-- 查询goodsid是否存在 -->
+  <select id="isExist" parameterType="java.lang.Integer" resultType="java.lang.String">
+    SELECT 1 FROM t_history
+    where goods_history=#{gid,jdbcType=INTEGER} and user_history=#{uid,jdbcType=INTEGER}
+  </select>
+
+  <!--根据用户id查询-->
+  <!--<select id="findByUserId" resultType="com.jd.shop.model.History" parameterType="java.lang.Integer" >-->
+    <!--select-->
+    <!--t.* , g.id goodId ,g.name , g.price-->
+    <!--from t_history t LEFT OUTER JOIN t_goods g ON t.goods_history = g.id-->
+    <!--where user_history = #{userId,jdbcType=INTEGER}-->
+  <!--</select>-->
+  <select id="findByUserId" resultType="com.jd.shop.model.History" parameterType="java.lang.Integer">
+    SELECT
+    t_history.id,
+    t_history.viewtime,
+    t_history.goods_history as goodsHistory,
+    t_goods.`name`,
+    t_goods.price,
+    t_image.title
+    FROM
+    t_history
+    INNER JOIN t_goods ON t_history.goods_history = t_goods.id
+    INNER JOIN t_image ON t_goods.piclist_goods = t_image.image_list
+    WHERE
+    t_history.user_history = #{userId,jdbcType=INTEGER}
+    GROUP BY
+    t_goods.id
+  </select>
+
+  <!-- 上月记录 -->
+  <select id="findByUidLast" resultType="com.jd.shop.model.History" parameterType="java.lang.Integer">
+    SELECT
+    t_history.id,
+    t_history.viewtime,
+    t_history.goods_history as goodsHistory,
+    t_goods.`name`,
+    t_goods.price,
+    t_image.title
+    FROM
+    t_history
+    INNER JOIN t_goods ON t_history.goods_history = t_goods.id
+    INNER JOIN t_image ON t_goods.piclist_goods = t_image.image_list
+    WHERE
+    t_history.user_history = #{userId,jdbcType=INTEGER}
+    and date_format(t_history.viewtime,'%Y-%m')=date_format(DATE_SUB(curdate(), INTERVAL 1 MONTH),'%Y-%m')
+    GROUP BY
+    t_goods.id
+  </select>
+
+  <!-- 本月记录 -->
+  <select id="findByUidThis" resultType="com.jd.shop.model.History" parameterType="java.lang.Integer">
+    SELECT
+    t_history.id,
+    t_history.viewtime,
+    t_history.goods_history as goodsHistory,
+    t_goods.`name`,
+    t_goods.price,
+    t_image.title
+    FROM
+    t_history
+    INNER JOIN t_goods ON t_history.goods_history = t_goods.id
+    INNER JOIN t_image ON t_goods.piclist_goods = t_image.image_list
+    WHERE
+    t_history.user_history = #{userId,jdbcType=INTEGER}
+    and date_format(t_history.viewtime,'%Y-%m')=date_format(now(),'%Y-%m')
+    GROUP BY
+    t_goods.id
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_history
     where id = #{id,jdbcType=INTEGER}
@@ -80,14 +153,6 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <!--new -->
-  <!--根据用户id查询-->
-  <select id="findByUserId" resultType="com.jd.shop.model.History" parameterType="java.lang.Integer" >
-    select
-    t.* , g.id goodId ,g.name , g.price
-    from t_history t LEFT OUTER JOIN t_goods g ON t.goods_history = g.id
-    where user_history = #{userId,jdbcType=INTEGER}
-  </select>
 
   <!--删除个人历史记录-->
   <delete id="deleteByUserId" parameterType="java.lang.Integer" >

@@ -69,31 +69,32 @@
     <mvc:annotation-driven />
 
     <!-- 拦截器 -->
-    <!--<mvc:interceptors>-->
-        <!--<mvc:interceptor>-->
-            <!--<mvc:mapping path="/*"/>-->
-            <!--<mvc:mapping path="/part/*"/>-->
-            <!--<mvc:mapping path="/goods/*"/>-->
-            <!--<mvc:mapping path="/admin/*"/>-->
-            <!--<mvc:mapping path="/user/*"/>-->
-            <!--<mvc:exclude-mapping path="/login/admin"/>-->
-            <!--<bean class="com.jd.shop.filter.AdminInterceptor"/>-->
-        <!--</mvc:interceptor>-->
-        <!--<mvc:interceptor>-->
-            <!--<mvc:mapping path="/**"/>-->
-            <!--<mvc:exclude-mapping path="/login/admin"/>-->
-            <!--<mvc:exclude-mapping path="/login/alogin"/>-->
-            <!--<mvc:exclude-mapping path="/login/login"/>-->
-            <!--<mvc:exclude-mapping path="/login/ton"/>-->
-            <!--<mvc:exclude-mapping path="/login/view"/>-->
-            <!--<mvc:exclude-mapping path="/picture/*"/>-->
-            <!--<mvc:exclude-mapping path="/part/*"/>-->
-            <!--<mvc:exclude-mapping path="/goods/*"/>-->
-            <!--<mvc:exclude-mapping path="/admin/*"/>-->
-            <!--<mvc:exclude-mapping path="/user/*"/>-->
-            <!--<bean class="com.jd.shop.filter.WebInterceptor"/>-->
-        <!--</mvc:interceptor>-->
-    <!--</mvc:interceptors>-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/*"/>
+            <mvc:mapping path="/part/*"/>
+            <mvc:mapping path="/goods/*"/>
+            <mvc:mapping path="/admin/*"/>
+            <mvc:mapping path="/user/*"/>
+            <mvc:mapping path="/order/*"/>
+            <mvc:exclude-mapping path="/login/admin"/>
+            <bean class="com.jd.shop.filter.AdminInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/*"/>
+            <mvc:mapping path="/part/*"/>
+            <mvc:mapping path="/goods/*"/>
+            <mvc:mapping path="/user/*"/>
+            <mvc:mapping path="/comment/*"/>
+            <mvc:mapping path="/order/*"/>
+            <mvc:mapping path="/cart/*"/>
+            <mvc:mapping path="/address/*"/>
+            <mvc:mapping path="/history/*"/>
+            <mvc:exclude-mapping path="/login/login"/>
+            <mvc:exclude-mapping path="/login/view"/>
+            <bean class="com.jd.shop.filter.UserInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
 
 

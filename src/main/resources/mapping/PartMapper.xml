@@ -29,6 +29,8 @@
     SELECT
     <include refid="Base_Column_List" />
     FROM t_part
+    GROUP BY t_part.id
+    ORDER BY t_part.priority DESC
   </select>
 
   <select id="shophome" resultType="map">

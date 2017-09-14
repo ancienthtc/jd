@@ -2,6 +2,7 @@ package com.jd.shop.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.jd.shop.annotation.AdminLogin;
+import com.jd.shop.annotation.UserLogin;
 import com.jd.shop.model.Goods;
 import com.jd.shop.model.Image;
 import com.jd.shop.model.Part;
@@ -135,6 +136,7 @@ public class PartController extends BaseController{
 
 
     //板块界面浏览
+    @UserLogin
     @RequestMapping("/view/{pid}")
     public String getgoods(@PathVariable Integer pid, Model model)
     {

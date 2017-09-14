@@ -3,13 +3,11 @@ package com.jd.shop.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jd.shop.annotation.AdminLogin;
-import com.jd.shop.model.Goods;
-import com.jd.shop.model.Image;
-import com.jd.shop.model.Part;
-import com.jd.shop.service.GoodsService;
-import com.jd.shop.service.PartService;
-import com.jd.shop.service.PictureService;
+import com.jd.shop.annotation.UserLogin;
+import com.jd.shop.model.*;
+import com.jd.shop.service.*;
 import com.jd.shop.util.PagedResult;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,6 +43,12 @@ public class GoodsController extends BaseController{
 
     @Autowired
     private PartService partService;
+
+    @Autowired
+    private CommentService commentService;
+
+    @Autowired
+    private HistoryService historyService;
 
     /**
      * 商品保存时先做图片本地上传,返回图片名
@@ -502,22 +506,57 @@ public class GoodsController extends BaseController{
     }
 
     //获取商品详情
+    @UserLogin
     @RequestMapping("/getGoods/{id}")
-    public String getGoods(@PathVariable Integer id,Model model)
+    public String getGoods(@PathVariable Integer id,Model model,HttpSession session)
     {
-        Goods goods=new Goods();
-        //获取商品信息
-        goods=goodsService.getGoods(id);
-        model.addAttribute("goods",goods);
-        List<Image> images=goodsService.getGoodsImgs(goods.getPiclistGoods());
-        model.addAttribute("imgs",images);
-        Image first=null;
-        if(!images.isEmpty())
-        {
-            first= images.get(0);
-
+        //用户信息
+        User user = (User)session.getAttribute("user");
+        if(user==null){
+            return "redirect:/login/view";
         }
-        model.addAttribute("first",first);
+        //获取商品信息
+        Goods goods=goodsService.getGoods(id);
+        if(goods != null) {
+            model.addAttribute("goods", goods);
+            List<Image> images = goodsService.getGoodsImgs(goods.getPiclistGoods());
+            model.addAttribute("imgs", images);
+            Image first = null;
+            if (!images.isEmpty()) {
+                first = images.get(0);
+
+            }
+            //获取商品评论
+            List<Comment> comments = commentService.getGoodsComment(id);
+            model.addAttribute("comments", comments);
+            model.addAttribute("first", first);
+
+            //写入浏览历史
+            historyService.HistoryAdd(user.getId(),id);
+        }
         return "user/shopbuy";
     }
+
+    //获取全部商品
+    @UserLogin
+    @RequestMapping("/allGoods")
+    public String allGoods(Model model)
+    {
+        List<Goods> goodss=goodsService.getAllGoods();
+        model.addAttribute("allgoods",goodss);
+        model.addAttribute("title","全部商品");
+        return "user/shopgoodses";
+    }
+
+    //商品搜索
+    @UserLogin
+    @RequestMapping("/search")
+    public String Search(Model model,String key)
+    {
+        List<Goods> goodsList=goodsService.search(key);
+        model.addAttribute("allgoods",goodsList);
+        model.addAttribute("title","关键词:"+key);
+        return "user/shopgoodses";
+    }
+
 }

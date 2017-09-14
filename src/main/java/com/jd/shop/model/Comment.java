@@ -25,6 +25,17 @@ public class Comment {
     @Transient
     private Double price;
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    @Transient
+
+    private String nickname;
 
     public Integer getGoodId() {
         return goodId;

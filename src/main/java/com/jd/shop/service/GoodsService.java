@@ -30,4 +30,8 @@ public interface GoodsService {
     int goodsDel(Integer goodsid);
 
     List<Image> getGoodsImgs(Integer piclist);
+
+    List<Goods> getAllGoods();//可改分页
+
+    List<Goods> search(String key);
 }

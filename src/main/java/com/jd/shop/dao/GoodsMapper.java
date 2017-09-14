@@ -39,4 +39,9 @@ public interface GoodsMapper {
     //更新库存(OrderService)
     int updateStock(@Param("amount") Double amount,@Param("gid") Integer gid);
 
+    List<Goods> getAllGoods();
+
+    List<Goods> search_all(@Param("key") String key);
+
+
 }

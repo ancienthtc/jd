@@ -88,6 +88,22 @@ orderlist.init = function(){    //统一跳转js
         }
     );
 
+    $("#order7").click( //统计
+        function(){
+            $.ajax({
+                url:"../order/toOrderAll",
+                type:"get",
+                dataType:"html",
+                success:function(data){
+                    $("#contentBoxId").html(data);
+                },
+                error:function(){
+                    alert("页面出错");
+                }
+            });
+        }
+    );
+
 
 }
 

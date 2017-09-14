@@ -73,8 +73,6 @@
   </style>
 
 
-
-
   <script src="../static/libs/jquery/jquery.min.js"></script>
 
 
@@ -145,14 +143,14 @@
   <div class="h_left"><p>欢迎光临${requestScope.user.nickname}&nbsp;&nbsp; <a href="">退出</a></p></div>
 
   <div class="h_right">
-    <form action="" method="post">
-      <input class="search_text" type="text"/>
-      <input type="submit" value="搜索" class="search_btn"/>
+    <form id="search_form" method="post" action="<%=basePath%>goods/search">
+      <input type="text" id="key" name="key" value="Search" class="swap_value" />
+      <input type="image" src="http://files.jb51.net/demoimg/200912/btn_search_box.gif" width="27" height="24" id="go" alt="Search" title="Search" />
     </form>
     <ul>
-      <li><a href="">****</a></li>
+      <li><a herf="javascript:void(0)"  onclick="window.location.href='<%=basePath%>user/toShopHome'">首页</a></li>
       <li><a href="" style="font-size:18px; color:#F00;">用户管理</a></li>
-      <li><a href="">购&nbsp;&nbsp;物&nbsp;&nbsp;车</a></li>
+      <li><a herf="javascript:void(0)"  onclick="window.location.href='<%=basePath%>cart/toCart/${sessionScope.user.id}'">购&nbsp;&nbsp;物&nbsp;&nbsp;车</a></li>
     </ul>
   </div>
 </div>
@@ -170,6 +168,7 @@
       <li><h4><span></span><a onClick="window.location.href='<%=basePath%>user/toShopCenter'">用户管理<img class="jt" src="手机/img/jian.png"></a></h4></li><hr>
       <li><h4><span></span><a href="javascript:void(0)" id="recieverAddress">地址管理<img class="jt" src="手机/img/jian.png"></a></h4></li><hr>
       <li><h4><span></span><a href="javascript:void(0)" id="commentManager">评论管理<img class="jt" src="手机/img/jian.png"></a></h4></li><hr>
+      <li><h4><span></span><a href="javascript:void(0)" id="history">历史纪录管理<img class="jt" src="手机/img/jian.png"></a></h4></li><hr>
       <li><h4><span></span><a href="javascript:void(0)" onClick="showsubmenu(1)">订单管理<img class="jt" src="手机/img/jian.png"></a></h4><hr>
         <ul id="submenu1" style="list-style: none; display:none; margin-left:-20px;">
           <li class="active"><a href="javascript:void(0)" id="nopay">待付款</a></li>

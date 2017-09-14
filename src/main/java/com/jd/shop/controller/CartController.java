@@ -3,6 +3,7 @@ package com.jd.shop.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.jd.shop.annotation.UserLogin;
 import com.jd.shop.model.Address;
 import com.jd.shop.service.AddressService;
 import com.jd.shop.service.CartService;
@@ -20,6 +21,7 @@ import java.util.Map;
  */
 
 //用户拦截器
+@UserLogin
 @Controller
 @RequestMapping("/cart")
 public class CartController extends BaseController{
@@ -144,14 +146,14 @@ public class CartController extends BaseController{
         List<HashMap> goodslist = JSON.parseArray(jsonArray.toJSONString(), HashMap.class);
         //取得最大运费
         Double freight=cartService.getMaxFreight(goodslist);
-        model.addAttribute("freight",freight);
+        model.addAttribute("freight",freight);//运费
         //取得选中商品总价
         total=object.getString("total");
-        model.addAttribute("total",Double.parseDouble(total) );
+        model.addAttribute("total",Double.parseDouble(total) );//总价
         //获取收货地址
         uid=object.getString("userid");
         List<Address> addresses=addressService.findAddressByUserId( Integer.parseInt(uid) );
-        model.addAttribute("addresses",addresses);
+        model.addAttribute("addresses",addresses);//收货地址
         //传递JSON
         model.addAttribute("cart",json);
         //return "user/shopcommit";

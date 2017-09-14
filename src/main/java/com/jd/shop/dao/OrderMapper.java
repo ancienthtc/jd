@@ -4,7 +4,9 @@ import com.jd.shop.model.Order;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface OrderMapper {
@@ -30,8 +32,9 @@ public interface OrderMapper {
      * @return
      */
     List<Order> getUserOrders(@Param("uid") Integer uid);//用户
-
-    List<Order> getAllOrders();//管理员
+    //管理员
+    List<Order> getAllOrders();
+    List<Order> getPartOrders(@Param("begin")String begin,@Param("end")String end,@Param("uuid")String uuid);//待付款帅选
 
     /**
      * 待发货
@@ -39,8 +42,9 @@ public interface OrderMapper {
      * @return
      */
     List<Order> getUserOrders2(@Param("uid") Integer uid);
-
-    List<Order> getAllOrders2();//管理员
+    //管理员
+    List<Order> getAllOrders2();
+    List<Order> getPartOrders2(@Param("begin")String begin,@Param("end")String end,@Param("uuid")String uuid);//待发货帅选
 
     /**
      * 待收货
@@ -60,7 +64,14 @@ public interface OrderMapper {
 
     List<Order> getAllOrders4();//管理员
 
+    /**
+     * 已完成
+     * @param uid
+     * @return
+     */
+    List<Order> getUserOrders5(@Param("uid") Integer uid);
 
+    List<Order> getAllOrders5();//管理员
 
     /**
      * 超时/取消
@@ -71,6 +82,16 @@ public interface OrderMapper {
 
     List<Order> getAllOrdersCancel();//管理员
 
+    /**
+     * 统计
+     * @return
+     */
+    //上月
+    Map<String,Object> getLastCount();
+    //本月
+    Map<String,Object> getThisCount();
+    //历史
+    Map<String,Object> getHistoryCount();
 
     String getDetail(@Param("uuid")String uuid );
 
@@ -85,4 +106,7 @@ public interface OrderMapper {
     List<Order> checkOrders();
 
     int delOrderByUUID(@Param("uuid")String uuid);
+
+    //总查询
+    List<Order> QueryOrder(@Param("uuid") String uuid,@Param("begin")String begin,@Param("end")String end,@Param("pay")Integer paystatus,@Param("shop")Integer shopstatus);
 }
