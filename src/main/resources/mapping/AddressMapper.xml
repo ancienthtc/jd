@@ -176,4 +176,67 @@
     from t_address
     where ismain = #{ismain,jdbcType=INTEGER}
   </select>
+
+  <!-- 查询有限的地址 -->
+  <select id="AddressByUserIdLimit" resultType="com.jd.shop.model.Address" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from t_address
+    where user_id = #{userId,jdbcType=INTEGER}
+    ORDER BY ismain DESC
+    LIMIT #{count,jdbcType=INTEGER}
+  </select>
+
+  <!-- 首位为默认地址 -->
+  <select id="FirstMainByUser" resultType="com.jd.shop.model.Address" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from t_address
+    where user_id = #{userId,jdbcType=INTEGER}
+    ORDER BY ismain DESC
+  </select>
+
+  <!-- 新 查询默认 -->
+  <select id="getDeafult" resultType="com.jd.shop.model.Address" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from t_address
+    where user_id=#{userId,jdbcType=INTEGER} and ismain=1
+  </select>
+
+  <!-- 新 查询非默认 -->
+  <select id="getNotDefault" resultType="com.jd.shop.model.Address" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from t_address
+    where user_id=#{userId,jdbcType=INTEGER} and ismain=0
+  </select>
+
+  <!-- 查找用户地址数 -->
+  <select id="getAddressCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+    SELECT
+    COUNT(1)
+    FROM
+    t_address
+    WHERE user_id=#{userId,jdbcType=INTEGER}
+  </select>
+
+  <update id="setMainToNot" parameterType="java.lang.Integer">
+    UPDATE
+    t_address
+    SET
+    ismain=0
+    WHERE
+    ismain=1 AND user_id=#{userId,jdbcType=INTEGER}
+  </update>
+
+  <update id="setMain" parameterType="java.lang.Integer">
+    UPDATE
+    t_address
+    SET
+    ismain=1
+    WHERE
+    id=#{AddressId,jdbcType=INTEGER}
+  </update>
+
 </mapper>

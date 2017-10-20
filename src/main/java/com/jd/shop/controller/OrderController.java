@@ -4,20 +4,14 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jd.shop.annotation.AdminLogin;
-import com.jd.shop.model.Address;
-import com.jd.shop.model.Admin;
-import com.jd.shop.model.Order;
-import com.jd.shop.model.User;
+import com.jd.shop.model.*;
 import com.jd.shop.service.AddressService;
 import com.jd.shop.service.OrderService;
 import com.jd.shop.util.PagedResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.net.URLDecoder;
@@ -49,10 +43,12 @@ public class OrderController {
         {
             //System.out.print(JSON.toJSON(map));
             //return URLDecoder.decode(map.get("Msg").toString(),"UTF-8");
+
+            //return map.get("Msg").toString();
             return map.get("Msg").toString();
         }
 
-        return "true";
+        return orderService.getUUID( Integer.parseInt(map.get("id").toString()) )  ;
     }
 
     //订单查询(待付款),分页,用户
@@ -194,19 +190,29 @@ public class OrderController {
     }
 
     //付款界面(未做)
-    @RequestMapping("/topay")
-    public String topay()
-    {
+//    @RequestMapping("/topay")
+//    public String topay()
+//    {
+//        //System.out.print(code);
+//        return "";
+//    }
 
-        return "";
-    }
-
-    //付款(未做)
+    //付款成功
     @RequestMapping(value = "/pay" , method = RequestMethod.POST)
     @ResponseBody
-    public String pay()
+    public String pay(@RequestBody String code)
     {
-        return "";
+        JSONObject object = JSON.parseObject(code);//uid , uuid
+        Integer uid= Integer.valueOf( object.get("uid").toString() );
+        String uuid=object.get("uuid").toString();
+        if( orderService.Pay(uid,uuid) )
+        {
+            return "true";
+        }
+        else
+        {
+            return "false";
+        }
     }
 
     //收货
@@ -590,6 +596,89 @@ public class OrderController {
         PagedResult<Order> commentList=orderService.getByPageCancel(pageNumber,pagesize);
         String json = JSON.toJSONString(commentList);
         return json;
+    }
+
+    /**
+     * 新需求
+     */
+    //跳转到订单详情
+    @RequestMapping("/mOrder/{uuid}")
+    public String toOrderDetail(@PathVariable String uuid,Model model)
+    {
+        Order order=orderService.getOrder(uuid);
+        JSONObject object=JSON.parseObject(order.getDetail());
+        JSONArray jsonArray = object.getJSONArray("Goods");
+        List<HashMap> goodslist = JSON.parseArray(jsonArray.toJSONString(), HashMap.class);
+        model.addAttribute("goodslist",goodslist);
+        model.addAttribute("freight",object.get("freight"));
+        model.addAttribute("log",object.get("log"));
+        double total=0.0;
+        for (int i=0;i<goodslist.size();i++)
+        {
+            total+=Double.parseDouble(goodslist.get(i).get("price").toString())*Double.parseDouble(goodslist.get(i).get("amount").toString());
+        }
+        model.addAttribute("total",total);
+        Integer aid= Integer.parseInt(object.getString("aid"));
+        Address address=addressService.findById(aid);
+        model.addAttribute("address",address);
+        order.setDetail(null);
+        model.addAttribute("order",order);
+
+        return "user/member_orders";
+    }
+
+    //起始ajax
+    @RequestMapping("/mOrderList")
+    @ResponseBody
+    public String getUserOrderList(Model model,@RequestBody String date,HttpSession session)
+    {
+        User user = (User)session.getAttribute("user");
+        if(user==null){
+            return "";
+        }
+        //System.out.print(JSON.toJSONString( orderService.OrderList_deafult(null,null,user.getId()) ));
+        return JSON.toJSONString( orderService.OrderList_deafult(null,null,user.getId()) );
+    }
+
+    /*  AJAX
+     *  Type -1: ALL 上一页 下一页
+     *  Type 0: Awaiting Payment 上一页 下一页
+     *  Type 1: Awaiting Shipping 上一页 下一页
+     *  Type 2: Shipment Shipped 上一页 下一页
+     *  Type 3: Received 上一页 下一页
+     *  Type 4: Cancelled 上一页 下一页
+     *  Type 5:
+     *  Type 6:
+     */
+    @RequestMapping("/mMoreOrderList")
+    @ResponseBody
+    public String getMoreOrderList(Model model,@RequestBody String date,HttpSession session)
+    {
+        User user = (User)session.getAttribute("user");
+        if(user==null){
+            return "";
+        }
+        JSONObject object = JSON.parseObject(date);
+
+        String s=JSON.toJSONString(orderService.orderPageSelect(object,user.getId()));
+        return s;
+    }
+
+    //跳转到付款
+    @RequestMapping("/gotopay")
+    public String gotopay(@RequestBody String datas,Model model)
+    {
+        JSONObject object = JSON.parseObject(datas);
+        if(object.get("user_id")==null || object.get("user_id").toString().length()<=0)
+        {
+            return "";
+        }
+
+        model.addAttribute("user_id",object.get("user_id"));
+        model.addAttribute("account",object.get("account"));
+        model.addAttribute("uuid",object.get("uuid"));
+
+        return "user/payment";
     }
 
 }

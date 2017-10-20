@@ -1,6 +1,7 @@
 package com.jd.shop.service;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.jd.shop.model.Order;
 import com.jd.shop.util.PagedResult;
 
@@ -13,6 +14,8 @@ import java.util.Map;
 public interface OrderService {
 
     Map<String,Object> createOrder(String json);
+
+    String getUUID(Integer id);
 
     int cancelOrder(String uuid);//订单取消
 
@@ -70,4 +73,18 @@ public interface OrderService {
 
     //系统检查订单失效(调用该方法后更新)
     void CheckOrderToCancel();
+
+    //支付
+    boolean Pay(Integer uid,String uuid);
+
+    /**
+     *  新需求
+     */
+
+    List<Order> getLimitOrder(Integer uid,Integer count);
+
+    //用户所有订单(初始ajax)
+    public PagedResult<Order> OrderList_deafult(Integer pageNo, Integer pageSize,Integer uid);
+
+    PagedResult<Order> orderPageSelect(JSONObject object,Integer uid);
 }

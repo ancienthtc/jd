@@ -85,6 +85,17 @@
     ORDER BY ordertime
   </select>
 
+  <!-- 收货之后 -->
+  <select id="getUserOrders45" parameterType="java.lang.Integer" resultType="com.jd.shop.model.Order">
+    SELECT
+    id,uuid,ordertime,shopstatus,paystatus ,allprice
+    FROM
+    t_order
+    WHERE
+    order_user=#{uid,jdbcType=INTEGER} and paystatus=1 and shopstatus>=2
+    ORDER BY ordertime
+  </select>
+
   <!-- 超时/取消 -->
   <select id="OrderCancel" parameterType="java.lang.Integer" resultType="com.jd.shop.model.Order">
     SELECT
@@ -274,6 +285,16 @@
     and shopstatus = #{shop,jdbcType=INTEGER}
   </select>
 
+  <!-- 付款验证 -->
+  <select id="pay_check" resultType="java.lang.String">
+    SELECT
+     paystatus
+    FROM
+     t_order
+    WHERE
+     uuid = #{uuid,jdbcType=VARCHAR} AND order_user = #{uid,jdbcType=INTEGER}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_order
     where id = #{id,jdbcType=INTEGER}
@@ -430,5 +451,36 @@
     set detail=#{detail,jdbcType=VARCHAR}
     where uuid=#{uuid,jdbcType=VARCHAR}
   </update>
+
+  <!-- 新需求 -->
+  <!-- 查询用户所有订单，有限个 -->
+  <select id="getOrderByIdLimit" parameterType="java.lang.Integer" resultType="com.jd.shop.model.Order">
+    select
+    <include refid="Base_Column_List" />
+    from t_order
+    where order_user = #{uid,jdbcType=INTEGER}
+    ORDER BY ordertime DESC
+    LIMIT #{count,jdbcType=INTEGER}
+  </select>
+
+  <select id="getNoSend" parameterType="java.lang.Integer" resultType="com.jd.shop.model.Order">
+    SELECT
+    id,uuid,detail,order_user
+    FROM
+    t_order
+    WHERE
+    paystatus=0 OR paystatus=2 OR ( paystatus=1 AND 1>=shopstatus )
+    AND order_user=1
+  </select>
+
+  <select id="getAllByUser" parameterType="java.lang.Integer" resultType="com.jd.shop.model.Order">
+    SELECT
+    id,uuid,ordertime,shopstatus,paystatus ,allprice
+    FROM
+    t_order
+    WHERE
+    order_user=#{uid,jdbcType=INTEGER}
+    ORDER BY ordertime
+  </select>
 
 </mapper>

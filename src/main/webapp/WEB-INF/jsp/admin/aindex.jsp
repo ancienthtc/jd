@@ -145,11 +145,11 @@
     <script src="../static/js/merchant/public/index.js"></script>
 
     <!-- 引用ajax(js文件下的) -->
-    <script src="../js/goodslist.js"></script>
-    <script src="../js/partlist.js"></script>
-    <script src="../js/userlist.js"></script>
-    <script src="../js/orderlist.js"></script>
-    <script src="../js/commentlist.js"></script>
+    <script src="../js/admin/goodslist.js"></script>
+    <script src="../js/admin/partlist.js"></script>
+    <script src="../js/admin/userlist.js"></script>
+    <script src="../js/admin/orderlist.js"></script>
+    <script src="../js/admin/commentlist.js"></script>
     
 </body>
 <!--<script th:inline="javascript">

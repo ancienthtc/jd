@@ -38,6 +38,17 @@ public class Goods {
     @Transient
     private String title;
 
+    @Transient
+    private String part;
+
+    public String getPart() {
+        return part;
+    }
+
+    public void setPart(String part) {
+        this.part = part;
+    }
+
     public String getTitle() {
         return title;
     }

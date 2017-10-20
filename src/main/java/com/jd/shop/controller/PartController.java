@@ -6,6 +6,7 @@ import com.jd.shop.annotation.UserLogin;
 import com.jd.shop.model.Goods;
 import com.jd.shop.model.Image;
 import com.jd.shop.model.Part;
+import com.jd.shop.service.GoodsService;
 import com.jd.shop.service.PartService;
 import com.jd.shop.service.PictureService;
 import com.jd.shop.util.PagedResult;
@@ -31,6 +32,9 @@ public class PartController extends BaseController{
 
     @Autowired
     private PartService partService;
+
+    @Autowired
+    private GoodsService goodsService;
 
     @Autowired
     private PictureService pictureService;
@@ -257,6 +261,22 @@ public class PartController extends BaseController{
         req.setAttribute("images",images);
 
         return "admin/partDetail";
+    }
+
+
+    /**
+     * 新需求
+     */
+    @RequestMapping("/prolist")
+    public String toProList(Model model)
+    {
+        //1.hot
+        model.addAttribute("hot",goodsService.GoodSale());
+
+        //2.part
+        model.addAttribute("allparts",partService.getAll());
+
+        return "user/pro_list";
     }
 
 }

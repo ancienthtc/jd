@@ -32,4 +32,7 @@ public interface PartService {
     List<Image> getAllPic(Integer pid);
 
     List<Map<String,String>> getGoodsByPart(Integer pid);
+
+    //新需求
+    List<Part> getIndexParts();
 }

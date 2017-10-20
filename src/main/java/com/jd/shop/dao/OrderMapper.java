@@ -26,6 +26,13 @@ public interface OrderMapper {
     Order selectByUUID(@Param("uuid") String uuid);
 
     int updateDetailByUUID(@Param("uuid") String uuid,@Param("detail") String detail);
+
+    /**
+     * 付款
+     */
+    //验证
+    String pay_check(@Param("uuid") String uuid,@Param("uid") Integer uid);
+
     /**
      * 待付款
      * @param uid
@@ -83,6 +90,13 @@ public interface OrderMapper {
     List<Order> getAllOrdersCancel();//管理员
 
     /**
+     * 交易结束
+     * @param uid
+     * @return
+     */
+    List<Order> getUserOrders45(@Param("uid") Integer uid);
+
+    /**
      * 统计
      * @return
      */
@@ -109,4 +123,16 @@ public interface OrderMapper {
 
     //总查询
     List<Order> QueryOrder(@Param("uuid") String uuid,@Param("begin")String begin,@Param("end")String end,@Param("pay")Integer paystatus,@Param("shop")Integer shopstatus);
+
+    /**
+     *  新需求
+     */
+    //查询用户订单，前N个订单
+    List<Order> getOrderByIdLimit(@Param("uid")Integer uid,@Param("count")Integer count);
+
+    //地址删除 查询 未发货订单
+    List<Order> getNoSend(@Param("uid")Integer uid);
+
+    //用户所有订单
+    List<Order> getAllByUser( @Param("uid") Integer uid );
 }

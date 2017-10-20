@@ -36,4 +36,7 @@ public interface PartMapper {
     List<Image> getPartPic(@Param("id")Integer pid);
 
     List<Map<String,String>> homepart();
+
+    //新需求
+    List<Part> getIndexParts();
 }

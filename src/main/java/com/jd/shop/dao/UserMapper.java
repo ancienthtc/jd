@@ -26,4 +26,8 @@ public interface UserMapper {
     List<User> getAll();
 
     List<String> username(@Param("nickname") String nickname);
+
+    //新需求
+    User login_name(@Param("name")String name , @Param("pass")String pass);
+    User login_tel(@Param("name")String name , @Param("pass")String pass);
 }

@@ -1,6 +1,13 @@
 /**
  * Created by ThinkPad on 2017/8/18.
  */
+var curWwwPath = window.document.location.href;
+var pathName = window.document.location.pathname;
+var pos = curWwwPath.indexOf(pathName);
+var localhostPath = curWwwPath.substring(0, pos);
+var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+var basePath=localhostPath+projectName+"/";
+
 var noaccept =  new Object();
 noaccept.event = function(){
 
@@ -62,7 +69,8 @@ noaccept.event = function(){
 
 $(function () {
     $('#page3').bPage({
-        url: '/JDWebShop/order/queryNoAccept',
+        url: '../order/queryNoAccept',
+        //url: basePath+'order/queryNoAccept',
         asyncLoad: true,
         asyncType: 'GET',
         serverSidePage: false,

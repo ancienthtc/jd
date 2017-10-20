@@ -1,6 +1,13 @@
 /**
  * Created by ThinkPad on 2017/8/23.
  */
+var curWwwPath = window.document.location.href;
+var pathName = window.document.location.pathname;
+var pos = curWwwPath.indexOf(pathName);
+var localhostPath = curWwwPath.substring(0, pos);
+var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+var basePath=localhostPath+projectName+"/";
+
 var outtime =  new Object();
 outtime.event = function(){
     $("#dataGridTableJson").on("click",".icon-del",function(){
@@ -84,7 +91,8 @@ outtime.event = function(){
 
 $(function () {
     $('#page3').bPage({
-        url: '/JDWebShop/order/queryOutTime',
+        url: '../order/queryOutTime',
+        //url: basePath+'order/queryOutTime',
         asyncLoad: true,
         asyncType: 'GET',
         serverSidePage: false,

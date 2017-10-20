@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 public interface loginService {
 
-    public User login(String name,String pass);
+    public User login(String name,String pass,boolean tellogin);
 
     public Admin alogin(String admin,String pass);
 }

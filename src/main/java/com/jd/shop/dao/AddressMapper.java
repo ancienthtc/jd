@@ -25,4 +25,24 @@ public interface AddressMapper {
 
     /*查询出默认地址*/
     Address findByIsmain(@Param("ismain") Integer ismain);
+
+    /*通过用户id查询地址信息*/
+    List<Address> AddressByUserIdLimit(@Param("userId") Integer userId,@Param("count") Integer count);
+
+    //通过用户查找地址，首位为默认
+    List<Address> FirstMainByUser(@Param("userId") Integer userId);
+
+    //查询非默认
+    List<Address> getNotDefault(@Param("userId") Integer userId);
+
+    //查询默认
+    Address getDeafult(@Param("userId") Integer userId);
+
+    //地址数目
+    int getAddressCount(@Param("userId") Integer userId);
+
+    int setMainToNot(@Param("userId") Integer userId);
+
+    int setMain(@Param("AddressId") Integer addressId);
+
 }

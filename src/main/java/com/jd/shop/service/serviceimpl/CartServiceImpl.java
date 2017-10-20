@@ -40,7 +40,7 @@ public class CartServiceImpl implements CartService{
 
         //2
 
-        CartItem cartItem=cartItemMapper.queryByGoods(goodsid);
+        CartItem cartItem=cartItemMapper.queryByGoodsWithUser(goodsid,userid);
         if(cartItem != null)  //已存在相同商品
         {
             return cartItemMapper.updateCountOfItem(goodsid,count);
@@ -85,7 +85,7 @@ public class CartServiceImpl implements CartService{
             }
             if (cartitem.get(i).get("all") != null) {
                 try {
-                    System.out.print(cartitem.get(i).get("all"));
+                    //System.out.print(cartitem.get(i).get("all"));
                     total = total + Double.parseDouble( cartitem.get(i).get("all").toString() );
                 }catch (ClassCastException e)
                 {

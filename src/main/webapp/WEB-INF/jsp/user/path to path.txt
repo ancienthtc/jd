@@ -1,0 +1,10 @@
+index.htm --> login/view
+about --> about
+pro_list.htm --> part/prolist
+pro.htm --> goods/NewGoodsDetail/${i.id}
+member_index.htm --> user/toMember_index
+member_cart.htm --> cart/toCart/${sessionScope.user.id}
+search.htm --> goods/search
+member_orders.htm --> order/mOrder/{uuid}
+member_orders_list.htm --> order/mOrderList
+member_add_list.htm --> address/AddressEdit

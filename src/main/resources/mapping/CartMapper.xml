@@ -37,7 +37,7 @@
     t_image.title
     FROM
     t_cart
-    Right JOIN t_cartitem ON t_cartitem.item_cart = t_cart.user_cart
+    Right JOIN t_cartitem ON t_cartitem.item_cart = t_cart.id
     LEFT JOIN t_goods ON t_cartitem.item_goods = t_goods.id
     LEFT JOIN t_image ON t_image.image_list=t_goods.piclist_goods
     WHERE user_cart=#{userid,jdbcType=INTEGER}

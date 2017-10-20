@@ -1,0 +1,392 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ShangHai Heavy·Foot International Trade Co.,Ltd.</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href='css/global.css' rel='stylesheet' type='text/css'  />
+<link href='css/global_1.css' rel='stylesheet' type='text/css'  />
+<link href='css/user.css' rel='stylesheet' type='text/css'  />
+<link href='css/style.css' rel='stylesheet' type='text/css'  />
+<script type='text/javascript' src='js/jquery-1.7.2.min.js' ></script>
+<script type='text/javascript' src='js/en.js' ></script>
+<script type='text/javascript' src='js/global.js' ></script>
+<script type='text/javascript' src='js/user.js' ></script>
+<script type='text/javascript' src='js/main.js' ></script>
+	<!-- Facebook Pixel Code -->
+	<script type="text/javascript">
+	!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+	fbq('init', '');
+	fbq('track', "PageView");
+	</script>
+	<noscript><img height="1" width="1" style="display:none" src="picture/3523c051d6d54a079309b12eae2c624f.gif" /></noscript>
+	<!-- End Facebook Pixel Code -->
+<script type="text/javascript">$(function(){products_list_obj.init();});</script>
+	<!-- Facebook Pixel Code -->
+	<script type="text/javascript">
+	<!-- When a search is made, such as a product query. -->
+	fbq('track', 'Search', {
+		search_string: 'Penn Plax',//搜索关键词
+		content_category: 'Product Search',//分类
+		currency: 'USD'//货币类型
+	});
+	</script>
+	<!-- End Facebook Pixel Code -->
+</head>
+
+<body class="lang_en">
+<link href='css/nav.css' rel='stylesheet' type='text/css'  />
+<script type="text/javascript">
+	$(window).resize(function(){$(window).webDisplay(0);});
+	$(window).webDisplay(0);
+			var ueeshop_config={
+		"domain":"http://szjiding.com",
+		"date":"2017/09/13 11:13:35",
+		"lang":"en",
+		"currency":"USD",
+		"currency_symbols":"$",
+		"currency_rate":"1.0000",
+		"FbAppId":"1594883030731762",
+		"FbPixelOpen":"1",
+		"UserId":"2",
+		"TouristsShopping":"1",
+		"PaypalExcheckout":""
+	}
+</script>
+
+<div id="header">
+    <div class="top">
+        <div class="wide">
+            <ul class="crossn top_info clean">
+				<li class="block fl border_r drop"><div class="fl"><strong>Currency:</strong></div>
+<dl class="fl">
+    <dt><strong id="currency" class="FontColor"></strong></dt>
+    <dd class="currency">
+                    <a rel="nofollow" href="javascript:;" data="USD"><img src="picture/53092c531f.jpg" alt="USD" />USD</a>
+                    <a rel="nofollow" href="javascript:;" data="EUR"><img src="picture/b355374c5e.jpg" alt="EUR" />EUR</a>
+                    <a rel="nofollow" href="javascript:;" data="GBP"><img src="picture/f5e3cb314d.jpg" alt="GBP" />GBP</a>
+                    <a rel="nofollow" href="javascript:;" data="CAD"><img src="picture/235af43e96.jpg" alt="CAD" />CAD</a>
+            </dd>
+</dl>
+</li>								<li class="block fl border_r sign">	<div class="FontColor fl">Welcome&nbsp;</div>
+	<dl class="fl">
+		<dt><a rel="nofollow" href="member_index.htm" class="FontColor"><span>coolcup@126.com</span></a></dt>
+		<dd class="user">
+			<a rel="nofollow" href="member_orders.htm">My Orders</a>
+			<a rel="nofollow" href="member_favorite.htm">My Favorites</a>
+            <a rel="nofollow" href="member_sysinfo_list.htm">Message</a>
+			<a rel="nofollow" href="index.htm">Sign Out</a>
+		</dd>
+	</dl>
+</li>
+                <li class="fr border_r"><a href="member_favorite.htm">Wish List</a></li>
+				<li class="fr border_r"><a href="member_index.htm">My Account</a></li>
+			</ul>
+        </div>
+    </div>
+
+    <div class="FontBgColor">
+		<div class="wide">
+			<div class="logo fl"><h1><a href="index.htm"><img src="picture/logo.png" alt="lywebsite" /></a></h1></div>
+			<div class="intro fr">
+				<div class="intro_info fl"> | <a href="about.htm">Contact Us</a></div>
+				<a class="cart_inner fl header_cart" href="member_cart.htm"><span class="cart_count">1</span></a>
+			</div>
+			<div class="search fr NavBgColor">
+				<form action="search.htm" method="get" class="form">
+					<input type="text" class="text fl" placeholder="" name="Keyword" notnull="" value="" />
+					<div class="category NavBorderColor1">
+						<div class="head">All Products<em></em></div>
+						<ul class="list">
+							<li cateid="0">All Products</li>
+							<li cateid="371" >Classification 01</li>
+							<li cateid="374" >Classification 02</li>
+							<li cateid="378" >Classification 03</li>
+							<li cateid="380" >Classification 04</li>
+							<li cateid="381" >Classification 05</li>
+						</ul>
+					</div>
+					<input type="submit" class="button fr FontBgColor" value="" />
+					<input type="hidden" name="CateId" value="" />
+				</form>
+			</div>
+			<div class="clear"></div>
+		</div>
+    </div>
+</div>
+<div id="nav" class="NavBgColor">
+	<div class="wide clean">
+                <div class="nav fl NavBorderColor1">
+        				<div class="item fl">
+				<a href="index.htm" class="navlink NavHoverBgColor NavBorderColor1">HomePage</a>
+							</div>
+						<div class="item fl">
+				<a href="about.htm" class="navlink NavHoverBgColor NavBorderColor1">About Us</a>
+							</div>
+						<div class="item fl">
+				<a href="pro_list.htm" class="navlink NavHoverBgColor NavBorderColor1">Products</a>
+							</div>
+						<div class="item fl">
+				<a href="about.htm" class="navlink NavHoverBgColor NavBorderColor1">Equipment</a>
+							</div>
+						<div class="item fl">
+				<a href="about.htm" class="navlink NavHoverBgColor NavBorderColor1">Culture</a>
+							</div>
+						<div class="item fl">
+				<a href="about.htm" class="navlink NavHoverBgColor NavBorderColor1">Honor</a>
+							</div>
+						<div class="item fl">
+				<a href="about.htm" class="navlink NavHoverBgColor NavBorderColor1">Quality</a>
+							</div>
+						<div class="item fl">
+				<a href="about.htm" class="navlink NavHoverBgColor NavBorderColor1">Contact Us</a>
+							</div>
+			        </div>
+		    </div>
+</div>
+<div id="main" class="wide">
+	<div id="location">Your position: <a href="/">Home</a> &gt; 1-2 of 2 Items for "Penn Plax"</div>
+		<div class="pro_left fl">
+			<div class="side_category sidebar">
+		<div class="cate_title b_title">Products Categories</div>
+		<div class="cate_menu b_main">
+						<ul>
+									<li data='[{"text":"Dog Training","url":"\/c\/dog-training_0372"},{"text":"Dog Toys","url":"\/c\/dog-toys_0373"}]'>
+						<h2>
+							<a href="/c/dogs-supplies_0371" title="Dogs supplies">Dogs supplies</a>
+							<em class="NavArrowColor"></em>						</h2>
+					</li>
+									<li data='[{"text":"Cat Food","url":"\/c\/cat-food_0376"},{"text":"Cat Toys","url":"\/c\/cat-toys_0377"}]'>
+						<h2>
+							<a href="/c/cats-supplies_0374" title="Cats Supplies">Cats Supplies</a>
+							<em class="NavArrowColor"></em>						</h2>
+					</li>
+									<li data='[{"text":"Fish Bowls","url":"\/c\/fish-bowls_0379"},{"text":"Test Kits","url":"\/c\/test-kits_0383"}]'>
+						<h2>
+							<a href="/c/fish-supplies_0378" title="Fish Supplies">Fish Supplies</a>
+							<em class="NavArrowColor"></em>						</h2>
+					</li>
+									<li data='[]'>
+						<h2>
+							<a href="/c/bird-supplies_0380" title="Bird Supplies">Bird Supplies</a>
+													</h2>
+					</li>
+									<li data='[]'>
+						<h2>
+							<a href="/c/small-animal-supplies_0381" title="Small Animal Supplies">Small Animal Supplies</a>
+													</h2>
+					</li>
+									<li data='[]'>
+						<h2>
+							<a href="/c/reptile-amp-amphibian-supplies_0382" title="Reptile &amp; Amphibian Supplies">Reptile &amp; Amphibian Supplies</a>
+													</h2>
+					</li>
+							</ul>
+						<a class="b_bottom FontColor" href="/products/">See More»</a>
+		</div>
+	</div>
+
+<div id="special_offer" class="sidebar">
+    <h2 class="b_title FontColor">Special Offers</h2>
+    <div class="b_main">
+        		<a class="b_bottom FontColor" href="/Hot-Sales/">See More»</a>
+    </div>
+</div>
+<div id="what_hot" class="sidebar">
+    <h2 class="b_title FontColor">What's Hot</h2>
+    <div class="b_main">
+                <dl class="pro_item clearfix">
+            <dt class="fl"><a class="pic_box" href="/kollercraft-api-aquaview-360-aquarium-kit-with-led-lighting-and-internal-filter-2-gallon_p0908.html" title="KollerCraft API Aquaview 360 Aquarium Kit with LED Lighting and Internal Filter, 2-Gallon"><img src="picture/ad098797b1.jpg.240x240.jpg" alt="KollerCraft API Aquaview 360 Aquarium Kit with LED Lighting and Internal Filter, 2-Gallon" /><span></span></a></dt>
+            <dd class="fl pro_info">
+                <div class="pro_name"><a href="/kollercraft-api-aquaview-360-aquarium-kit-with-led-lighting-and-internal-filter-2-gallon_p0908.html" title="KollerCraft API Aquaview 360 Aquarium Kit with LED Lighting and Internal Filter, 2-Gallon">KollerCraft API Aquaview 360 Aquarium Kit wit..</a></div>
+                <div class="pro_price"><em class="currency_data PriceColor"></em><span class="price_data PriceColor" data="25.99"></span></div>
+            </dd>
+        </dl>
+                <dl class="pro_item clearfix">
+            <dt class="fl"><a class="pic_box" href="/petstages-catnip-chew-mice_p0907.html" title="Petstages Catnip Chew Mice"><img src="picture/138feb1ce8.jpg.240x240.jpg" alt="Petstages Catnip Chew Mice" /><span></span></a></dt>
+            <dd class="fl pro_info">
+                <div class="pro_name"><a href="/petstages-catnip-chew-mice_p0907.html" title="Petstages Catnip Chew Mice">Petstages Catnip Chew Mice</a></div>
+                <div class="pro_price"><em class="currency_data PriceColor"></em><span class="price_data PriceColor" data="3.19"></span></div>
+            </dd>
+        </dl>
+                <dl class="pro_item clearfix">
+            <dt class="fl"><a class="pic_box" href="/petstages-green-magic-boomerang-buddy-catnip-for-cats_p0906.html" title="Petstages Green Magic Boomerang Buddy Catnip for Cats"><img src="picture/6a520db541.jpg.240x240.jpg" alt="Petstages Green Magic Boomerang Buddy Catnip for Cats" /><span></span></a></dt>
+            <dd class="fl pro_info">
+                <div class="pro_name"><a href="/petstages-green-magic-boomerang-buddy-catnip-for-cats_p0906.html" title="Petstages Green Magic Boomerang Buddy Catnip for Cats">Petstages Green Magic Boomerang Buddy Catnip ..</a></div>
+                <div class="pro_price"><em class="currency_data PriceColor"></em><span class="price_data PriceColor" data="2.09"></span></div>
+            </dd>
+        </dl>
+        		<a class="b_bottom FontColor" href="/Hot-Sales/">See More»</a>
+    </div>
+</div>
+	<div class="seckill_box sidebar_to">
+		<h2 class="seckill_title b_title FontColor">Flash Sales</h2>
+		<div class="seckill_main b_main">
+			<div class="item">
+				<div class="img pic_box"><a href="/ultra-pawsampreg-durable-dog-boots-black-large_p0861_s0013.html" title="Ultra Paws&amp;reg: Durable Dog Boots Black - Large"><img src="picture/1b011e6e3a.jpg" alt="Ultra Paws&amp;reg: Durable Dog Boots Black - Large" /></a><span></span></div>
+				<div class="name"><a href="/ultra-pawsampreg-durable-dog-boots-black-large_p0861_s0013.html" title="Ultra Paws&amp;reg: Durable Dog Boots Black - Large">Ultra Paws&amp;reg: Durable Dog Boots Black - Large</a></div>
+				<div class="days clean" endTime="2020/07/31 16:24:00">
+					<div class="i fl"><div class="pink d">00</div>day</div>
+					<div class="i fl"><div class="h">00</div>hours</div>
+					<div class="i fl"><div class="m">00</div>mins</div>
+					<div class="i fl"><div class="s">00</div>secs</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	//秒杀时间倒计时
+	$(".seckill_box .item .days").each(function(){
+		var obj=$(this),
+			time=new Date();
+		obj.genTimer({
+			beginTime: ueeshop_config.date,
+			targetTime: obj.attr("endTime"),
+			callbackOnlyDatas:1,
+			callback: function(e){
+				obj.find('.d').html(e.dates>99?99:e.dates);
+				obj.find('.h').html(e.hours);
+				obj.find('.m').html(e.minutes);
+				obj.find('.s').html(e.seconds);
+			}
+		});
+	});
+});
+</script><div class="left_ad"><div><img src='picture/6309456e94.jpg' alt=''></div></div>
+<div class="left_ad"><div style='overflow:hidden;'><script type='text/javascript' src='js/swf_obj.js' ></script>
+<div id='swfContents_6'></div>
+								<script type='text/javascript'>
+									var xmlData='<list></list>';
+									var flashvars={xmlData:xmlData};
+									var params={menu:false, wmode:'transparent'};
+									var attributes={};
+									swfobject.embedSWF('/static/images/swf/ad.swf', 'swfContents_6', '', '', '9', 'expressInstall.swf', flashvars, params, attributes);
+								</script></div></div>
+<div class="blank20"></div>	</div>
+		<div class="pro_right fr">
+				<div class="narrow_search">
+			<div class="ns_title clearfix">
+				<h2>1-2 of 2 Items for "Penn Plax"</h2>
+							</div>
+					</div>
+		<div id="filter">
+			<div class="prod_sort fl">
+				<a href="?&Keyword=Penn+Plax&Sort=1d"><em class="sort_icon_popular"></em>Most Popular</a>
+				<a href="?&Keyword=Penn+Plax&Sort=2d"><em class="sort_icon_sales"></em>Sales</a>
+				<a href="?&Keyword=Penn+Plax&Sort=3d"><em class="sort_icon_favorites"></em>Favorites</a>
+				<a href="?&Keyword=Penn+Plax&Sort=4d"><em class="sort_icon_new"></em>New</a>
+				<a href="?&Keyword=Penn+Plax&Sort=5a"><em class="sort_icon_price"></em>Price<i class="sort_icon_arrow"></i></a>
+			</div>
+			<div class="prod_price fl">
+				<span class="pp_inputbox"><em class="currency_data"></em><input type="text" id="minprice" class="min_box" autocomplete="off" value=""></span>
+				<span class="pp_heng">-</span>
+				<span class="pp_inputbox"><em class="currency_data"></em><input type="text" id="maxprice" class="max_box" autocomplete="off" value=""></span>
+				<input type="button" id="submit_btn" class="pp_btn" value="Go" />
+				<input type="hidden" class="no_price_url" value="?&Keyword=Penn+Plax" />
+			</div>
+			<div class="prod_menu fr">
+				<div class='page'><div class='cur'>1/1</div></div><a href='/search/1.html?&Keyword=Penn+Plax' class='page_item pre'></a><a href='/search/1.html?&Keyword=Penn+Plax' class='page_item next'></a>			</div>
+		</div>
+		<div id="prod_list" class="list prod_list clearfix" effects="5">
+		<div class="prod_box prod_box_5 fl first">
+		<div class="prod_box_pic">
+			<a class="pic_box" href="/penn-plax-bird-bath-with-universal-clips_p0932.html" title="Penn Plax Bird Bath with Universal Clips">
+				<img src="picture/2e156db6a4.jpg.240x240.jpg" /><span></span>
+											</a>
+						<em class="icon_seckill DiscountBgColor">Sale</em>
+		</div>
+		<div class="prod_box_info">
+			<div class="prod_box_inner">
+				<h3 class="prod_name"><a href="/penn-plax-bird-bath-with-universal-clips_p0932.html" title="Penn Plax Bird Bath with Universal Clips">Penn Plax Bird Bath with Universal Clips</a></h3>
+				<div class="prod_price">
+					<em class="currency_data PriceColor">$</em><span class="price_data PriceColor" data="4.59" keyid="932">4.59</span>
+					<del><em class="currency_data">$</em><span class="price_data" data="8.99">8.99</span></del>				</div>
+				<div class="free_shipping"></div>
+				<div class="prod_view">
+					<span class="star star_s5"></span><a class="review_count" href="/penn-plax-bird-bath-with-universal-clips_p0932.html#review_box">(10)</a>					<span class="favorite add_favorite" data="932"><i class="icon_heart"></i>(1)</span>				</div>
+			</div>
+					</div>
+	</div>
+			<div class="prod_box prod_box_5 fl">
+		<div class="prod_box_pic">
+			<a class="pic_box" href="/pennplax-space-feeder-with-mirror-for-birds_p0940.html" title="Pennplax Space Feeder with Mirror for Birds">
+				<img src="picture/a8b7614457.jpg.240x240.jpg" /><span></span>
+											</a>
+						<em class="icon_seckill DiscountBgColor">Sale</em>
+		</div>
+		<div class="prod_box_info">
+			<div class="prod_box_inner">
+				<h3 class="prod_name"><a href="/pennplax-space-feeder-with-mirror-for-birds_p0940.html" title="Pennplax Space Feeder with Mirror for Birds">Pennplax Space Feeder with Mirror for Birds</a></h3>
+				<div class="prod_price">
+					<em class="currency_data PriceColor">$</em><span class="price_data PriceColor" data="6.99" keyid="940">6.99</span>
+					<del><em class="currency_data">$</em><span class="price_data" data="12.09">12.09</span></del>				</div>
+				<div class="free_shipping"></div>
+				<div class="prod_view">
+					<span class="star star_s5"></span><a class="review_count" href="/pennplax-space-feeder-with-mirror-for-birds_p0940.html#review_box">(10)</a>					<span class="favorite add_favorite" data="940"><i class="icon_heart"></i>(1)</span>				</div>
+			</div>
+					</div>
+	</div>
+		</div>
+<link href='css/row_4.css' rel='stylesheet' type='text/css'  />
+<script type='text/javascript' src='js/row_4.js' ></script>
+	</div>
+	<div class="blank25"></div>
+</div>
+
+<div id="footer">
+	<div class="foot wide clean">
+		<div class="foot_menu fl">
+        	<div class="foot_menu_hd">About Us</div>
+				<ul class="list">
+					<li><a href="about.htm"><em></em>About Us</a></li>
+					<li><a href="pro_list.htm"><em></em>Products</a></li>
+					<li><a href="about.htm"><em></em>Equipment</a></li>
+					<li><a href="about.htm"><em></em>Honor</a></li>
+					<li><a href="about.htm"><em></em>Contact Us</a></li>
+				</ul>
+        	</div>
+			<div class="foot_menu fcu fl">
+				<div class="foot_menu_hd">Contact Us</div>
+				<div class="fcu_item fcu_0"><strong>Address:</strong><br />China JiangSu SuZhou</div>
+				<div class="fcu_item fcu_1"><strong>Phone:</strong><br />0512-57609476</div>
+				<div class="fcu_item fcu_2"><strong>Email:</strong><br /><a href="mailto:Heavyfoot@qq.com">Heavyfoot@qq.com</a></div>
+       		 </div>
+             <div class="foot_menu fMain fl">
+        	<div class="foot_menu_hd">Overview</div>
+				<ul class="list">
+					<li><a href="about.htm">PAYMENT METHODS</a></li>
+					<li><a href="about.htm">SHIPPING &amp; RETURNS</a></li>
+					<li><a href="about.htm">Location &amp; Working Hours</a></li>
+				 </ul>
+      		</div>
+        	<div class="newsletter foot_menu fl">
+        	<div class="foot_menu_hd">Be the First to Know</div>
+            <div class="newsletter_tips">Get all the latest information on Events, Sales and Offers. Sign up for newsletter today.</div>
+			<div class="newsletter_title">Enter your e-mail Address</div>
+			<div class="form">
+				<form id="newsletter_foot_form">
+					<input type="text" class="text" name="Email" value="" notnull="" format="Email" />
+					<input type="submit" class="button FontBgColor" value="Subscribe" />
+				</form>
+			</div>
+        </div>
+		<div class="clear"></div>
+	</div>
+</div>
+
+<div id="copyright">
+	<div class="wide clean">
+		<div class="cp fl">
+			<a href="javascript:void(0);" target="_blank" style="margin:0 5px;"><img src="picture/06e4596004.png" alt="2" /></a>
+			<a href="javascript:void(0);" target="_blank" style="margin:0 5px;"><img src="picture/a42c34df2c.png" alt="3" /></a>
+			<a href="javascript:void(0);" target="_blank" style="margin:0 5px;"><img src="picture/84b60e7538.png" alt="4" /></a>
+		</div>
+		<div class="cp fr copyright"> &nbsp;&nbsp;&nbsp;&nbsp; <a href="javascript:void(0);" target="_blank">POWERED BY SZJIDING</a></div>
+    </div>
+</div>
+
+
+</body>
+</html>

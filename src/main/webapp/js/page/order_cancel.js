@@ -1,6 +1,13 @@
 /**
  * Created by ThinkPad on 2017/8/23.
  */
+var curWwwPath = window.document.location.href;
+var pathName = window.document.location.pathname;
+var pos = curWwwPath.indexOf(pathName);
+var localhostPath = curWwwPath.substring(0, pos);
+var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+var basePath=localhostPath+projectName+"/";
+
 var cancel =  new Object();
 cancel.event = function(){
     $("#dataGridTableJson").on("click",".icon-del",function(){
@@ -84,7 +91,8 @@ cancel.event = function(){
 
 $(function () {
     $('#page3').bPage({
-        url: '/JDWebShop/order/getCancel',
+        url: '../order/getCancel',
+        //url: basePath+'order/getCancel',
         asyncLoad: true,
         asyncType: 'GET',
         serverSidePage: false,

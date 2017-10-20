@@ -1,3 +1,12 @@
+// var location = (window.location+'').split('/');
+// var basePath = location[0]+'//'+location[2]+'/'+location[3];
+var curWwwPath = window.document.location.href;
+var pathName = window.document.location.pathname;
+var pos = curWwwPath.indexOf(pathName);
+var localhostPath = curWwwPath.substring(0, pos);
+var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+var basePath=localhostPath+projectName+"/";
+
 var good =  new Object();
 good.event = function(){
 	/*编辑产品页面*/
@@ -174,7 +183,8 @@ $(function(){
 	//    }
 	//});
 	$('#page3').bPage({
-	    url : '/JDWebShop/goods/goodslist',
+	    url : '../goods/goodslist',
+	    //url : basePath+'goods/goodslist',
 	    asyncLoad : true,
 	    asyncType : 'GET',
 	    serverSidePage : false,

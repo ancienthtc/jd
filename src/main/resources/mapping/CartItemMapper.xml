@@ -27,6 +27,19 @@
     item_goods= #{gid,jdbcType=INTEGER}
   </select>
 
+  <select id="queryByGoodsWithUser" parameterType="java.lang.Integer" resultType="com.jd.shop.model.CartItem">
+    SELECT
+    t_cartitem.id,
+    t_cartitem.amount,
+    t_cartitem.item_goods,
+    t_cartitem.item_cart
+    FROM
+    t_cartitem
+    INNER JOIN t_cart ON t_cart.id = t_cartitem.item_cart
+    WHERE
+    t_cart.user_cart = #{uid,jdbcType=INTEGER} AND item_goods= #{gid,jdbcType=INTEGER}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_cartitem
     where id = #{id,jdbcType=INTEGER}

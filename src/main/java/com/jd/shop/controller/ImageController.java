@@ -7,16 +7,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 
 /**
  * Created by ThinkPad on 2017/7/10.
  */
 @Controller
-@RequestMapping("/picture")
+@RequestMapping("/image")
 public class ImageController {
 
     @ResponseBody
@@ -24,19 +21,12 @@ public class ImageController {
     public void showPicture(HttpServletRequest request,
                             HttpServletResponse response, String imagePath,String pic) throws IOException
     {
-        //如果没有图片显示默认图片
-//        if(imagePath == null || imagePath.equals("")){
-//            imagePath = request.getSession().getServletContext().getRealPath("/")+ "upload/"+"music_logo.jpg";
-//        }
-//        if(pic != null && imagePath==null)
-//        {
-//            imagePath=request.getSession().getServletContext().getRealPath("/")+ "upload/" + pic;
-//        }
+
         if(pic != null)
         {
             if(pic.equals("undefined") || pic.equals("") || pic.equals("null")) //默认图片
             {
-                imagePath = request.getSession().getServletContext().getRealPath("/")+ "image/" + "not.png";
+                imagePath = request.getSession().getServletContext().getRealPath("/")+ "images/" + "not.png";
             }
             else
             {
@@ -45,9 +35,10 @@ public class ImageController {
         }
         else//默认图片
         {
-            imagePath = request.getSession().getServletContext().getRealPath("/")+ "image/" + "stop.png";
+            imagePath = request.getSession().getServletContext().getRealPath("/")+ "images/" + "stop.png";
         }
         //System.out.println(imagePath);
+
 
         FileInputStream in;
         response.setContentType("application/octet-stream;charset=UTF-8");
@@ -65,12 +56,42 @@ public class ImageController {
             outputStream.write(data);
             outputStream.flush();
             outputStream.close();
-        } catch (Exception e) {
+        }
+        catch (FileNotFoundException e)
+        {
+            imagePath = request.getSession().getServletContext().getRealPath("/")+ "images/" + "not.png";
+            OutPutAgain(imagePath,request,response);
+        }
+        catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
+    private void OutPutAgain(String path,HttpServletRequest request, HttpServletResponse response)
+    {
+        FileInputStream in;
+        response.setContentType("application/octet-stream;charset=UTF-8");
+        try {
+            // 图片读取路径
+            in = new FileInputStream(path);
+            int i = in.available();
+            byte[] data = new byte[i];
+            in.read(data);
+            in.close();
 
+            // 写图片
+            OutputStream outputStream = new BufferedOutputStream(
+                    response.getOutputStream());
+            outputStream.write(data);
+            outputStream.flush();
+            outputStream.close();
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+
+    }
 
 }

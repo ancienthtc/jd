@@ -1,6 +1,12 @@
 /**
  * Created by ThinkPad on 2017/8/15.
  */
+var curWwwPath = window.document.location.href;
+var pathName = window.document.location.pathname;
+var pos = curWwwPath.indexOf(pathName);
+var localhostPath = curWwwPath.substring(0, pos);
+var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+var basePath=localhostPath+projectName+"/";
 
 var nopay =  new Object();
 nopay.event = function(){
@@ -67,7 +73,8 @@ nopay.event = function(){
 
 $(function () {
     $('#page3').bPage({
-        url: '/JDWebShop/order/queryNoPay',
+        url: '../order/queryNoPay',
+        //url: basePath+'order/queryNoPay',
         asyncLoad: true,
         asyncType: 'GET',
         serverSidePage: false,

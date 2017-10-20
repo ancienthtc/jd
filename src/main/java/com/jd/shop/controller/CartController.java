@@ -69,8 +69,9 @@ public class CartController extends BaseController{
         model.addAttribute("items",cartitem);   //id,name,price,freight,gclass,ciid,amount,user_cart,all,title
 
         Map<String,Number> cal=cartService.getCal(cartitem);//放入service
-        model.addAttribute("cal",cal);
-        return "user/shopcart";
+        model.addAttribute("cal",cal);//total count
+        //return "user/shopcart";
+        return "user/member_cart";
     }
 
     //删除一个
@@ -124,7 +125,7 @@ public class CartController extends BaseController{
             map.put("count",goodses);
             map.put("allof",allof);
 
-            System.out.print(JSON.toJSONString(map, true));
+            //System.out.print(JSON.toJSONString(map, true));
             return JSON.toJSONString(map, true);
         }catch (Exception e)
         {
@@ -144,6 +145,7 @@ public class CartController extends BaseController{
         JSONArray jsonArray = object.getJSONArray("goods");
         //转换List<Map<>>
         List<HashMap> goodslist = JSON.parseArray(jsonArray.toJSONString(), HashMap.class);
+        model.addAttribute("goodslist",goodslist);
         //取得最大运费
         Double freight=cartService.getMaxFreight(goodslist);
         model.addAttribute("freight",freight);//运费
@@ -152,12 +154,14 @@ public class CartController extends BaseController{
         model.addAttribute("total",Double.parseDouble(total) );//总价
         //获取收货地址
         uid=object.getString("userid");
-        List<Address> addresses=addressService.findAddressByUserId( Integer.parseInt(uid) );
+        List<Address> addresses=addressService.FirstMainByUser( Integer.parseInt(uid) );
         model.addAttribute("addresses",addresses);//收货地址
         //传递JSON
+        json=json.replaceAll("\'","\"");
         model.addAttribute("cart",json);
         //return "user/shopcommit";
-        return "user/shopcommit";
+        //return "user/shopcommit";
+        return "user/member_checkout";
     }
 
     @RequestMapping("/commit")

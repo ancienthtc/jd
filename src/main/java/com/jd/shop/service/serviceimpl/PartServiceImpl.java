@@ -12,6 +12,7 @@ import com.jd.shop.service.PictureService;
 import com.jd.shop.util.BeanUtil;
 import com.jd.shop.util.PagedResult;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -82,6 +83,7 @@ public class PartServiceImpl implements PartService{
 
 
     //删除板块(并删除图片)
+    @Transactional
     public boolean partDel(Integer id,String ServerPath)
     {
         //搜索该板块下有无商品
@@ -116,4 +118,9 @@ public class PartServiceImpl implements PartService{
         return goodsMapper.getGoodsByPart(pid);
     }
 
+
+    @Override
+    public List<Part> getIndexParts() {
+        return partMapper.getIndexParts();
+    }
 }

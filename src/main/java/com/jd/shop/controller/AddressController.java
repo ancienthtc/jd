@@ -6,6 +6,8 @@ import com.jd.shop.model.User;
 import com.jd.shop.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -118,12 +120,18 @@ public class AddressController {
             map.put("msg","默认地址无法删除,请重新设定默认地址");
             return map;
         }
-        int num = addressService.deleteAddress(id);
-        if(num==0){
-            map.put("msg","地址删除失败");
+        //查询是否有该地址订单未发货
+        if( addressService.candel(id) )
+        {
+            int num = addressService.deleteAddress(id);
+            if(num==0){
+                map.put("msg","地址删除失败");
+                return map;
+            }
+            map.put("msg","success");
             return map;
         }
-        map.put("msg","success");
+        map.put("msg","地址正在使用,删除失败");
         return map;
     }
 
@@ -170,4 +178,87 @@ public class AddressController {
         map.put("msg","success");
         return map;
     }
+
+    /**
+     * 新需求
+     */
+
+    //地址修改页面
+    @RequestMapping("/AddressEdit")
+    public String toEditAddress(HttpSession session,Model model)
+    {
+        User user = (User)session.getAttribute("user");
+        if(user==null){
+            return "redirect:/login_register";
+        }
+        model.addAttribute("main",addressService.getDefault(user.getId()));
+        model.addAttribute("other",addressService.getNotDefault(user.getId()));
+
+        return "user/member_add_list";
+    }
+
+    //增加地址
+    @RequestMapping(value="/addNew")
+    @ResponseBody
+    public String addNew(Address address,HttpSession session)
+    {
+        User user = (User)session.getAttribute("user");
+        if(user==null){
+            return "false";
+        }
+        if( addressService.addAddress(address,user.getId()) )
+        {
+            return "true";
+        }
+        else
+        {
+            return "false";
+        }
+    }
+
+    //layer 弹出 form
+    @RequestMapping("/getAddressForm")
+    public String getAddressForm()
+    {
+        return "user/address_form";
+    }
+
+    //layer 弹出 form 编辑
+    @RequestMapping("/getEditAddressForm/{id}")
+    public String getEditAddressForm(@PathVariable Integer id,Model model)
+    {
+        model.addAttribute("address",addressService.findById(id) );
+        return "user/address_form";
+    }
+
+    //执行编辑
+    @RequestMapping("/editAddressForm")
+    @ResponseBody
+    public String editAddressForm(Address address)
+    {
+        if (addressService.updateByPrimaryKeySelective(address) >0)
+        {
+            return "true";
+        }
+        return "false";
+    }
+
+    //设置默认
+    @RequestMapping("/setDefault/{aid}")
+    @ResponseBody
+    public String setDefault(@PathVariable Integer aid,HttpSession session)
+    {
+        User user = (User)session.getAttribute("user");
+        if(user==null){
+            return "false";
+        }
+        if( addressService.setDefault(aid,user.getId() ) )
+        {
+            return "true";
+        }
+        return "false";
+    }
+
+
+
 }

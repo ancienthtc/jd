@@ -64,18 +64,34 @@
     GROUP BY g.id
   </select>
 
-  <select id="getAllGoods" resultType="com.jd.shop.model.Goods">
+  <select id="getAllGoods" resultType="com.jd.shop.model.Goods" >
     SELECT
     t_goods.id,
     t_goods.`name`,
     t_goods.price,
     t_goods.piclist_goods,
     t_goods.shelf,
-    t_image.title
+    t_goods.parameter1,
+    t_goods.parameter2,
+    t_goods.parameter3,
+    t_image.title,
+    t_part.pname
     FROM
     t_goods
-    JOIN t_image ON t_goods.piclist_goods = t_image.image_list
-    WHERE t_goods.shelf is not null
+    LEFT JOIN t_image ON t_goods.piclist_goods = t_image.image_list
+    INNER JOIN t_part ON t_goods.part_goods = t_part.id
+    <where>
+      <if test="array!=null">
+      <foreach collection="array" item="item" index="index"  separator="OR">
+        t_goods.`name` LIKE CONCAT('%',#{item},'%')
+        OR t_part.pname LIKE CONCAT('%',#{item},'%')
+        OR t_goods.parameter1 LIKE CONCAT('%',#{item},'%')
+        OR t_goods.parameter2 LIKE CONCAT('%',#{item},'%')
+        OR t_goods.parameter3 LIKE CONCAT('%',#{item},'%')
+      </foreach>
+      </if>
+      and t_goods.shelf is not null
+    </where>
     GROUP BY t_goods.`name`
   </select>
 
@@ -95,6 +111,11 @@
     ORDER BY
     t_goods.`name`,t_goods.parameter1,t_goods.parameter2,t_goods.parameter3,t_goods.detail
   </select>
+
+  <select id="select_under" resultType="java.lang.String" parameterType="java.lang.Integer">
+    SELECT 1 FROM t_goods WHERE id = #{id,jdbcType=INTEGER} and shelf is NULL
+  </select>
+
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_goods
@@ -218,7 +239,7 @@
     update t_goods
     <set >
       <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+        `name` = #{name,jdbcType=VARCHAR},
       </if>
       <if test="price != null" >
         price = #{price,jdbcType=DOUBLE},
@@ -289,8 +310,120 @@
 
   <update id="updateStock" parameterType="java.lang.Number">
     UPDATE t_goods
-    SET stock=stock-#{amount,jdbcType=DOUBLE}
+    SET stock = #{amount,jdbcType=DOUBLE}
     WHERE id=#{gid,jdbcType=INTEGER}
   </update>
+
+  <update id="updateSales" parameterType="java.lang.Number">
+    UPDATE t_goods
+    SET sales = #{amount,jdbcType=DOUBLE}
+    WHERE id=#{gid,jdbcType=INTEGER}
+  </update>
+
+  <!-- 新需求 -->
+  <!-- 最新的8个商品 -->
+  <select id="new_goods" resultType="com.jd.shop.model.Goods" parameterType="java.lang.Integer">
+    SELECT
+    t_goods.id,
+    t_goods.`name`,
+    t_goods.price,
+    t_goods.gclass,
+    t_goods.shelf,
+    t_goods.piclist_goods,
+    t_image.title as `title`
+    FROM
+    t_goods
+    INNER JOIN t_image ON t_goods.piclist_goods = t_image.image_list
+    WHERE shelf is not null
+    GROUP BY t_goods.id
+    ORDER BY shelf
+    DESC LIMIT #{index,jdbcType=INTEGER} , #{end,jdbcType=INTEGER}
+  </select>
+
+  <!-- 热销商品 -->
+  <select id="hot_goods" resultType="com.jd.shop.model.Goods" >
+    SELECT
+    t_goods.id,
+    t_goods.`name`,
+    t_goods.price,
+    t_goods.gclass,
+    t_goods.sales,
+    t_goods.shelf,
+    t_goods.piclist_goods,
+    t_image.title as `title`
+    FROM
+    t_goods
+    INNER JOIN t_image ON t_goods.piclist_goods = t_image.image_list
+    WHERE shelf is not null
+    GROUP BY t_goods.id
+    ORDER BY sales DESC
+    LIMIT 0,3
+  </select>
+
+  <!-- 商品详情 -->
+  <select id="getInfo" resultType="com.jd.shop.model.Goods" parameterType="java.lang.Integer">
+    SELECT
+    t_goods.id,
+    t_goods.`name`,
+    t_goods.price,
+    t_goods.gclass,
+    t_goods.parameter1,
+    t_goods.parameter2,
+    t_goods.parameter3,
+    t_goods.freight,
+    t_goods.detail,
+    t_goods.sales,
+    t_goods.stock,
+    t_goods.shelf,
+    t_goods.part_goods,
+    t_goods.piclist_goods as piclistGoods,
+    t_part.pname as `part`
+    FROM
+    t_goods
+    INNER JOIN t_part ON t_goods.part_goods = t_part.id
+    WHERE t_goods.id=#{goodsid,jdbcType=INTEGER}
+  </select>
+
+  <!-- 条件查询商品展示 -->
+  <select id="GoodsShow" resultType="com.jd.shop.model.Goods">
+    SELECT
+    t_goods.id,
+    t_goods.`name`,
+    t_goods.price,
+    t_goods.piclist_goods,
+    t_goods.shelf,
+    t_goods.parameter1,
+    t_goods.parameter2,
+    t_goods.parameter3,
+    t_image.title,
+    t_part.pname
+    FROM
+    t_goods
+    LEFT JOIN t_image ON t_goods.piclist_goods = t_image.image_list
+    INNER JOIN t_part ON t_goods.part_goods = t_part.id
+    <where>
+      <!-- 模糊查询组 -->
+      <if test="array!=null">
+        <foreach collection="array" item="item" index="index"  separator="OR">
+          t_goods.`name` LIKE CONCAT('%',#{item},'%')
+          OR t_part.pname LIKE CONCAT('%',#{item},'%')
+          OR t_goods.parameter1 LIKE CONCAT('%',#{item},'%')
+          OR t_goods.parameter2 LIKE CONCAT('%',#{item},'%')
+          OR t_goods.parameter3 LIKE CONCAT('%',#{item},'%')
+        </foreach>
+      </if>
+      <if test="pid!=null">
+        and part_goods = #{pid,jdbcType=INTEGER}
+      </if>
+      <if test="min!=null">
+        and t_goods.price > #{min,jdbcType=DOUBLE}
+      </if>
+      <if test="max!=null">
+        and #{max,jdbcType=DOUBLE} > t_goods.price
+      </if>
+      and t_goods.shelf is not null
+    </where>
+    GROUP BY t_goods.`name`
+  </select>
 
 </mapper>

@@ -183,4 +183,14 @@
       piclist_part = #{piclistPart,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+  <!-- 新需求 -->
+  <!-- 首页板块 -->
+  <select id="getIndexParts" resultType="com.jd.shop.model.Part" >
+    SELECT pname FROM t_part LIMIT 0,7
+  </select>
+
+
+
 </mapper>

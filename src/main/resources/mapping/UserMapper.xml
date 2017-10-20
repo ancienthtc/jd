@@ -34,6 +34,23 @@
       OR (nickname = #{name,jdbcType=VARCHAR} and pass = #{pass,jdbcType=VARCHAR} )
   </select>
 
+  <!-- 新登录方法 用户名 -->
+  <select id="login_name" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM t_user
+    WHERE nickname = #{name,jdbcType=VARCHAR} and pass = #{pass,jdbcType=VARCHAR}
+  </select>
+
+  <!-- 新登录方法 用户名/手机号 -->
+  <select id="login_tel" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM t_user
+    WHERE ( tel = #{name,jdbcType=VARCHAR} and pass = #{pass,jdbcType=VARCHAR} )
+    OR ( nickname = #{name,jdbcType=VARCHAR} and pass = #{pass,jdbcType=VARCHAR} )
+  </select>
+
   <select id="getAll" resultType="com.jd.shop.model.User">
     SELECT
       <include refid="Base_Column_List" />

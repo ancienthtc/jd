@@ -1,9 +1,17 @@
 /**
  * Created by ThinkPad on 2017/7/27.
  */
+var curWwwPath = window.document.location.href;
+var pathName = window.document.location.pathname;
+var pos = curWwwPath.indexOf(pathName);
+var localhostPath = curWwwPath.substring(0, pos);
+var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+var basePath=localhostPath+projectName+"/";
+
 $(function(){
     $('#page').bPage({
-        url : '/JDWebShop/user/list_get',
+        url : '../user/list_get',
+        //url : basePath+'user/list_get',
         asyncLoad : true,
         asyncType : 'GET',
         serverSidePage : false,

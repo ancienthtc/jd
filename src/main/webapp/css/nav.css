@@ -1,0 +1,22 @@
+.FontColor,a.FontColor,a.FontColor:hover,a:hover{color:#00C17E;}
+.FontBgColor{background-color:#00C17E;}
+.FontBorderColor{border-color:#00C17E;}
+.FontBorderHoverColor:hover, a.FontBorderHoverColor:hover{border-color:#00C17E;}
+.FontBgHoverColor:hover{background-color:#00C17E!important;}
+.FontHoverColor:hover{color:#00C17E!important;}
+.NavBgColor{background-color:#00935F;}
+.NavHoverBgColor:hover{background-color:#01A46A;}
+.NavBorderColor1{border-color:#00935F;}
+.CategoryBgColor{background-color:#00935F;}
+.PriceColor{color:#00935F;}
+.AddtoCartBgColor{background-color:#00935F;}
+.BuyNowBgColor{background-color:#00C17E;}
+.ReviewBgColor{background-color:#00935F;}
+.DiscountBgColor{background-color:#00935F;}
+.DiscountBorderColor{border-color:#00935F;}
+.ProListBgColor{background-color:#00C17E;}
+.ProListHoverBgColor:hover{background-color:#00935F;}
+.GoodBorderColor{border-color:#00C17E;}
+.GoodBorderHoverColor:hover{border-color:#00935F;}
+.GoodBorderColor.selected{border-color:#00935F;}
+.GoodBorderBottomHoverColor{border-bottom-color:#00935F;}

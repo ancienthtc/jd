@@ -1,6 +1,13 @@
 /**
  * Created by ThinkPad on 2017/8/21.
  */
+var curWwwPath = window.document.location.href;
+var pathName = window.document.location.pathname;
+var pos = curWwwPath.indexOf(pathName);
+var localhostPath = curWwwPath.substring(0, pos);
+var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+var basePath=localhostPath+projectName+"/";
+
 var log =  new Object();
 log.event = function(){
     $("#dataGridTableJson").on("click",".icon-view",function(){
@@ -53,7 +60,8 @@ log.event = function(){
 
 $(function () {
     $('#page3').bPage({
-        url: '/JDWebShop/order/getNoSend',
+        url: '../order/getNoSend',
+        //url: basePath+'order/getNoSend',
         asyncLoad: true,
         asyncType: 'GET',
         serverSidePage: false,

@@ -314,7 +314,7 @@ a, a:visited{text-decoration:none;}
 
 <script src="<%=basePath%>js/jquery-3.1.1.js" type="text/javascript"></script>
 <script src="../static/libs/bootstrap/bootstrap.min.js"></script>
-<script src="<%=basePath%>js/public.js" type="text/javascript"></script>
+<script src="<%=basePath%>js/admin/public.js" type="text/javascript"></script>
 
 <%--分页插件--%>
 <script type="text/javascript" src="<%=basePath%>js/page/b.page.js" ></script>

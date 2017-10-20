@@ -220,6 +220,8 @@ public class PictureServiceImpl implements PictureService {
                 imageMapper.deleteByPrimaryKey(i.getId());//再删数据库
             }
         }
+        //最后删集合
+        picListMapper.deleteByPrimaryKey(listid);
         return true;
     }
 
@@ -232,6 +234,31 @@ public class PictureServiceImpl implements PictureService {
         }else{
             return false;
         }
+    }
+
+    @Override
+    public boolean goodsDel(Integer gid,String ServerPath) {
+        Goods goods=goodsMapper.selectByPrimaryKey(gid);
+        Integer goods_list=goods.getPiclistGoods();
+        if(goods_list != null)
+        {
+            List<Image> images=picListMapper.getImagesList(goods_list);
+            if(images.isEmpty())//没有图片删除
+            {
+                return false;
+            }
+            for(Image i:images)
+            {
+                if(  fileDel(ServerPath+i.getTitle())   )//先删文件
+                {
+                    imageMapper.deleteByPrimaryKey(i.getId());//再删数据库
+                }
+            }
+            //最后删集合
+            picListMapper.deleteByPrimaryKey(goods_list);
+            return true;
+        }
+        return false;
     }
 
 }

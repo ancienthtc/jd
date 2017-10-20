@@ -3,7 +3,11 @@ package com.jd.shop.controller;
 import com.alibaba.fastjson.JSON;
 import com.jd.shop.annotation.AdminLogin;
 import com.jd.shop.annotation.UserLogin;
+import com.jd.shop.model.Address;
+import com.jd.shop.model.Order;
 import com.jd.shop.model.User;
+import com.jd.shop.service.AddressService;
+import com.jd.shop.service.OrderService;
 import com.jd.shop.service.PartService;
 import com.jd.shop.service.UserService;
 import com.jd.shop.util.DateUtil;
@@ -39,6 +43,12 @@ public class UserController extends BaseController{
     @Autowired
     private PartService partService;
 
+    @Autowired
+    private AddressService addressService;
+
+    @Autowired
+    private OrderService orderService;
+
     //用户注册
     @RequestMapping(value = "register" , method = RequestMethod.POST)
     @ResponseBody
@@ -58,7 +68,7 @@ public class UserController extends BaseController{
         String live=user.getLive();
         String pass=user.getPass();
 
-        if(nickname==null || nickname.equals("") || tel==null || tel.equals("") || pass==null || pass.equals(""))
+        if(nickname.length()>10 && nickname.length()<=3 || tel==null || tel.equals("") || pass==null || pass.equals(""))
         {
             model.addAttribute("message","注册失败");
             //return "user/login";
@@ -195,7 +205,26 @@ public class UserController extends BaseController{
         return "redirect:/login/view";
     }
 
+    /**
+     * 新需求
+     */
+    @RequestMapping("/toMember_index")
+    public String toMember_index(HttpSession session,Model model)
+    {
+        User user = (User)session.getAttribute("user");
+        if(user==null){
+            return "redirect:/login/view";
+        }
+        //地址（修改，显示4条）
+        List<Address> addresses=addressService.AddressByUidLimit(user.getId(),4);
+        model.addAttribute("address",addresses);
 
+        //用户所有订单（修改，显示6条）
+        List<Order> orders=orderService.getLimitOrder(user.getId(),5);
+        model.addAttribute("orders",orders);
+
+        return "user/member_index";
+    }
 
 
 }

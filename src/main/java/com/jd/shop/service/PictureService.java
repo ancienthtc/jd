@@ -1,6 +1,7 @@
 package com.jd.shop.service;
 
 import com.jd.shop.model.Image;
+import com.jd.shop.model.PicList;
 
 /**
  * Created by ThinkPad on 2017/7/7.
@@ -48,4 +49,7 @@ public interface PictureService {
     boolean partPicdel(Integer pid,String ServerPath);
 
     boolean copyImg(String path,String newPath);
+
+    //商品的删除
+    boolean goodsDel(Integer gid,String ServerPath);
 }

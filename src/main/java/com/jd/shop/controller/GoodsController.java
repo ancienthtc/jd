@@ -100,7 +100,7 @@ public class GoodsController extends BaseController{
     @ResponseBody
     public Map<String,String> addGoods(Goods goods,String imgName){
         Map<String ,String> map=new HashMap<String, String>();
-        if(goods.getName()==null || goods.getPrice()==null || goods.getParameter1()==null){
+        if(goods.getName()==null || goods.getPrice()==null || goods.getParameter1()==null){ //可删除参数验证
             return null;
         }
         Goods good = goodsService.addGoods(goods);
@@ -174,7 +174,7 @@ public class GoodsController extends BaseController{
     public Map<String,String> updateGoods(Goods goods)
     {
         Map<String ,String> map=new HashMap<String, String>();
-        System.out.println(goods);
+        //System.out.println(goods);
         if(goods.getName()==null || goods.getPrice()==null || goods.getParameter1()==null)
         {
             return null;
@@ -205,8 +205,12 @@ public class GoodsController extends BaseController{
     @AdminLogin
     @RequestMapping("/goodslist")
     @ResponseBody
-    public String getListPage(Integer pageNumber,Integer pageSize ,Model model)
+    public String getListPage(Integer pageNumber,Integer pageSize ,Model model,Integer pageNo)
     {
+        if(pageNumber==null && pageNo!=null)
+        {
+            pageNumber=pageNo;
+        }
         PagedResult<Goods> goodslist=goodsService.queryByPage(pageNumber,pageSize);
         model.addAttribute("goodslist",goodslist);
         String json = JSON.toJSONString(goodslist);
@@ -292,12 +296,12 @@ public class GoodsController extends BaseController{
     @RequestMapping("goodsdel")
     @ResponseBody
     public String goodsdel(Integer id)
-
     {
+        String ServerPath=request.getSession().getServletContext().getRealPath("/")+ "upload/";
         if(id==null){
             throw new RuntimeException("id不能为空");
         }
-        if(goodsService.goodsDel(id) > 0) {
+        if(goodsService.goodsDel(id,ServerPath) > 0) {
             return "true";
         }
         else
@@ -549,14 +553,79 @@ public class GoodsController extends BaseController{
     }
 
     //商品搜索
-    @UserLogin
-    @RequestMapping("/search")
-    public String Search(Model model,String key)
+//    @UserLogin
+//    @RequestMapping("/search")
+//    public String Search(Model model,String key)
+//    {
+//        List<Goods> goodsList=goodsService.search(key);
+//        model.addAttribute("allgoods",goodsList);
+//        model.addAttribute("title","关键词:"+key);
+//        return "user/shopgoodses";
+//    }
+
+    /**
+     * 新需求
+     */
+    //商品详情页
+    @RequestMapping("/NewGoodsDetail/{goodsid}")
+    public String toGoodsDetail(@PathVariable Integer goodsid,Model model)
     {
-        List<Goods> goodsList=goodsService.search(key);
-        model.addAttribute("allgoods",goodsList);
-        model.addAttribute("title","关键词:"+key);
-        return "user/shopgoodses";
+        //获取商品
+        Goods g=goodsService.getGoodsInfo(goodsid);
+        model.addAttribute("goods",g);
+        //获取图片
+        model.addAttribute("images",goodsService.getGoodsImgs( g.getPiclistGoods() ));
+
+        return "user/pro";
     }
 
+    //起始ajax
+    @RequestMapping("/partGoods")
+    @ResponseBody
+    public String getGoods(Model model,@RequestBody String date)
+    {
+        //model.addAttribute("goods",goodsService.getAllGoods());
+        if(date!=null && !date.equalsIgnoreCase("null"))
+        {
+            String[] key=date.split("\\s+");
+            return JSON.toJSONString(goodsService.goodsByPage(null,null , key));
+        }
+        //System.out.println(JSON.toJSONString(goodsService.goodsByPage(null,null)));
+        return JSON.toJSONString(goodsService.goodsByPage(null,null , null));
+    }
+
+    //带参ajax
+    /*
+     * 前一页:     type(1) + pid + pageNo + pageSize(12) + pages + total + min + max + key   pageNo-1>1       min<max
+     * 后一页:     type(2) + pid + pageNo + pageSize(12) + pages + total + min + max + key   pageNo+1<pages   min<max
+     * 第 N 页:    type(3) + pid + pageNo + pageSize(12) + pages + total + min + max + key   pageNo=N         min<max
+     * 直接帅选:   type(4) + pid + pageNo + pageSize(12) + pages + total + min + max   min<max
+     * Sales :     type(5) + pid + pageNo + pageSize(12) + pages + total + min + max   排序             min<max
+     * News  :     type(6) + pid + pageNo + pageSize(12) + pages + total + min + max   排序             min<max
+     */
+    @RequestMapping("/GoodsList")
+    @ResponseBody
+    public String getGoods(@RequestBody String json)
+    {
+        JSONObject object = JSON.parseObject(json);
+        //System.out.println(object);
+        PagedResult<Goods> goodss=goodsService.goodsByPageSelect(object);
+        //System.out.println(JSONObject.toJSONString(goodss));
+        return JSONObject.toJSONString(goodss);
+    }
+
+    //搜索
+    @RequestMapping("/search")
+    public String Search(Model model,String Keyword)
+    {
+        model.addAttribute("key",Keyword);
+
+        //1.hot
+        model.addAttribute("hot",goodsService.GoodSale());
+
+        //2.part
+        model.addAttribute("allparts",partService.getAll());
+
+        return "user/pro_list";
+    }
 }

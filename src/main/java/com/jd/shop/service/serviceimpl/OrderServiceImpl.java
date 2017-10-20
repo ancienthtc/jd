@@ -9,9 +9,11 @@ import com.jd.shop.dao.GoodsMapper;
 import com.jd.shop.dao.OrderMapper;
 import com.jd.shop.model.Goods;
 import com.jd.shop.model.Order;
+import com.jd.shop.service.GoodsService;
 import com.jd.shop.service.OrderService;
 import com.jd.shop.util.BeanUtil;
 import com.jd.shop.util.PagedResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,9 @@ import java.util.*;
  */
 @Service
 public class OrderServiceImpl implements OrderService{
+
+    @Autowired
+    private GoodsService goodsService;
 
     @Resource
     private OrderMapper orderMapper;
@@ -56,7 +61,10 @@ public class OrderServiceImpl implements OrderService{
         JSONArray jsonArray = object.getJSONArray("goods");
         List<HashMap> goodslist = JSON.parseArray(jsonArray.toJSONString(), HashMap.class);//ccid,,amount,all,gid,title
         String uid=object.getString("userid");//用户
-        String total=object.getString("total");//总价
+        String total=object.getString("total");//商品总价
+        String freight=object.getString("freight");//运费
+
+        Double final_price=Double.parseDouble(total)+Double.parseDouble(freight);//最终价格
         String aid=object.getString("aid");
 
         detail.append("{");detail.append("'Goods':[");
@@ -81,15 +89,28 @@ public class OrderServiceImpl implements OrderService{
                 return map;
             }
 
-            //3.减去商品库存
-            if(goodsMapper.updateStock(amount,gid)<=0)
+            //3.减去商品库存 如果为0 就下架
+            double left=goods.getStock()-amount;
+            if(goodsMapper.updateStock(left , gid)<=0)
             {
                 map.put("Order",null);
                 map.put("Msg","库存减少失败");
                 return map;
             }
+            if(left==0.0)
+            {
+                goodsService.goodsunder(goods.getId());
+            }
 
-            //4.移除购物车(如果有ciid)
+            //4.加上销售量
+            if(goodsMapper.updateSales(goods.getSales()+amount , gid)<=0)
+            {
+                map.put("Order",null);
+                map.put("Msg","销量增加失败");
+                return map;
+            }
+
+            //5.移除购物车(如果有ciid)
             if( goodslist.get(i).get("ciid")!=null)
             {
                 Integer ciid = Integer.parseInt(goodslist.get(i).get("ciid").toString());
@@ -100,33 +121,36 @@ public class OrderServiceImpl implements OrderService{
                 }
             }
 
-            //5.生成新的JSON
+            //6.生成新的JSON
             detail.append("{");
             detail.append("'goodsid':'"+gid+"',");
             detail.append("'goodsname':'"+goodslist.get(i).get("name")+"',");
             detail.append("'price':'"+goodslist.get(i).get("price")+"',");
             detail.append("'amount':'"+goodslist.get(i).get("amount")+"',");
             detail.append("'title':'"+goodslist.get(i).get("title"));
+            //detail.append("'freight':'"+ Double.valueOf(freight) );
             detail.append("'},");
         }
         detail.deleteCharAt(detail.length() - 1);//去除,
         detail.append("]");
         detail.append(",'aid':"+aid);
+        detail.append(",'freight':"+ Double.valueOf(freight) );
         detail.append("}");//详情完毕
-        //6.信息放入Order
+        //7.信息放入Order
         order.setUuid(uuid);//uuid
         order.setOrdertime( cc.getTime() );//下单时间
         order.setShopstatus(0);//发货状态 0-未发货
         order.setPaystatus(0);//付款状态 0-未付款
         //paytime null
         order.setLimit(48);//订单时效：48小时
-        order.setAllprice( Double.parseDouble(total) );//总价
+        order.setAllprice( final_price );//总价
         order.setDetail(detail.toString());//商品详情(JSON)
         order.setOrderUser( Integer.parseInt(uid) );//关联用户
         if(orderMapper.insertSelective(order) > 0)
         {
-            order.getId();
+            //order.getId();
             map.put("Order",order);
+            map.put("id",order.getId());
             map.put("Msg","生成成功");
             return map;
         }
@@ -137,6 +161,34 @@ public class OrderServiceImpl implements OrderService{
             map.put("Msg","生成失败");
             return map;
         }
+    }
+
+    @Override
+    public String getUUID(Integer id) {
+        return orderMapper.selectByPrimaryKey(id).getUuid();
+    }
+
+    @Override
+    @Transactional
+    public boolean Pay(Integer uid, String uuid) {
+        String s=orderMapper.pay_check(uuid,uid) ;
+        if( s.equals("0") )
+        {
+            if( orderMapper.UpdatePayS(1,uuid) > 0 )
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        else
+        {
+            return false;
+        }
+
     }
 
     public List<Order> user_orders(Integer uid) {
@@ -391,7 +443,10 @@ public class OrderServiceImpl implements OrderService{
             {
                 Double amount=Double.parseDouble( goodslist.get(i).get("amount").toString() ) ;//取出数量
                 //goods.setStock( goods.getStock()+amount );
+                //恢复库存
                 goodsMapper.updateStock(goods.getStock()+amount,goodsid);
+                //恢复销量
+                goodsMapper.updateSales(goods.getSales()-amount,goodsid);
             }
         }
         //3.更新状态
@@ -480,6 +535,71 @@ public class OrderServiceImpl implements OrderService{
                 cancelOrder(o.getUuid());
             }
         }
+    }
+
+    /**
+     *  新需求
+     */
+
+    @Override
+    public List<Order> getLimitOrder(Integer uid, Integer count) {
+        return orderMapper.getOrderByIdLimit(uid,count);
+    }
+
+    @Override
+    public PagedResult<Order> OrderList_deafult(Integer pageNo, Integer pageSize,Integer uid) {
+        pageNo = pageNo == null?1:pageNo;
+        pageSize = pageSize == null?5:pageSize;
+        PageHelper.startPage(pageNo,pageSize);  //startPage是告诉拦截器说我要开始分页了。分页参数是这两个。
+        //List<Order> orders=orderMapper.getAllByUser(uid);
+        //PagedResult<Order> o=BeanUtil.toPagedResult( orderMapper.getAllByUser(uid) );
+        return BeanUtil.toPagedResult( orderMapper.getAllByUser(uid) );
+    }
+
+    /*  AJAX
+     *  Type -1: ALL 上一页 下一页
+     *  Type 0: Awaiting Payment 上一页 下一页
+     *  Type 1: Awaiting Shipping 上一页 下一页
+     *  Type 2: Shipment Shipped 上一页 下一页
+     *  Type 3: Received 上一页 下一页
+     *  Type 4: Cancelled 上一页 下一页
+     *  Type 5:
+     *  Type 6:
+     */
+    @Override
+    public PagedResult<Order> orderPageSelect(JSONObject object,Integer uid) {
+        String type=object.getString("type");
+        Integer pageNo;
+        Integer pageSize;
+        try{
+            pageNo=Integer.parseInt( object.getString("pageNo") );
+            pageSize=Integer.parseInt(object.getString("pageSize") );
+        }catch (NumberFormatException e)
+        {
+            pageNo=null;
+            pageSize=null;
+        }
+
+        pageNo = pageNo == null?1:pageNo;
+        pageSize = pageSize == null?5:pageSize;
+        PageHelper.startPage(pageNo,pageSize);
+        switch ( Integer.valueOf(type) )
+        {
+            case -1:
+                return BeanUtil.toPagedResult( orderMapper.getAllByUser(uid) );
+            case  0:
+                return BeanUtil.toPagedResult( orderMapper.getUserOrders(uid) );
+            case  1:
+                return BeanUtil.toPagedResult( orderMapper.getUserOrders2(uid) );
+            case  2:
+                return BeanUtil.toPagedResult( orderMapper.getUserOrders3(uid) );
+            case  3:
+                return BeanUtil.toPagedResult( orderMapper.getUserOrders45(uid) );
+            case  4:
+                return BeanUtil.toPagedResult( orderMapper.OrderCancel(uid) );
+        }
+
+        return null;
     }
 
 }

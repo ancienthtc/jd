@@ -138,7 +138,7 @@
           <c:forEach items="${requestScope.imgs}"  var="item">
              <%-- <p>${item.filename}</p>--%>
               <div class="photos canSort"  >
-                  <div class="img" style="background-image: url('<%=basePath%>picture/show?pic=${item.title}')"></div>
+                  <div class="img" style="background-image: url('<%=basePath%>image/show?pic=${item.title}')"></div>
                   <span  style="display: none">${item.id}</span>
                   <div class="mask"></div>
                   <i class="iconfont icon-add"></i>
@@ -242,7 +242,7 @@
 <%--解析表单数据--%>
 <script src="../static/util/iform.js"></script>
 
-<script type="text/javascript" src="<%=basePath%>js/goodDetail.js" ></script>
+<script type="text/javascript" src="<%=basePath%>js/admin/goodDetail.js" ></script>
 
 <script>
     $('#datetimepicker').datetimepicker({

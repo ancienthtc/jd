@@ -32,13 +32,21 @@ public class loginServiceImpl implements loginService {
     Timestamp ts = Timestamp.valueOf( sdf.format(now.getTime()) );
 
 
-    public User login(String name,String pass) {
+    public User login(String name,String pass , boolean tellogin) {
         //MD5加密password
         pass= Md5Utils.string2MD5(pass);
 
         User u=new User();
         try {
-            u=userMapper.login(name,pass);
+            if(tellogin)
+            {
+                u=userMapper.login_tel(name,pass);
+            }
+            else
+            {
+                u=userMapper.login_name(name,pass);
+            }
+
         }catch (Exception e)
         {
             e.printStackTrace();

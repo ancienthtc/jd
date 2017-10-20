@@ -216,7 +216,7 @@
 <%--解析表单数据--%>
 <script src="../static/util/iform.js"></script>
 
-<script type="text/javascript" src="<%=basePath%>js/goodAdd.js" ></script>
+<script type="text/javascript" src="<%=basePath%>js/admin/goodAdd.js" ></script>
 
 <script>
     $('#datetimepicker').datetimepicker({

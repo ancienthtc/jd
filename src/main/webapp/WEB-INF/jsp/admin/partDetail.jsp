@@ -100,7 +100,7 @@
             <c:forEach items="${requestScope.images}"  var="item">
                 <%-- <p>${item.filename}</p>--%>
                 <div class="photos canSort"  >
-                    <div class="img" style="background-image: url('<%=basePath%>picture/show?pic=${item.title}')"></div>
+                    <div class="img" style="background-image: url('<%=basePath%>image/show?pic=${item.title}')"></div>
 
                     <span  style="display: none">${requestScope.part.id}</span>
 
@@ -201,7 +201,7 @@
 <!-- 封装的iForm -->
 <script src="../static/util/iform.js"></script>
 
-<script type="text/javascript" src="<%=basePath%>js/partDetail.js" ></script>
+<script type="text/javascript" src="<%=basePath%>js/admin/partDetail.js" ></script>
 
 <script>
     $('#datetimepicker').datetimepicker({
