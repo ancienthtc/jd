@@ -27,5 +27,9 @@ public interface CartMapper {
 
     List<Map<String,Object>> cartitem(@Param("userid") Integer uid);
 
+    //新需求
+    //查询规格是否为空
+
+
     int clearCart(@Param("uid") Integer uid);
 }

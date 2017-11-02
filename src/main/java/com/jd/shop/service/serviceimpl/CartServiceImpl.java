@@ -31,27 +31,53 @@ public class CartServiceImpl implements CartService{
     private GoodsService goodsService;
 
     @Transactional
-    public int cartadd(Integer userid, Integer goodsid, Double count) {
+    public int cartadd(String userid, String goodsid, String count ,String tprice, String fid) {
 
+        //旧
         //1.查找该用户的购物车，没有就创建   --->放入了用户注册 2017/8/9
         //2.获取购物车id，判断是否存在goodsid
         //3.不存在就填入记录，存在就更新数量
         //4.成功返回 1， 失败返回 0
 
-        //2
+        //新!
+        //2.获取购物车 判断 商品id和商品规格是否同时存在
+        //3.存在:数量增加,总价增加    不存在:新添记录(规格,总价)
 
-        CartItem cartItem=cartItemMapper.queryByGoodsWithUser(goodsid,userid);
+        //2
+        CartItem cartItem;
+        if(fid==null || fid=="")
+        {
+            cartItem=cartItemMapper.queryByGoodsWithUserNormal( Integer.parseInt(goodsid) , Integer.parseInt(userid) );
+        }
+        else    //fid!=null
+        {
+            cartItem=cartItemMapper.queryByGoodsWithUserFormat( Integer.parseInt(goodsid),Integer.parseInt(userid),Integer.parseInt(fid) );
+        }
         if(cartItem != null)  //已存在相同商品
         {
-            return cartItemMapper.updateCountOfItem(goodsid,count);
+            Integer f;
+            if( fid.length()>0)
+            {
+                f=Integer.parseInt(fid);
+            }
+            else
+            {
+                f=null;
+            }
+            return cartItemMapper.updateCountOfItem(Integer.parseInt(goodsid) ,Double.parseDouble(count),Integer.parseInt(userid) ,f  );
         }
         else //没有已存在商品,添加记录
         {
             //3
-            Cart cart=cartMapper.selectCartByUser(userid);
+            Cart cart=cartMapper.selectCartByUser( Integer.parseInt(userid) );
             CartItem cartItem1=new CartItem();
-            cartItem1.setAmount(count);
-            cartItem1.setItemGoods(goodsid);
+            cartItem1.setAmount( Double.parseDouble(count) );
+            cartItem1.setTprice( Double.parseDouble(tprice) );
+            if( fid.length()>0 )
+            {
+                cartItem1.setItemFormat( Integer.parseInt(fid) );
+            }
+            cartItem1.setItemGoods( Integer.parseInt(goodsid)  );
             cartItem1.setItemCart(cart.getId());
             return cartItemMapper.insertSelective(cartItem1);
         }
@@ -62,6 +88,8 @@ public class CartServiceImpl implements CartService{
     }
 
     public List<Map<String, Object>> cartItem(Integer uid) {
+        //默认情况 CartItem.item_format 空
+        //包含规格的列    CartItem.item_format 非空
         return cartMapper.cartitem(uid);
     }
 

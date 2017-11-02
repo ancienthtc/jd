@@ -3,6 +3,7 @@ package com.jd.shop.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created by ThinkPad on 2017/9/15.
@@ -20,4 +21,18 @@ public class StaticController {
 
         return "user/"+page;
     }
+
+    @RequestMapping("/GetVersion/{pass}")
+    @ResponseBody
+    public String getVersion(@PathVariable String pass)
+    {
+        if(pass.equals("JDHu")) {
+            return "Version 1.2 -- 17/11/2";
+        }
+        else
+        {
+            return "密码错误";
+        }
+    }
+
 }

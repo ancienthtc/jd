@@ -78,12 +78,20 @@
     function paypal2() {
         var url = "<%=basePath%>order/gotopay";
         //uuid acount userid
-        var user_id=${sessionScope.user.id};    //ok
+        var user_id="";
+        user_id=${sessionScope.user.id};    //ok
         if(user_id==null || user_id.length<=0)
         {
             return false;
         }
-        var account=$("#all_price").text();//ok
+        //var account=$("#all_price").text();//ok
+        var account="";
+        account=${order.allprice};
+        if(account==null || account=="")
+        {
+            return false;
+        }
+
         var uuid=$("#order_uuid").text();//ok
         var dates='{"user_id":"'+user_id+'","account":"'+account+'","uuid":"'+uuid+'"}';
         $.ajax({
@@ -437,7 +445,9 @@
                                             <dt><a href="<%=basePath%>goods/NewGoodsDetail/${item.get("goodsid")}" target="_blank"><img src="<%=basePath%>image/show?pic=${item.get("title")}"></a></dt>
                                             <dd>
                                                 <h4><a href="<%=basePath%>goods/NewGoodsDetail/${item.get("goodsid")}" target="_blank">${item.get("goodsname")}</a></h4>
-                                                <p class="pro_attr">${item.get("goodsid")}</p></dd>
+                                                <p class="pro_attr">${item.get("goodsid")}</p>
+                                                <p class="pro_attr">format:${item.get("fname")}</p>
+                                            </dd>
                                         </dl>
                                     </td>
                                     <td class="pro_price"><span>${item.get("price")}</span></td>

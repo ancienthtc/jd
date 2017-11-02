@@ -25,8 +25,10 @@ public interface CartItemMapper {
 
     CartItem queryByGoods(@Param("gid") Integer gid);
 
-    CartItem queryByGoodsWithUser(@Param("gid") Integer gid,@Param("uid") Integer uid);
+    CartItem queryByGoodsWithUserNormal(@Param("gid") Integer gid,@Param("uid") Integer uid);
 
-    int updateCountOfItem(@Param("gid") Integer gid,@Param("count")Double count);
+    CartItem queryByGoodsWithUserFormat(@Param("gid") Integer gid,@Param("uid") Integer uid,@Param("fid") Integer fid);
+
+    int updateCountOfItem(@Param("gid") Integer gid,@Param("count")Double count,@Param("uid") Integer uid,@Param("fid") Integer fid);
 
 }

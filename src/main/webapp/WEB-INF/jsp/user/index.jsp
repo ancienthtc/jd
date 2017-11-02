@@ -1148,7 +1148,14 @@
             <a href="javascript:void(0);" target="_blank" style="margin:0 5px;"><img
                     src="<%=basePath%>picture/84b60e7538.png" alt="4"/></a>
         </div>
-        <div class="cp fr copyright"> &nbsp;&nbsp;&nbsp;&nbsp; <a href="javascript:void(0);" target="_blank">POWERED BY
+        <div class="cp fr copyright">
+            <!-- 站长统计 -->
+            <script type="text/javascript">
+                var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+                document.write(unescape("%3Cspan id='cnzz_stat_icon_1265895728'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol
+                    + "s22.cnzz.com/z_stat.php%3Fid%3D1265895728%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+            </script>
+            &nbsp;&nbsp;&nbsp;&nbsp; <a href="javascript:void(0);" target="_blank">POWERED BY
             SZJIDING</a></div>
     </div>
 </div>

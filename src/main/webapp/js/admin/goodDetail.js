@@ -1,7 +1,7 @@
 var goodDetail = new Object();
-goodDetail.id="";
-goodDetail.count = $('#imgBox').children('.photos').length;
-goodDetail.imgidspan = "";
+//goodDetail.id="";
+//goodDetail.count = $('#imgBox').children('.photos').length;
+//goodDetail.imgidspan = "";
 goodDetail.event = function(){
     /*返回按钮*/
     $('[data-btn="backProduct"]').on('click', function(){
@@ -179,6 +179,82 @@ goodDetail.event = function(){
         })
 
     })
+
+    // $("#change").on('click','.change',function () {
+    //     alert($(this));
+    // });
+    // $("#del").on('click','.del',function () {
+    //     alert($(this));
+    // });
+    $(".change").bind("click",function () {
+        //console.log( $(this).attr("name") );
+        //console.log( $(this).parent().parent().find(".fname") );
+        //console.log( $(this).parent().parent().find(".fname").val() );
+        //console.log( $(this).parent().parent().find(".fprice").val() );
+        //console.log( $(this).parent().parent().find(".fstock").val() );
+        var id=$(this).attr("name");
+        var fname=$(this).parent().parent().find(".fname").val();
+        var fprice=$(this).parent().parent().find(".fprice").val();
+        var fstock=$(this).parent().parent().find(".fstock").val();
+
+        var json='{"id":"'+id+'","fname":"'+fname+'","fprice":'+fprice+',"fstock":"'+fstock+'"}';
+        $.ajax({
+            type : 'POST',
+            data: json ,
+            contentType : 'application/json',
+            url:"../format/alter",
+            dataType:"text",
+            success:function(data){
+                if(data=="true")
+                {
+                    alert("修改成功");
+                }
+                else
+                {
+                    alert("修改失败");
+                }
+                //$("#contentBoxId").html(data);
+            },
+            error:function(){
+                alert("请求失败");
+            }
+        })
+
+
+    });
+
+    $(".del").bind("click",function () {
+        //console.log( $(this).attr("name") );
+        var id=$(this).attr("name");
+        var json={"id":+id};
+        //var tbody=$(this).parent().parent().parent();
+        var tr=$(this).parent().parent();
+        $.ajax({
+            type : 'POST',
+            data: json ,
+            //contentType : 'application/json',
+            url:"../format/del",
+            dataType:"text",
+            success:function(data){
+                if(data=="true")
+                {
+                    alert("删除成功");
+                    //tbody.removeChild(tr);
+                    tr.remove();
+                }
+                else
+                {
+                    alert("删除失败");
+                }
+                //$("#contentBoxId").html(data);
+            },
+            error:function(){
+                alert("请求失败");
+            }
+        })
+
+    });
+
 
 }
 

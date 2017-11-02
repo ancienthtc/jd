@@ -35,8 +35,15 @@ public class OrderController {
     //订单创建
     @RequestMapping(value = "/create" , produces="text/html;charset=UTF-8;")
     @ResponseBody
-    public String createOrder(@RequestBody String date) throws Exception
+    public String createOrder(@RequestBody String date,HttpSession session) throws Exception
     {
+        String json_session=session.getAttribute("info").toString();
+        if( !orderService.CheckInfo(json_session,date) )
+        {
+            return "支付失败，请勿修改任何信息! Failed to pay,Please don't to change any information!";
+        }
+
+
         Map<String,Object> map=orderService.createOrder(date);
 
         if(map.get("Order")==null)
@@ -326,6 +333,19 @@ public class OrderController {
     *   **********************************************************************
     *
     *   */
+    /**
+     *  测试订单取消! (不直接使用)
+     */
+    //@RequestMapping("/cancel_test")
+    //@ResponseBody
+    public String cancel_test(String uuid)
+    {
+        if ( orderService.cancelOrder(uuid) > 0 )
+        {
+            return "true";
+        }
+        return "false";
+    }
 
     //跳转
     //order1:等待支付

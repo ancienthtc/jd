@@ -188,9 +188,15 @@
                     var price= tablerow.find("[name='price']").attr("value");
                     var amount= tablerow.find("[name='amount']").attr("value");
                     var gclass= tablerow.find("[name='gclass']").attr("value");
+                    //fid
+                    var fid= tablerow.find("[name='fid']").attr("value");
+                    //fname
+                    var fname= tablerow.find("[name='fname']").attr("value");
+
                     var all= tablerow.find("[name='all']").attr("value");
                     var ciid= tablerow.find("[name='ciid']").attr("value");
-                    goodslist=goodslist+"{'title':'"+title+ "','gid':'"+gid+"','name':'"+name+"','price':'"+price+"','amount':'"+amount+"','gclass':'"+gclass+"','all':'"+all+"','ciid':'"+ciid+"'},";
+                    goodslist=goodslist+"{'title':'"+title+ "','gid':'"+gid+"','name':'"+name+"','price':'"+price+"','amount':'"+amount
+                        +"','gclass':'"+gclass+"','all':'"+all+"','ciid':'"+ciid+"','fid':'"+fid+"','fname':'"+fname+"'},";
                     //console.log(a);
                     checkbox_count++;
                 });
@@ -389,7 +395,11 @@
                     <tbody id="father_select">
                     <c:if test="${empty items}">
                         <tr>
-                            <a href="<%=basePath%>part/prolist">暂无商品,前去购买</a>
+                            <td colspan="5">
+                                <%--<a href="<%=basePath%>part/prolist">暂无商品,前去购买</a>--%>
+                                <a href="<%=basePath%>part/prolist">There is no goods in cart,please to go shoping.</a>
+                            </td>
+
                         </tr>
                     </c:if>
                     <c:if test="${not empty items}">
@@ -403,6 +413,10 @@
                                     <input type="hidden" name="price" value="${item.get("price")}"/>
                                     <input type="hidden" name="gclass" value="${item.get("gclass")}"/>
                                     <input type="hidden" name="amount" value="${item.get("amount")}"/>
+
+                                    <input type="hidden" name="fid" value="${item.get("fid")}"/>
+                                    <input type="hidden" name="fname" value="${item.get("fname")}"/>
+
                                     <input type="hidden" name="ciid" value="${item.get("ciid")}"/>
                                     <input type="hidden" name="all" value="${item.get("all")}"/>
                                 </td>
@@ -416,9 +430,18 @@
                                         <dd>
                                             <h4><a href="<%=basePath%>goods/NewGoodsDetail/${item.get("id")}">${item.get("name")}</a></h4>
                                             <p>${item.get("id")}</p>
-                                            <p class="remark">
-                                                Remark:<input type="text" name="Remark[]" value="" maxlength="200" data=""/>
-                                                <span><img src="<%=basePath%>picture/edit.png"/></span>
+                                            <%--<p class="remark">--%>
+                                                <%--Remark:<input type="text" name="Remark[]" value="" maxlength="200" data=""/>--%>
+                                                <%--<span><img src="<%=basePath%>picture/edit.png"/></span>--%>
+                                            <%--</p>--%>
+                                            <p>
+                                                Format:${item.get("fname")}
+                                                <%--<c:if test="${item.get('fname')==null}">--%>
+                                                    <%--Format:DEFAULT--%>
+                                                <%--</c:if>--%>
+                                                <%--<c:if test="${item.get('fname')!=null}">--%>
+                                                    <%--Format:${item.get("fname")}--%>
+                                                <%--</c:if>--%>
                                             </p>
                                         </dd>
                                     </dl>

@@ -459,3 +459,11 @@ a.red:hover{color:red; text-decoration:underline;}
 .chathide{right:-115px;}
 .chattrans{-webkit-transition:right .3s; transition:right .3s;}
 #chat_float_btn{text-align:center; height:70px; width:35px; border-radius:35px 0 0 35px; position:fixed; top:160px; right:0; z-index:1001; background:url(../images/chat_float_btn.png) no-repeat 12px center; cursor:pointer;}
+
+.guige{width:510px;height:auto;}
+.guige span{float: left;width:95px;height: 40px;line-height: 40px;margin-top: 10px;}
+.moren{width: 415px;float:right;}
+.moren div{color: black;height: 40px;border: 1px solid #ddd;
+    text-align: center;line-height: 40px;float: left;padding-left: 10px;padding-right: 10px;
+    margin-left: 10px;margin-top: 10px;}
+

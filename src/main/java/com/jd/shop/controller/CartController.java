@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,21 @@ public class CartController extends BaseController{
         String count=date.getString("count");
         String userid=date.getString("userid");
         String goodsid=date.getString("goodsid");
+        String tprice=date.getString("tprice");
+
+        String fid=null;
+        try{
+            fid=date.getString("fid");
+        }
+        catch (NullPointerException e)
+        {
+            fid="";
+        }
+
+        if(fid==null || fid.length()<=0)
+        {
+            fid="";
+        }
 
         if(userid==null || goodsid==null)
         {
@@ -50,7 +66,7 @@ public class CartController extends BaseController{
         {
             return "false";
         }
-        if( cartService.cartadd( Integer.parseInt(userid)  , Integer.parseInt(goodsid)  ,Double.parseDouble(count) ) >0 )
+        if( cartService.cartadd( userid  , goodsid  ,count,tprice ,fid  ) >0 )
         {
             return "true";
         }
@@ -66,7 +82,14 @@ public class CartController extends BaseController{
     public String toCart(@PathVariable Integer id, Model model)//用户id
     {
         List<Map<String,Object>> cartitem=cartService.cartItem(id);
-        model.addAttribute("items",cartitem);   //id,name,price,freight,gclass,ciid,amount,user_cart,all,title
+        for(int i=0;i<cartitem.size();i++)
+        {
+            if(cartitem.get(i).get("fname")==null || cartitem.get(i).get("fname").toString().length()<=0)
+            {
+                cartitem.get(i).put("fname","默认");
+            }
+        }
+        model.addAttribute("items",cartitem);   //id,name,price,freight,gclass,ciid,amount,fid,fname,user_cart,all,title || fname空为默认
 
         Map<String,Number> cal=cartService.getCal(cartitem);//放入service
         model.addAttribute("cal",cal);//total count
@@ -137,7 +160,7 @@ public class CartController extends BaseController{
     //进入结算
     @RequestMapping(value = "/tocommit")
 
-    public String toCommit(String json, Model model , String uid,String total)
+    public String toCommit(String json, Model model , String uid, String total, HttpSession session)
     {
         //解析JSON
         JSONObject object = JSON.parseObject(json);
@@ -145,6 +168,7 @@ public class CartController extends BaseController{
         JSONArray jsonArray = object.getJSONArray("goods");
         //转换List<Map<>>
         List<HashMap> goodslist = JSON.parseArray(jsonArray.toJSONString(), HashMap.class);
+        //title,gid,name,price,amount,gclass,all,ciid   fid , fname
         model.addAttribute("goodslist",goodslist);
         //取得最大运费
         Double freight=cartService.getMaxFreight(goodslist);
@@ -154,10 +178,16 @@ public class CartController extends BaseController{
         model.addAttribute("total",Double.parseDouble(total) );//总价
         //获取收货地址
         uid=object.getString("userid");
-        List<Address> addresses=addressService.FirstMainByUser( Integer.parseInt(uid) );
+        List<Address> addresses=addressService.FirstMainByUser( Integer.parseInt(uid) );//默认地址
         model.addAttribute("addresses",addresses);//收货地址
         //传递JSON
+
+        json=json.substring(0,json.length()-1);
+        json+=",'freight':'"+freight+"'}";
         json=json.replaceAll("\'","\"");
+
+
+        session.setAttribute("info",json);
         model.addAttribute("cart",json);
         //return "user/shopcommit";
         //return "user/shopcommit";

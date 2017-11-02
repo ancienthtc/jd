@@ -45,6 +45,18 @@
 
     <script type="text/javascript">
 
+//        var radio = document.getElementById("test").getElementsByTagName("li");
+//        var text = document.getElementById("text");
+//        var submit = document.getElementById("buynow_button");
+//        submit.onclick = function(){
+//            for(var i=0;i<radio.length;i++){
+//                if(radio[i].checked){
+//                    text.value = radio[i].value;
+//                }
+//            }
+//        }
+
+
         $(document).ready(function(){
             <!-- 加和减 -->
             //数量+
@@ -78,10 +90,30 @@
 
             //添加到购物车
             $("#addtocart_button").click(function () {
-                check_login();
                 var count=$("#quantity").val();
-                var userid=${sessionScope.user.id};
+
+                var userid;
+                if( $("#uid").val() == null || $("#uid").val().length<=0 || $("#uid").val()=="undefined" )
+                {
+                    check_login();
+                    return false;
+                }
+                else
+                {
+                    userid=$("#uid").val();
+                }
+
                 var goodsid=$("#goodsid").val();
+                //选中的价格
+                var tprice=$("#cur_price").text();
+                //规格id  formatid
+                var fid=$("#test").find(".active").attr("name");
+                //var fname;
+                if(fid=="a")
+                {
+                    fid="null";
+                }
+
                 if(userid.length<=0)
                 {
                     userid='null';
@@ -90,7 +122,7 @@
                 {
                     goodsid='null';
                 }
-                var date='{count:'+count+',userid:'+userid+',goodsid:'+goodsid+'}';
+                var date='{count:'+count+',userid:'+userid+',goodsid:'+goodsid+',tprice:'+tprice+',fid:'+fid+'}';
                 $.ajax( {
                     type : 'POST',
                     contentType : 'application/json',
@@ -116,23 +148,46 @@
             });
 
             $("#buynow_button").click(function () {
-                check_login();
+
                 //userid , total=1
                 //title=first title , gid , name , price=单价 , amount=选取个数 , gclass , all=amount*price , ciid*
-                var userid=${sessionScope.user.id};//ok
-                var total=1;
+                var userid;
+                if( $("#uid").val() == null || $("#uid").val().length<=0 || $("#uid").val()=="undefined" )
+                {
+                    check_login();
+                    return false;
+                }
+                else
+                {
+                    userid=$("#uid").val();
+                }
+
+
 
                 var title=$("#img1").attr("title");
                 var gid='${goods.id}';
                 var name='${goods.name}';
-                var price=${goods.price};
+                var price=$("#cur_price").text();
                 var amount=$("#quantity").val();//ok
                 var gclass='${goods.gclass}';
+
+                var total=price*amount;
+                //var total=1;
+
+                //规格参数
+                var fid=$("#test").find(".active").attr("name");
+                var fname=$("#test").find(".active").attr("fname");
+
+                if(fid=="a")
+                {
+                    fid="null";
+                }
 
                 var all=amount*price;
                 var json="";
                 json=json+'{"goods":[';
-                json=json+'{"title":"'+title+'","gid":"'+gid+'","name":"'+name+'","price":"'+price+'","amount":"'+amount+'","gclass":"'+gclass+'","all":"'+all+'","ciid":null}';
+                json=json+'{"title":"'+title+'","gid":"'+gid+'","name":"'+name+'","price":"'+price+'","amount":"'+amount+
+                    '","gclass":"'+gclass+'","all":"'+all+'","ciid":null,"fid":"'+fid+'","fname":"'+fname+'"}';
                 json=json+'],';
                 json=json+'"userid":"'+userid+'","total":"'+total+'"';
                 json=json+'}';
@@ -156,12 +211,18 @@
         })
 
         function check_login() {
-            var user=${sessionScope.user.id};
+            var user=$("#uid").val();
             if(user==null || user.length<=0)
             {
-                window.location.href='<%=basePath%>login_register';
+                alert("请先登录");
+                <%--window.location.href='<%=basePath%>';--%>
+//                window.navigate("jb51.jsp");
+                <%--window.href="<%=basePath%>login/view";--%>
+                //return false;
             }
         }
+
+
 
     </script>
 
@@ -204,6 +265,7 @@
 </head>
 
 <body class="lang_en">
+<input id="uid" value="${sessionScope.user.id}" type="hidden"/>
 <style type="text/css">
     .FontColor, a.FontColor, a.FontColor:hover, a:hover {
         color: #00C17E;
@@ -292,6 +354,22 @@
     .GoodBorderBottomHoverColor {
         border-bottom-color: #00935F;
     }
+
+    .format_ {
+        color: black;
+        height: 40px;
+        border: 1px solid #ddd;
+        text-align: center;
+        line-height: 40px;
+        float: left;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+
+    .active{border: 1px solid red;}
+
 </style>
 <script type="text/javascript">
     $(window).resize(function () {
@@ -501,8 +579,8 @@
                 </div>
                 <div class="widget prod_info_price">
                     <div class="widget price_left price_0">
-                        <div class="price_info_title">Original Price:</div>
-                        <del>USD $25.99</del>
+                        <div class="price_info_title">Goods Sales:</div>
+                        <del id="gsales">${goods.sales}</del>
                     </div>
                     <div class="widget price_left price_1">
                         <div class="price_info_title">Price:</div>
@@ -528,12 +606,39 @@
                             </div>
                             <div class="discount_price discount_attr fl">(<span>42% OFF</span>)</div>
                             <div class="clear"></div>
-                            <div class="save_price">Save <span class="save_p">$10.99</span><span class="save_style">(42% Off)</span>
+                            <div class="save_price">Goods Stock: <span class="save_p" id="save_p">${goods.stock}</span><span class="save_style">(42% Off)</span>
                             </div>
                         </div>
                     </div>
                     <a class="prod_info_pdf" href="javascript:;"><em class="icon_pdf"></em>PDF Format</a>
                 </div>
+                <div class="guige">
+                    <span>specifications:</span>
+
+                    <!-- 规格参数 -->
+                    <%--<div class="moren" id="test">--%>
+                        <%--<div class="format_ active" value="1" >default</div>--%>
+                        <%--<div class="format_" value="2">defaultdefaultdefaultdefaultdefaultdefault</div>--%>
+                        <%--<div class="format_" value="3">defaultrtreter</div>--%>
+                    <%--</div>--%>
+
+                    <ul id="test">
+                        <c:forEach var="item" items="${formats}">
+
+                            <c:if test="${empty item.id}">
+                                <li class="format_ " name="a" fname="${item.fname}" >${item.fname}</li>
+                                <input type="hidden" id="gid" value="${goods.id}">
+                            </c:if>
+                            <c:if test="${not empty item.id}">
+                                <li class="format_ " name="${item.id}" fname="${item.fname}" >${item.fname}</li>
+                            </c:if>
+
+                        </c:forEach>
+                    </ul>
+
+
+                </div>
+
                 <form class="prod_info_form" name="prod_info_form" id="goods_form" action="/cart/add.html" method="post"
                       target="_blank">
                     <ul class="widget attributes" default_selected="0" data-combination="1">
@@ -793,3 +898,72 @@
 <script type="text/javascript" src="<%=basePath%>js/addthis_widget.js"></script>
 </body>
 </html>
+
+<script>
+    var obj_lis = document.getElementById("test").getElementsByTagName("li");
+
+    for(i=0;i<obj_lis.length;i++){
+        obj_lis[i].onclick = function(){
+            //改AJAX
+            //alert($(this).attr("name"));
+            var fid=$(this).attr("name");
+            var gid=$("#gid").val();
+            var dates='';
+            if(fid=="a")
+            {
+                dates='{"fid":"'+gid+'","type":"'+0+'"}';
+            }
+            else
+            {
+                dates='{"fid":"'+fid+'","type":"'+1+'"}';
+            }
+            changePrice(dates);
+            
+        }
+    }
+    $('#test li').eq(0).addClass("active");
+    $('#test li').each(function(){
+        $(this).click(function(){
+            $(this).addClass("active").siblings().removeClass("active");
+        })
+    })
+
+    function changePrice(dates) {
+
+        $.ajax( {
+            type : 'POST',
+            contentType : 'application/json',
+            url : '<%=basePath%>format/changePrice',
+            data : dates,
+            dataType : 'json',
+            success : function(data) {
+                console.log(data);
+                //$("#cur_price").text(data);
+                $.each(data,function (i,row) {
+                    if(i=="price")
+                    {
+                        $("#cur_price").text(row);//price
+                    }
+                    if(i=="stock")
+                    {
+                        $("#save_p").text(row);//price
+                    }
+                    if(i=="sales")
+                    {
+                        $("#gsales").text(row);
+                    }
+
+                })
+//                for (var key in data)
+//                {
+//                    alert(key); alert(data[key]);
+//                }
+            },
+            error : function(data) {
+                alert("错误!")
+            }
+        });
+
+    }
+    
+</script>

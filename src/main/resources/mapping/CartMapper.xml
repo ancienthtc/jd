@@ -27,19 +27,22 @@
     SELECT
     t_goods.id,
     t_goods.`name`,
-    t_goods.price,
     t_goods.freight,
     t_goods.gclass,
-    t_cartitem.id as ciid,
+    t_cartitem.id AS ciid,
     t_cartitem.amount,
+    t_cartitem.tprice AS price,
+    t_format.id AS fid,
+    t_format.fname AS fname,
     t_cart.user_cart,
-    t_goods.price*t_cartitem.amount as `all`,
+    t_cartitem.tprice*t_cartitem.amount AS `all`,
     t_image.title
     FROM
     t_cart
     Right JOIN t_cartitem ON t_cartitem.item_cart = t_cart.id
     LEFT JOIN t_goods ON t_cartitem.item_goods = t_goods.id
     LEFT JOIN t_image ON t_image.image_list=t_goods.piclist_goods
+    LEFT JOIN t_format ON t_cartitem.item_format = t_format.id
     WHERE user_cart=#{userid,jdbcType=INTEGER}
     GROUP BY t_cartitem.id
   </select>

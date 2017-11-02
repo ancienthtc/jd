@@ -50,6 +50,9 @@ public class GoodsController extends BaseController{
     @Autowired
     private HistoryService historyService;
 
+    @Autowired
+    private FormatService formatService;
+
     /**
      * 商品保存时先做图片本地上传,返回图片名
      * @param file
@@ -506,6 +509,12 @@ public class GoodsController extends BaseController{
         }else{
             req.setAttribute("shelf","");
         }
+
+        //新！
+        //获取规格
+        List<Format> formats=formatService.getGoodsFormat(id);
+        req.setAttribute("formats", formats);
+
         return "admin/goodDetail";
     }
 
@@ -573,11 +582,26 @@ public class GoodsController extends BaseController{
         //获取商品
         Goods g=goodsService.getGoodsInfo(goodsid);
         model.addAttribute("goods",g);
+        //新！ 获取规格
+        List<Format> formats=formatService.getGoodsFormat(goodsid);
+        Format format=new Format();
+        format.setId(null);
+        //中文
+        //format.setFname("默认");
+        //英文
+        format.setFname("Default");
+
+        format.setFprice(g.getPrice());
+        format.setFstock(g.getStock());
+        format.setFsale(g.getSales());
+        formats.add(0,format);
+        model.addAttribute("formats",formats);
         //获取图片
         model.addAttribute("images",goodsService.getGoodsImgs( g.getPiclistGoods() ));
 
         return "user/pro";
     }
+
 
     //起始ajax
     @RequestMapping("/partGoods")

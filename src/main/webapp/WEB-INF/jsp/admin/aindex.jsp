@@ -58,9 +58,13 @@
                         </ul>-->
                     </li>
                     <!-- 商品管理 -->
-                    <li class="default" id = "good">
+                    <li class="default" >
                        <p><span class="iconfont icon-products"></span>商品管理<i class="iconfont icon-right arrow"></i></p>
+                        <ul class="secondNav">
+                             <li id = "good"><a href="javascript:void(0);">商品详情</a></li>
+                             <li id = "admin1"><a href="javascript:void(0);">规格管理</a></li>
 
+                         </ul>
                     </li>
                     <!-- 用户管理 -->
                     <li class="default" id="user">

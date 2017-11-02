@@ -5,6 +5,10 @@ public class CartItem {
 
     private Double amount;
 
+    private Double tprice;
+
+    private Integer itemFormat;
+
     private Integer itemGoods;
 
     private Integer itemCart;
@@ -23,6 +27,22 @@ public class CartItem {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    public Double getTprice() {
+        return tprice;
+    }
+
+    public void setTprice(Double tprice) {
+        this.tprice = tprice;
+    }
+
+    public Integer getItemFormat() {
+        return itemFormat;
+    }
+
+    public void setItemFormat(Integer itemFormat) {
+        this.itemFormat = itemFormat;
     }
 
     public Integer getItemGoods() {

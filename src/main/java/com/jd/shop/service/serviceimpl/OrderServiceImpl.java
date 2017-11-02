@@ -5,8 +5,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.jd.shop.dao.CartItemMapper;
+import com.jd.shop.dao.FormatMapper;
 import com.jd.shop.dao.GoodsMapper;
 import com.jd.shop.dao.OrderMapper;
+import com.jd.shop.model.Format;
 import com.jd.shop.model.Goods;
 import com.jd.shop.model.Order;
 import com.jd.shop.service.GoodsService;
@@ -41,6 +43,9 @@ public class OrderServiceImpl implements OrderService{
     @Resource
     private CartItemMapper cartItemMapper;
 
+    @Resource
+    private FormatMapper formatMapper;
+
     //订单统计 全局变量
     public final static int LAST_TYPE=-1;
     public final static int THIS_TYPE=0;
@@ -64,6 +69,8 @@ public class OrderServiceImpl implements OrderService{
         String total=object.getString("total");//商品总价
         String freight=object.getString("freight");//运费
 
+
+
         Double final_price=Double.parseDouble(total)+Double.parseDouble(freight);//最终价格
         String aid=object.getString("aid");
 
@@ -80,35 +87,80 @@ public class OrderServiceImpl implements OrderService{
                 return map;
             }
 
-            //2.取得库存，判断库存量,库存小于数量，返回失败
-            Double amount= Double.parseDouble(goodslist.get(i).get("amount").toString() );
-            if(amount-goods.getStock() >= 0 || goods.getStock()<=0 )
+            //判断规格参数，默认/自定义
+            //规格参数
+            String fid=  goodslist.get(i).get("fid").toString()  ;
+            String fname= goodslist.get(i).get("fname").toString();
+
+            /*  */
+            if(fid.length()>0 && !fid.equalsIgnoreCase("null") )   // 运算规格
             {
-                map.put("Order",null);
-                map.put("Msg",goods.getName()+"超过库存!");
-                return map;
+                //获取规格
+                Format format=formatMapper.selectByPrimaryKey( Integer.parseInt(fid) );
+                //取得购买数量
+                Double amount= Double.parseDouble(goodslist.get(i).get("amount").toString() );
+
+                //2.取得库存，判断库存量,库存小于数量，返回失败
+                if(amount-format.getFstock() >= 0 || format.getFstock() <= 0 )
+                {
+                    map.put("Order",null);
+                    map.put("Msg",goods.getName()+"超过库存!");
+                    return map;
+                }
+                //3.减去商品库存
+                double left=format.getFstock()-amount;
+                if( formatMapper.updateStock(left,gid) <= 0)
+                {
+                    map.put("Order",null);
+                    map.put("Msg","库存减少失败");
+                    return map;
+                }
+                //规格无库存不下架
+                //4.加上销售量
+                if( formatMapper.updateSales(format.getFsale()+amount , gid) <= 0 )
+                {
+                    map.put("Order",null);
+                    map.put("Msg","销量增加失败");
+                    return map;
+                }
+
+
+            }
+            else if(fid.length()<=0 || fid.equalsIgnoreCase("null")  )   // 运算普通
+            {
+                //2.取得库存，判断库存量,库存小于数量，返回失败
+                Double amount= Double.parseDouble(goodslist.get(i).get("amount").toString() );
+                if(amount-goods.getStock() >= 0 || goods.getStock()<=0 )
+                {
+                    map.put("Order",null);
+                    map.put("Msg",goods.getName()+"超过库存!");
+                    return map;
+                }
+
+                //3.减去商品库存 如果为0 就下架
+                double left=goods.getStock()-amount;
+                if(goodsMapper.updateStock(left , gid)<=0)
+                {
+                    map.put("Order",null);
+                    map.put("Msg","库存减少失败");
+                    return map;
+                }
+                if(left==0.0)
+                {
+                    goodsService.goodsunder(goods.getId());
+                }
+
+                //4.加上销售量
+                if(goodsMapper.updateSales(goods.getSales()+amount , gid)<=0)
+                {
+                    map.put("Order",null);
+                    map.put("Msg","销量增加失败");
+                    return map;
+                }
+
             }
 
-            //3.减去商品库存 如果为0 就下架
-            double left=goods.getStock()-amount;
-            if(goodsMapper.updateStock(left , gid)<=0)
-            {
-                map.put("Order",null);
-                map.put("Msg","库存减少失败");
-                return map;
-            }
-            if(left==0.0)
-            {
-                goodsService.goodsunder(goods.getId());
-            }
-
-            //4.加上销售量
-            if(goodsMapper.updateSales(goods.getSales()+amount , gid)<=0)
-            {
-                map.put("Order",null);
-                map.put("Msg","销量增加失败");
-                return map;
-            }
+            /*  */
 
             //5.移除购物车(如果有ciid)
             if( goodslist.get(i).get("ciid")!=null)
@@ -127,9 +179,11 @@ public class OrderServiceImpl implements OrderService{
             detail.append("'goodsname':'"+goodslist.get(i).get("name")+"',");
             detail.append("'price':'"+goodslist.get(i).get("price")+"',");
             detail.append("'amount':'"+goodslist.get(i).get("amount")+"',");
-            detail.append("'title':'"+goodslist.get(i).get("title"));
+            detail.append("'title':'"+goodslist.get(i).get("title")+"',");
+            detail.append("'fid':'"+goodslist.get(i).get("fid")+"',");
+            detail.append("'fname':'"+goodslist.get(i).get("fname")+"'");
             //detail.append("'freight':'"+ Double.valueOf(freight) );
-            detail.append("'},");
+            detail.append("},");
         }
         detail.deleteCharAt(detail.length() - 1);//去除,
         detail.append("]");
@@ -144,7 +198,7 @@ public class OrderServiceImpl implements OrderService{
         //paytime null
         order.setLimit(48);//订单时效：48小时
         order.setAllprice( final_price );//总价
-        order.setDetail(detail.toString());//商品详情(JSON)
+        order.setDetail( detail.toString().replaceAll("\'","\"") );//商品详情(JSON)
         order.setOrderUser( Integer.parseInt(uid) );//关联用户
         if(orderMapper.insertSelective(order) > 0)
         {
@@ -161,6 +215,19 @@ public class OrderServiceImpl implements OrderService{
             map.put("Msg","生成失败");
             return map;
         }
+    }
+
+    @Override
+    public boolean CheckInfo(String session_json, String ajax_json) {
+        JSONObject o1 = JSON.parseObject(session_json);
+        JSONObject o2 = JSON.parseObject(ajax_json);
+        o2.remove("aid");
+        if(o1.toJSONString().equals(o2.toJSONString()))
+        {
+            return true;
+        }
+        return false;
+
     }
 
     @Override
@@ -430,23 +497,46 @@ public class OrderServiceImpl implements OrderService{
     public int cancelOrder(String uuid) {
         //1.取出detail
         Order order=orderMapper.selectByUUID(uuid);
+        if(order==null)
+        {
+            return 0;
+        }
         JSONObject jsonObject=JSON.parseObject(order.getDetail());
         JSONArray jsonArray = jsonObject.getJSONArray("Goods");
         List<HashMap> goodslist = JSON.parseArray(jsonArray.toJSONString(), HashMap.class);
         //2.判断商品是否存在，存在就恢复库存
         for(int i=0;i<goodslist.size();i++)
         {
+            //获取detail中的goodsid
             Integer goodsid= Integer.parseInt( goodslist.get(i).get("goodsid").toString() ) ;//取出id
-            //查找商品
-            Goods goods=goodsMapper.selectByPrimaryKey(goodsid);
-            if(goods != null)
+            //获取detail中的fid
+            String fid=goodslist.get(i).get("fid").toString();
+            if( fid.length()<=0 || fid.equalsIgnoreCase("null") ) //判断商品
             {
-                Double amount=Double.parseDouble( goodslist.get(i).get("amount").toString() ) ;//取出数量
-                //goods.setStock( goods.getStock()+amount );
-                //恢复库存
-                goodsMapper.updateStock(goods.getStock()+amount,goodsid);
-                //恢复销量
-                goodsMapper.updateSales(goods.getSales()-amount,goodsid);
+                //查找商品
+                Goods goods=goodsMapper.selectByPrimaryKey(goodsid);
+                if(goods != null)
+                {
+                    Double amount=Double.parseDouble( goodslist.get(i).get("amount").toString() ) ;//取出数量
+                    //goods.setStock( goods.getStock()+amount );
+                    //恢复库存
+                    goodsMapper.updateStock(goods.getStock()+amount,goodsid);
+                    //恢复销量
+                    goodsMapper.updateSales(goods.getSales()-amount,goodsid);
+                }
+            }
+            else    //判断规格
+            {
+                Format format=formatMapper.selectByPrimaryKey( Integer.parseInt( fid ) );
+                if(format!=null)
+                {
+                    Double amount=Double.parseDouble( goodslist.get(i).get("amount").toString() );
+                    //恢复库存
+                    formatMapper.updateStock( format.getFstock()+amount , goodsid );
+                    //恢复销量
+                    formatMapper.updateSales( format.getFsale()-amount,goodsid );
+                }
+
             }
         }
         //3.更新状态

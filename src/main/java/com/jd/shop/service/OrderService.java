@@ -15,6 +15,8 @@ public interface OrderService {
 
     Map<String,Object> createOrder(String json);
 
+    boolean CheckInfo(String session_json,String ajax_json);
+
     String getUUID(Integer id);
 
     int cancelOrder(String uuid);//订单取消

@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public interface CartService {
 
-    int cartadd(Integer userid,Integer goodsid,Double count);
+    int cartadd(String userid,String goodsid,String count ,String tprice,String fid);
 
     List<Map<String,Object>> cartItem(Integer uid);
 

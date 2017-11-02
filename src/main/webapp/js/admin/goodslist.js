@@ -4,9 +4,7 @@ var goodslist = new Object();
 
 goodslist.init = function(){
     /*商品页面部分刷新*/
-    $("#good").click(
-
-        function(){
+    $("#good").click(function(){
             $.ajax({
                 url:"../goods/toGoodsList2",
                 type:"get",
@@ -45,8 +43,23 @@ goodslist.init = function(){
             //         content: str //注意，如果str是object，那么需要字符拼接。
             //     });
             // });
+    });
 
-        });
+    $("#admin1").click( //规格管理
+        function(){
+            $.ajax({
+                url:"../format/getGlist",
+                type:"get",
+                dataType:"html",
+                success:function(data){
+                    $("#contentBoxId").html(data);
+                },
+                error:function(){
+                    alert("页面出错");
+                }
+            });
+        }
+    );
 
 }
 

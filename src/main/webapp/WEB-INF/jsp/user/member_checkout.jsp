@@ -87,12 +87,27 @@
         function paypal2(uuid) {
             var url = "<%=basePath%>order/gotopay";
             //uuid acount userid
-            var user_id=${sessionScope.user.id};
+            var user_id="";
+            user_id=${sessionScope.user.id};
             if(user_id==null || user_id.length<=0)
             {
                 return false;
             }
-            var account=$("#ot_total").text();
+            <%--var total=${total};--%>
+            <%--var freight=${freight};--%>
+            <%--if(total==null || freight==null)--%>
+            <%--{--%>
+                <%--return false;--%>
+            <%--}--%>
+            <%--var account=parseFloat(total,2)+parseFloat(freight,2);--%>
+            //var account=$("#ot_total").text();
+            var account="";
+            account=${total+freight};
+            if(account==null || account=="")
+            {
+                return false;
+            }
+
             var dates='{"user_id":"'+user_id+'","account":"'+account+'","uuid":"'+uuid+'"}';
             $.ajax({
                 type : 'POST',
@@ -132,7 +147,7 @@
             //生成订单 并跳转
             $("#buy").click(function () {
                 var json=$("#cart_json").val();//待提交  -->商品信息
-                console.log(json);//testOK
+                //console.log(json);//testOK
                 json=json.toString();
                 var list= $('input:radio[name="choice"]:checked').val();
                 if(list==null){
@@ -142,18 +157,18 @@
 
                 var tablerow = $('input:radio[name="choice"]:checked').parent();
                 var aid = tablerow.find("[name='aid']").attr("value");//待提交,收货地址
-                console.log(aid);
+                //console.log(aid);
 
                 //var all=$("#all").attr("value");
                 //console.log(all);
-                var freight=$("#ot_combine_shippnig_insurance").text();
+                //var freight=$("#ot_combine_shippnig_insurance").text();
 
-                console.log(json);
+                //console.log(json);
                 var date=json.substr(0,json.length-1);
                 //json=json.substr(0,json.length-1);
-                date=date+",'aid':'"+aid+"','freight':'"+freight+"'}";
+                date=date+",'aid':'"+aid+"'}";
                 //var dates='{json:'+json+',aid:'+aid+',all:'+all+'}';
-                console.log(date);
+                //console.log(date);
                 $.ajax( {
                     type : 'POST',
                     contentType : 'application/json; charset=UTF-8',
@@ -161,7 +176,7 @@
                     data : date,
                     dataType : 'text',
                     success : function(data) {
-                        console.log(data);
+                        //console.log(data);
                         //if(data==true || data=="true")
                         if(data.length==36)
                         {

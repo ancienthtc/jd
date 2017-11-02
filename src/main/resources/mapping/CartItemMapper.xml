@@ -4,11 +4,13 @@
   <resultMap id="BaseResultMap" type="com.jd.shop.model.CartItem" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="amount" property="amount" jdbcType="DOUBLE" />
+    <result column="tprice" property="tprice" jdbcType="DOUBLE" />
+    <result column="item_format" property="itemFormat" jdbcType="INTEGER" />
     <result column="item_goods" property="itemGoods" jdbcType="INTEGER" />
     <result column="item_cart" property="itemCart" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, amount, item_goods, item_cart
+    id, amount, tprice, item_format, item_goods, item_cart
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -27,28 +29,49 @@
     item_goods= #{gid,jdbcType=INTEGER}
   </select>
 
-  <select id="queryByGoodsWithUser" parameterType="java.lang.Integer" resultType="com.jd.shop.model.CartItem">
+  <select id="queryByGoodsWithUserNormal" parameterType="java.lang.Integer" resultType="com.jd.shop.model.CartItem">
     SELECT
     t_cartitem.id,
     t_cartitem.amount,
+    t_cartitem.tprice,
+    t_cartitem.item_format,
     t_cartitem.item_goods,
     t_cartitem.item_cart
     FROM
     t_cartitem
     INNER JOIN t_cart ON t_cart.id = t_cartitem.item_cart
     WHERE
-    t_cart.user_cart = #{uid,jdbcType=INTEGER} AND item_goods= #{gid,jdbcType=INTEGER}
+    t_cart.user_cart = #{uid,jdbcType=INTEGER} AND item_goods= #{gid,jdbcType=INTEGER} AND item_format is NULL
   </select>
+
+  <select id="queryByGoodsWithUserFormat" parameterType="java.lang.Integer" resultType="com.jd.shop.model.CartItem">
+    SELECT
+    t_cartitem.id,
+    t_cartitem.amount,
+    t_cartitem.tprice,
+    t_cartitem.item_format,
+    t_cartitem.item_goods,
+    t_cartitem.item_cart
+    FROM
+    t_cartitem
+    INNER JOIN t_cart ON t_cart.id = t_cartitem.item_cart
+    WHERE
+    t_cart.user_cart = #{uid,jdbcType=INTEGER} AND item_goods= #{gid,jdbcType=INTEGER} AND item_format = #{fid,jdbcType=INTEGER}
+  </select>
+
+
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_cartitem
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.jd.shop.model.CartItem" >
-    insert into t_cartitem (id, amount, item_goods, 
-      item_cart)
-    values (#{id,jdbcType=INTEGER}, #{amount,jdbcType=DOUBLE}, #{itemGoods,jdbcType=INTEGER}, 
-      #{itemCart,jdbcType=INTEGER})
+    insert into t_cartitem (id, amount, tprice,
+      item_format, item_goods, item_cart
+      )
+    values (#{id,jdbcType=INTEGER}, #{amount,jdbcType=DOUBLE}, #{tprice,jdbcType=DOUBLE},
+      #{itemFormat,jdbcType=INTEGER}, #{itemGoods,jdbcType=INTEGER}, #{itemCart,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.jd.shop.model.CartItem" >
     insert into t_cartitem
@@ -58,6 +81,12 @@
       </if>
       <if test="amount != null" >
         amount,
+      </if>
+      <if test="tprice != null" >
+        tprice,
+      </if>
+      <if test="itemFormat != null" >
+        item_format,
       </if>
       <if test="itemGoods != null" >
         item_goods,
@@ -73,6 +102,12 @@
       <if test="amount != null" >
         #{amount,jdbcType=DOUBLE},
       </if>
+      <if test="tprice != null" >
+        #{tprice,jdbcType=DOUBLE},
+      </if>
+      <if test="itemFormat != null" >
+        #{itemFormat,jdbcType=INTEGER},
+      </if>
       <if test="itemGoods != null" >
         #{itemGoods,jdbcType=INTEGER},
       </if>
@@ -87,6 +122,12 @@
       <if test="amount != null" >
         amount = #{amount,jdbcType=DOUBLE},
       </if>
+      <if test="tprice != null" >
+        tprice = #{tprice,jdbcType=DOUBLE},
+      </if>
+      <if test="itemFormat != null" >
+        item_format = #{itemFormat,jdbcType=INTEGER},
+      </if>
       <if test="itemGoods != null" >
         item_goods = #{itemGoods,jdbcType=INTEGER},
       </if>
@@ -99,17 +140,26 @@
   <update id="updateByPrimaryKey" parameterType="com.jd.shop.model.CartItem" >
     update t_cartitem
     set amount = #{amount,jdbcType=DOUBLE},
+      tprice = #{tprice,jdbcType=DOUBLE},
+      item_format = #{itemFormat,jdbcType=INTEGER},
       item_goods = #{itemGoods,jdbcType=INTEGER},
       item_cart = #{itemCart,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
   <!-- new -->
-  <update id="updateCountOfItem" parameterType="java.lang.Number">
+  <update id="updateCountOfItem" >
     UPDATE
-     t_cartitem set amount=amount+#{count,jdbcType=DOUBLE}
+    t_cartitem INNER JOIN t_cart ON t_cart.id = t_cartitem.item_cart
+    SET amount=amount+#{count,jdbcType=DOUBLE}
     WHERE
-     item_goods=#{gid,jdbcType=INTEGER}
+    item_goods=#{gid,jdbcType=INTEGER} and t_cart.user_cart=#{uid,jdbcType=INTEGER}
+    <if test="fid == null">
+    AND item_format is NULL
+    </if>
+    <if test="fid != null">
+    AND item_format = #{fid,jdbcType=INTEGER}
+    </if>
   </update>
 
 </mapper>
