@@ -17,7 +17,9 @@
     table tr{height: 40px;text-align: center;border: 1px solid rgba(0, 0, 0, .15);}
     table tr td:nth-child(3){width: 20%;}
     table tr td input{width:80px!important;height: 30px!important;border-radius: 4px!important;}
-
+.fname{border:1px solid rgba(0, 0, 0, .15);border-radius: 4px;}
+    .fprice{border:1px solid rgba(0, 0, 0, .15);border-radius: 4px;}
+    .fstock{border:1px solid rgba(0, 0, 0, .15);border-radius: 4px;}
 </style>
 
 <div class="location">

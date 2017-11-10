@@ -19,7 +19,7 @@
       <%--<span style="display: none" class="form-control" name="id" >${requestScope.goods.id}</span>--%>
       <input type="hidden" class="form-control" name="id" />
     <div class="btGroup">
-      <label>产品名称：</label>
+      <label>产品名称*：</label>
       <input type="text" class="form-control" name="name"/>
       <span class="tips"></span>
     </div>
@@ -35,7 +35,7 @@
 
   </div>
     <div class="btGroup">
-      <label>单价：</label>
+      <label>单价*：</label>
         <input type="text" class="form-control" name="price"/>
         <span class="tips"></span>
           <%--<select class="form-control" id="parentType">
@@ -49,12 +49,12 @@
           <span class="tips"></span>--%>
     </div>
     <div class="btGroup">
-      <label>计量单位：</label>
+      <label>计量单位*：</label>
         <input type="text" class="form-control" name="gclass" />
         <span class="tips"></span>
     </div>
     <div class="btGroup">
-      <label>参数1：</label>
+      <label>参数1*：</label>
         <input type="text" class="form-control" name="parameter1" />
         <span class="tips"></span>
     </div>

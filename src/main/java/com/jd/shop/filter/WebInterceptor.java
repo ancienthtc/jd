@@ -40,8 +40,8 @@ public class WebInterceptor implements HandlerInterceptor {
          */
         String path = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort();
         User sessionUser = (User) session.getAttribute("user");
-        System.out.println(path);
-        System.out.println(sessionUser);
+        //System.out.println(path);
+        //System.out.println(sessionUser);
         if (sessionUser != null) {
             return true;
         } else {

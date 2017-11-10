@@ -16,6 +16,9 @@
     <link href='<%=basePath%>css/global_1.css' rel='stylesheet' type='text/css'/>
     <link href='<%=basePath%>css/user.css' rel='stylesheet' type='text/css'/>
     <link href='<%=basePath%>css/style.css' rel='stylesheet' type='text/css'/>
+
+    <link href='<%=basePath%>css/user/special.css' rel='stylesheet' type='text/css'/>
+
     <script type='text/javascript' src='<%=basePath%>js/jquery-1.7.2.min.js'></script>
     <script type='text/javascript' src='<%=basePath%>js/en.js'></script>
     <script type='text/javascript' src='<%=basePath%>js/global.js'></script>
@@ -110,8 +113,14 @@
 
                     </dl>
                 </li>
-                <li class="fr border_r"><a href="<%=basePath%>member_favorite.htm">Wish List</a></li>
-                <li class="fr border_r"><a href="<%=basePath%>user/toMember_index.htm">My Account</a></li>
+                <c:if test="${empty sessionScope.user}">
+                    <li class="fr border_r"><a href="<%=basePath%>login_register">Wish List</a></li>
+                    <li class="fr border_r"><a href="<%=basePath%>login_register">My Account</a></li>
+                </c:if>
+                <c:if test="${not empty sessionScope.user}">
+                    <li class="fr border_r"><a href="<%=basePath%>member_favorite.htm">Wish List</a></li>
+                    <li class="fr border_r"><a href="<%=basePath%>user/toMember_index">My Account</a></li>
+                </c:if>
             </ul>
         </div>
     </div>
@@ -402,6 +411,14 @@
     </div>
 </div>
 
+<div id="div_side">
+
+    <a target="_blank"
+       href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=RCYlK2opJWk3KiszPWouJSkhNwQiKzwpJS0oaicrKQ"
+       style="text-decoration:none;">
+        <img src="<%=basePath%>picture/mail.png" alt="">
+    </a>
+</div>
 
 </body>
 </html>

@@ -604,15 +604,19 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public List<Order> HighQuery(String uuid, String begin, String end, Integer paystatus, Integer shopstatus) {
+    public PagedResult<Order> HighQuery(String uuid,String begin,String end,Integer paystatus,Integer shopstatus,Integer pageNo,Integer pageSize)
+    {
+        pageNo = pageNo == null ? 1 : pageNo;
+        pageSize = pageSize == null ? 5 : pageSize;
+        PageHelper.startPage(pageNo, pageSize);
         List<Order> orderList=orderMapper.QueryOrder(uuid,begin,end,paystatus,shopstatus);
         //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for (Order o:orderList)
         {
             o.setOrdertime2(o.getOrdertime().toLocaleString());
         }
-
-        return orderList;
+        //BeanUtil.toPagedResult(orderList);
+        return BeanUtil.toPagedResult(orderList);
     }
 
     @Override
@@ -625,6 +629,7 @@ public class OrderServiceImpl implements OrderService{
                 cancelOrder(o.getUuid());
             }
         }
+
     }
 
     /**

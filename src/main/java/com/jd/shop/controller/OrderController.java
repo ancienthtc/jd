@@ -14,8 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.net.URLDecoder;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -262,7 +260,7 @@ public class OrderController {
         model.addAttribute("address",address);
 
         //return object.toJSONString();
-        return "user/order_nopay_detail";
+        return "admin/order_nopay_detail";
     }
 
     //待收货中获取物流信息
@@ -288,7 +286,7 @@ public class OrderController {
         model.addAttribute("info",goodslist);
         model.addAttribute("address",address);
 
-        return "user/order_noaccept_detail";
+        return "admin/order_noaccept_detail";
     }
 
 
@@ -309,7 +307,7 @@ public class OrderController {
 
         model.addAttribute("info",goodslist);
 
-        return "user/order_nocomment_detail";
+        return "admin/order_nocomment_detail";
     }
 
 
@@ -453,7 +451,7 @@ public class OrderController {
         JSONObject date2=new JSONObject( JSONObject.parseObject(detail));
         //修改键 log
         date2.put("log",info);
-        System.out.print(date2);
+        //System.out.print(date2);
         //更新detail
         orderService.updateDetail(uuid,date2.toString());
 
@@ -496,38 +494,55 @@ public class OrderController {
         String strtus=object.getString("strtus");
         String begin=object.getString("begin");
         String end=object.getString("end");
+
+        //分页
+        String pNo=object.getString("pageNo");
+        String pSize=object.getString("pageSize");
+        Integer pageNo=null;
+        Integer pageSize=null;
+        if(pNo.length()<=0 || pNo.equalsIgnoreCase("null") )
+        {
+            pageNo=null;
+        }
+        else
+        {
+            pageNo=Integer.parseInt(pNo);
+        }
+        if(pSize.length()<=0 || pSize.equalsIgnoreCase("null") )
+        {
+            pageSize=null;
+        }
+        else
+        {
+            pageSize=Integer.parseInt(pSize);
+        }
+
         Integer paystatus=0;
         Integer shopstatus=0;
-        List<Order> orderList=new ArrayList<Order>();
+        //List<Order> orderList=new ArrayList<Order>();
         switch (Integer.parseInt(strtus))
         {
             case 1://待付款
-                paystatus=0;
-                shopstatus=0;
+                paystatus=0;shopstatus=0;
                 break;
             case 2://待发货
-                paystatus=1;
-                shopstatus=0;
+                paystatus=1;shopstatus=0;
                 break;
             case 3://待收货
-                paystatus=1;
-                shopstatus=1;
+                paystatus=1;shopstatus=1;
                 break;
             case 4://待评价
-                paystatus=1;
-                shopstatus=2;
+                paystatus=1;shopstatus=2;
                 break;
             case 5://已完成
-                paystatus=1;
-                shopstatus=3;
+                paystatus=1;shopstatus=3;
                 break;
             case 6://已取消
-                paystatus=2;
-                shopstatus=0;
+                paystatus=2;shopstatus=0;
                 break;
         }
         orderService.CheckOrderToCancel();//检查失效订单
-        String json=JSON.toJSONString (orderList=orderService.HighQuery(uuid,begin,end,paystatus,shopstatus) );
+        String json=JSON.toJSONString ( orderService.HighQuery(uuid,begin,end,paystatus,shopstatus,pageNo,pageSize) );
         return json;
     }
 

@@ -16,6 +16,9 @@
     <link href='<%=basePath%>css/global_1.css' rel='stylesheet' type='text/css'/>
     <link href='<%=basePath%>css/user.css' rel='stylesheet' type='text/css'/>
     <link href='<%=basePath%>css/style.css' rel='stylesheet' type='text/css'/>
+
+    <link href='<%=basePath%>css/user/special.css' rel='stylesheet' type='text/css'/>
+
     <script type='text/javascript' src='<%=basePath%>js/jquery-1.7.2.min.js'></script>
     <script type='text/javascript' src='<%=basePath%>js/en.js'></script>
     <script type='text/javascript' src='<%=basePath%>js/global.js'></script>
@@ -580,7 +583,8 @@
                 <div class="widget prod_info_price">
                     <div class="widget price_left price_0">
                         <div class="price_info_title">Goods Sales:</div>
-                        <del id="gsales">${goods.sales}</del>
+                        <%--<del id="gsales">${goods.sales}</del>--%>
+                        <div class="price_info_title">${goods.sales}</div>
                     </div>
                     <div class="widget price_left price_1">
                         <div class="price_info_title">Price:</div>
@@ -604,9 +608,10 @@
                                 </dl>
                                 <strong id="cur_price" class="price">${goods.price}</strong>
                             </div>
-                            <div class="discount_price discount_attr fl">(<span>42% OFF</span>)</div>
+                            <%--<div class="discount_price discount_attr fl">(<span>42% OFF</span>)</div>--%>
                             <div class="clear"></div>
-                            <div class="save_price">Goods Stock: <span class="save_p" id="save_p">${goods.stock}</span><span class="save_style">(42% Off)</span>
+                            <div class="save_price">Goods Stock: <span class="save_p" id="save_p">${goods.stock}</span>
+                                <%--<span class="save_style">(42% Off)</span>--%>
                             </div>
                         </div>
                     </div>
@@ -889,6 +894,15 @@
         <div class="cp fr copyright"> &nbsp;&nbsp;&nbsp;&nbsp; <a href="javascript:void(0);" target="_blank">POWERED BY
             SZJIDING</a></div>
     </div>
+</div>
+
+<div id="div_side">
+
+    <a target="_blank"
+       href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=RCYlK2opJWk3KiszPWouJSkhNwQiKzwpJS0oaicrKQ"
+       style="text-decoration:none;">
+        <img src="<%=basePath%>picture/mail.png" alt="">
+    </a>
 </div>
 
 

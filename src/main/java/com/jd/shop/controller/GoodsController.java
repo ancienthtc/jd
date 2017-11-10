@@ -364,7 +364,7 @@ public class GoodsController extends BaseController{
         Image image=pictureService.goodsAndpicture(goodsid,title,filePath,serverPath);
         request.setAttribute("image",image);
         String image_json = JSON.toJSONString(image);
-        System.out.print(image_json);
+        //System.out.print(image_json);
         return image_json;
         // 重定向
        /* return "redirect:/goods/list";*/
@@ -377,14 +377,14 @@ public class GoodsController extends BaseController{
     @AdminLogin
     @RequestMapping("list")
     public ModelAndView list() {
-        String filePath = request.getSession().getServletContext().getRealPath("/") + "upload/";
+        //String filePath = request.getSession().getServletContext().getRealPath("/") + "upload/";
         ModelAndView mav = new ModelAndView("redirect:/goods/goodslist");
-        File uploadDest = new File(filePath);
-        String[] fileNames = uploadDest.list();
-        for (int i = 0; i < fileNames.length; i++) {
+        //File uploadDest = new File(filePath);
+        //String[] fileNames = uploadDest.list();
+        //for (int i = 0; i < fileNames.length; i++) {
             //打印出文件名
-            System.out.println(fileNames[i]);
-        }
+            //System.out.println(fileNames[i]);
+        //}
         return mav;
     }
     //商品图片上传 ^^^^^^

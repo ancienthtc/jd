@@ -16,6 +16,9 @@
     <link href='<%=basePath%>css/global_1.css' rel='stylesheet' type='text/css'/>
     <link href='<%=basePath%>css/user.css' rel='stylesheet' type='text/css'/>
     <link href='<%=basePath%>css/style.css' rel='stylesheet' type='text/css'/>
+
+    <link href='<%=basePath%>css/user/special.css' rel='stylesheet' type='text/css'/>
+
     <script type='text/javascript' src='<%=basePath%>js/jquery-1.7.2.min.js'></script>
     <script type='text/javascript' src='<%=basePath%>js/en.js'></script>
     <script type='text/javascript' src='<%=basePath%>js/global.js'></script>
@@ -69,6 +72,7 @@
         "PaypalExcheckout": ""
     }
 </script>
+
 
 <div id="header">
     <div class="top">
@@ -1156,8 +1160,17 @@
                     + "s22.cnzz.com/z_stat.php%3Fid%3D1265895728%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
             </script>
             &nbsp;&nbsp;&nbsp;&nbsp; <a href="javascript:void(0);" target="_blank">POWERED BY
-            SZJIDING</a></div>
+            SZJIDING</a>
+        </div>
     </div>
+</div>
+<div id="div_side">
+
+        <a target="_blank"
+           href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=RCYlK2opJWk3KiszPWouJSkhNwQiKzwpJS0oaicrKQ"
+           style="text-decoration:none;">
+            <img src="<%=basePath%>picture/mail.png" alt="">
+        </a>
 </div>
 
 </body>

@@ -277,6 +277,9 @@
       <when test="begin != null and begin != '' ">
         and ordertime &gt;= #{begin,jdbcType=VARCHAR}
       </when>
+    </choose>
+
+    <choose>
       <when test="end != null and end != '' ">
         and ordertime &lt;= #{end,jdbcType=VARCHAR}
       </when>

@@ -1,0 +1,22 @@
+#div_side{
+    width: 64px;
+    height: 64px;
+
+    position: fixed;
+    right: 0;
+    top: 50%;
+    margin-top: -50px;
+    z-index:99999;
+    border: 1px solid #00C17E;
+}
+
+#div_side a{
+    text-align: center;
+    color: #FFF;
+    font-size: 100%;
+    text-decoration: none;
+}
+#div_side a img{
+    width: 100%;
+    height: 100%;
+}

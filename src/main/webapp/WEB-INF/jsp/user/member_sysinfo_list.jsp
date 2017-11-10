@@ -16,6 +16,9 @@
     <link href='<%=basePath%>css/global_1.css' rel='stylesheet' type='text/css'/>
     <link href='<%=basePath%>css/user.css' rel='stylesheet' type='text/css'/>
     <link href='<%=basePath%>css/style.css' rel='stylesheet' type='text/css'/>
+
+    <link href='<%=basePath%>css/user/special.css' rel='stylesheet' type='text/css'/>
+
     <script type='text/javascript' src='<%=basePath%>js/jquery-1.7.2.min.js'></script>
     <script type='text/javascript' src='<%=basePath%>js/en.js'></script>
     <script type='text/javascript' src='<%=basePath%>js/global.js'></script>
@@ -377,6 +380,14 @@
     </div>
 </div>
 
+<div id="div_side">
+
+    <a target="_blank"
+       href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=RCYlK2opJWk3KiszPWouJSkhNwQiKzwpJS0oaicrKQ"
+       style="text-decoration:none;">
+        <img src="<%=basePath%>picture/mail.png" alt="">
+    </a>
+</div>
 
 </body>
 </html>

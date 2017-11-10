@@ -71,7 +71,8 @@ public interface OrderService {
     List<Map<String,Object>> getCount();
 
     //订单总查询
-    List<Order> HighQuery(String uuid,String begin,String end,Integer paystatus,Integer shopstatus);
+    //List<Order> HighQuery(String uuid,String begin,String end,Integer paystatus,Integer shopstatus);
+    PagedResult<Order> HighQuery(String uuid,String begin,String end,Integer paystatus,Integer shopstatus,Integer pageNo,Integer pageSize);
 
     //系统检查订单失效(调用该方法后更新)
     void CheckOrderToCancel();

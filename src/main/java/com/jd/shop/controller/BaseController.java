@@ -21,7 +21,7 @@ public class BaseController {
         // 根据不同的异常类型进行不同处理
         if(ex instanceof RuntimeException)
         {
-            System.out.println(ex.getMessage());
+            //System.out.println(ex.getMessage());
             ex.printStackTrace();
             model.addAttribute("message",ex.getMessage());
             return "ex/error";
