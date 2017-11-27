@@ -41,9 +41,8 @@ $(function(){
                         row.login="";
                     }
 
-
                     var tr = $('<tr>');
-                    $(tr).append('<td>'+row.nickname+'</td>');
+                    $(tr).append('<td>'+row.nickname+'<input type="hidden" name="id"'+row.id+'/></td>');
                     $(tr).append('<td>'+row.tel+'</td>');
                     $(tr).append('<td>'+row.birth+'</td>');
                     $(tr).append('<td>'+row.sex+'</td>');
@@ -51,7 +50,7 @@ $(function(){
                     $(tr).append('<td>'+row.login+'</td>');
                     $(tr).append('<td>'+row.score+'</td>');
                     // $(tr).append("<td><a href='/JDWebShop/part/alter?pid="+row.id+"'>修改</a></td>");
-                    $(tr).append("<td><a href='/JDWebShop/part/####?###="+row.id+"'>删除</a></td>");
+                    //$(tr).append("<td><a href='/JDWebShop/part/####?###="+row.id+"'>删除</a></td>");
                     //$(tr).append('<td>'+row.statusName+'</td>');
                     //$(tr).append('<td>'+row.update_time+'</td>');
                     $(tb).append(tr);

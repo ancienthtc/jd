@@ -27,6 +27,8 @@ public interface OrderMapper {
 
     int updateDetailByUUID(@Param("uuid") String uuid,@Param("detail") String detail);
 
+    List<Order> UserAllOrders(@Param("uuid") Integer uid);
+
     /**
      * 付款
      */

@@ -910,6 +910,12 @@
 <script type='text/javascript' src='<%=basePath%>js/review.js'></script>
 <script type='text/javascript' src='<%=basePath%>js/lightbox.min.js'></script>
 <script type="text/javascript" src="<%=basePath%>js/addthis_widget.js"></script>
+
+<!-- 站长统计 -->
+<script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan id='cnzz_stat_icon_1265895728'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1265895728%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+</script>
 </body>
 </html>
 

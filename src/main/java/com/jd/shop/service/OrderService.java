@@ -28,6 +28,8 @@ public interface OrderService {
     //List<Map<String,Object>> user_orders(Integer uid);
 
     //用户
+    List<Order> UserAllOrder(Integer uid);
+
     PagedResult<Order> queryByPageNoPay(Integer pageNo, Integer pageSize, Integer userId);
 
     PagedResult<Order> queryByPageNoSend(Integer pageNo, Integer pageSize, Integer userId);

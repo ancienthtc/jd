@@ -262,6 +262,11 @@ public class OrderServiceImpl implements OrderService{
         return orderMapper.getUserOrders(uid);
     }
 
+    @Override
+    public List<Order> UserAllOrder(Integer uid) {
+        return null;
+    }
+
     //分页
     public PagedResult<Order> queryByPageNoPay(Integer pageNo, Integer pageSize, Integer userId) {
         pageNo = pageNo == null ? 1 : pageNo;

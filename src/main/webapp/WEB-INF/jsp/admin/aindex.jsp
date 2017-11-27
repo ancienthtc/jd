@@ -101,7 +101,7 @@
                         <p><span class="iconfont icon-msg"></span>公告管理<i class="iconfont icon-right arrow"></i></p>
                         <ul class="secondNav">
                             <li id="message"><a href="javascript:void(0);">公告列表</a></li>
-                            <li ><a href="javascript:void(0);">xxx</a></li>
+                            <%--<li ><a href="javascript:void(0);">xxx</a></li>--%>
                         </ul>
                     </li>
 

@@ -15,6 +15,7 @@ import com.jd.shop.util.PagedResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -48,6 +49,7 @@ public class UserController extends BaseController{
 
     @Autowired
     private OrderService orderService;
+
 
     //用户注册
     @RequestMapping(value = "register" , method = RequestMethod.POST)
@@ -226,5 +228,13 @@ public class UserController extends BaseController{
         return "user/member_index";
     }
 
+    @RequestMapping(value = "/delete/{uid}/{status}" , method = RequestMethod.POST)
+    @ResponseBody
+    public String user_del(@PathVariable Integer uid,@PathVariable Integer status)
+    {
+        //status=0 普通删除 , status=1 强制删除
+
+        return userService.userDel(uid,status);
+    }
 
 }

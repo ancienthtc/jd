@@ -18,4 +18,6 @@ public interface UserService {
 
     int updatePersonalInfo(User user);
 
+    String userDel(Integer uid,Integer status);
+
 }

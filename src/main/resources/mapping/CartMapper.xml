@@ -63,6 +63,10 @@
     WHERE t_user.id=#{uid,jdbcType=INTEGER}
   </delete>
 
+  <delete id="delCartByUserIsDel" parameterType="java.lang.Integer">
+    DELETE FROM t_cart WHERE user_cart=#{userid,jdbcType=INTEGER}
+  </delete>
+
 
   <insert id="insert" parameterType="com.jd.shop.model.Cart" >
     insert into t_cart (id, user_cart)

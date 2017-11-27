@@ -10,6 +10,7 @@ var basePath=localhostPath+projectName+"/";
 
 var cancel =  new Object();
 cancel.event = function(){
+
     $("#dataGridTableJson").on("click",".icon-del",function(){
         var id = $(this).parent().nextAll("span").attr("value");
         //alert(id);

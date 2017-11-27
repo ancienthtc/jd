@@ -34,6 +34,13 @@
     where uuid = #{uuid,jdbcType=VARCHAR}
   </select>
   <!-- 用户 -->
+  <select id="UserAllOrders" parameterType="java.lang.Integer" resultType="com.jd.shop.model.Order">
+    select
+    <include refid="Base_Column_List" />
+    from t_order
+    where order_user = #{uid,jdbcType=INTEGER}
+  </select>
+
   <!-- 待付款 -->
   <select id="getUserOrders" parameterType="java.lang.Integer" resultType="com.jd.shop.model.Order">
     SELECT
@@ -203,7 +210,7 @@
     t_order
     WHERE
     paystatus=2 and shopstatus=0
-    ORDER BY ordertime
+    ORDER BY ordertime DESC
   </select>
 
   <!-- 统计上月 -->

@@ -445,7 +445,10 @@
                                 <tr>
                                     <td class="pro_list">
                                         <dl class="clearfix">
-                                            <dt><a href="<%=basePath%>goods/NewGoodsDetail/${item.get("goodsid")}" target="_blank"><img src="<%=basePath%>image/show?pic=${item.get("title")}"></a></dt>
+                                            <dt>
+                                                <a href="<%=basePath%>goods/NewGoodsDetail/${item.get("goodsid")}" target="_blank">
+                                                <img src="<%=basePath%>image/show?pic=${item.get("title")}"></a>
+                                            </dt>
                                             <dd>
                                                 <h4><a href="<%=basePath%>goods/NewGoodsDetail/${item.get("goodsid")}" target="_blank">${item.get("goodsname")}</a></h4>
                                                 <p class="pro_attr">${item.get("goodsid")}</p>
